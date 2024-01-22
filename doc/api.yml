@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  version: 'latest'
+  title: Bookwel-api
+
+paths:
+  '/hello':
+      get:
+        tags:
+          - HealthController
+        operationId: checkHealth
+        responses:
+          200:
+            description: Health controller
+            content:
+              text/plain:
+                schema:
+                  type: string
+                  example: "Hello from the Bookwel Team!"
