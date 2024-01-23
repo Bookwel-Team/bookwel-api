@@ -2,13 +2,16 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
+
+    id 'org.openapi.generator' version '5.3.0'
+
     id 'jacoco'
 }
 
-group = 'api.prog5.bookwel'
-version = '0.0.1-SNAPSHOT'
 
 java {
+    group = 'api.prog5.bookwel'
+    targetCompatibility = '17'
     sourceCompatibility = '17'
 }
 
@@ -21,6 +24,21 @@ configurations {
 repositories {
     mavenCentral()
     mavenLocal()
+}
+
+task generateTsClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName = "typescript-axios"
+    inputSpec = "$rootDir/doc/api.yml".toString()
+    outputDir = "$buildDir/gen-ts".toString()
+    typeMappings = [
+            Date    : "Date",
+            DateTime: "Date",
+    ]
+    additionalProperties = [
+            enumPropertyNaming: "original",
+            npmName           : "@bookwel/typescript-client",
+            npmVersion        : project.properties["args"] ?: "latest"
+    ]
 }
 
 test {
@@ -72,14 +90,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'io.swagger:swagger-annotations:1.6.12'
+
     implementation 'org.flywaydb:flyway-core'
+
     implementation 'org.postgresql:postgresql'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.testcontainers:junit-jupiter'
