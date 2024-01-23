@@ -1,8 +1,12 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.2'
+    id 'org.springframework.boot' version '2.7.17'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'jacoco'
+    id 'org.openapi.generator' version '5.3.0'
 }
 
 group = 'api.prog5.bookwel'
@@ -22,6 +26,43 @@ repositories {
     mavenCentral()
     mavenLocal()
 }
+
+task generateJavaClient(type: GenerateTask) {
+    generatorName = "java"
+    inputSpec = "$rootDir/doc/api.yml".toString()
+    outputDir = "$rootDir/build/gen".toString()
+    apiPackage = "api.prog5.bookwel.endpoint.rest.api"
+    invokerPackage = "api.prog5.bookwel.endpoint.rest.client"
+    modelPackage = "api.prog5.bookwel.endpoint.rest.model"
+
+    configOptions = [
+            serializationLibrary: "jackson",
+            dateLibrary: "custom"
+    ]
+    typeMappings = [
+            // What date-time type to use when? https://i.stack.imgur.com/QPhGW.png
+            Date: "java.time.LocalDate",
+            DateTime: "java.time.Instant",
+    ]
+    library = "native"
+
+    groupId = 'api.prog5'
+    id = 'bookwel-gen'
+    skipValidateSpec = false
+    logToStderr = true
+    generateAliasAsModel = false
+    enablePostProcessFile = false
+}
+
+task publishJavaClientToMavenLocal(type: Exec, dependsOn: generateJavaClient) {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)){
+        commandLine './.shell/publish_gen_to_maven_local.bat'
+    } else {
+        commandLine './.shell/publish_gen_to_maven_local.sh'
+    }
+    outputs.file("$buildDir/gen/publishJavaClientToMavenLocal.success")
+}
+tasks.compileJava.dependsOn publishJavaClientToMavenLocal
 
 test {
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
@@ -69,6 +110,8 @@ jacocoTestReport {
 }
 
 dependencies {
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -82,10 +125,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation 'org.testcontainers:postgresql'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.1'
+    testImplementation 'org.testcontainers:postgresql:1.19.1'
 }
