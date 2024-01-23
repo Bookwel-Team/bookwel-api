@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release-version:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -79,6 +79,9 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
 
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Generate typescript client
         run: ./gradlew generateTsClient -Pargs=${{ env.semver }}
 
@@ -90,11 +93,17 @@ jobs:
       - name: Publish client
         run: |
           cd build/gen-ts/
-          sed -i "s/\"https:\/\/annotator-api.preprod.bpartners.app\"/\(process.env.REACT_APP_BPARTNERS_ANNOTATOR_API_URL || \"\"\)/g" base.ts
+          echo '{
+                  "publishConfig": {
+                    "registry": "https://npm.pkg.github.com/"
+                  }
+                }' | jq -s '.[0] * .[1]' package.json - > package.json.tmp && mv package.json.tmp package.json
+          sed -i "s/\"http:\/\/localhost\"/\(process.env.NEXT_PUBLIC_API_URL || \"\"\)/g" base.ts
           sed -i "s/\"dependencies\"/\"peerDependencies\"/g" package.json
           sed -i '11d' tsconfig.json && sed -i "s/\"es6\",/\"es6\"/g" tsconfig.json
           echo -e "\n*.ts\nnode_module\n!*.d.ts\n.idea\n.vscode\n.openapi-generator\n.openapi-generator-ignore\ngit_push.sh" >> .npmignore
           npm install
           npm run build
-          echo "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" > ~/.npmrc
+          echo "@${{ vars.GH_USERNAME }}:registry=https://npm.pkg.github.com/" > ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
           npm publish
