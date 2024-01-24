@@ -104,6 +104,5 @@ jobs:
           echo -e "\n*.ts\nnode_module\n!*.d.ts\n.idea\n.vscode\n.openapi-generator\n.openapi-generator-ignore\ngit_push.sh" >> .npmignore
           npm install
           npm run build
-          echo "@${{ vars.GH_USERNAME }}:registry=https://npm.pkg.github.com/" > ~/.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_NPM_TOKEN }}" >> ~/.npmrc
           npm publish
