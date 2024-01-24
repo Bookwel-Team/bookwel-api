@@ -1,0 +1,3 @@
+WARNING : ANY MIGRATION PRESENT IN main/resources/db/migration has to be duplicated into test/resources/db/migration.
+
+We want to keep testData in test/resources instead of putting those in main/resources
