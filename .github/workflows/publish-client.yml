@@ -105,4 +105,5 @@ jobs:
           npm install
           npm run build
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_NPM_TOKEN }}" >> ~/.npmrc
+          echo "@${{ vars.NPM_USERNAME }}:registry=https://npm.pkg.github.com" >> ~/.npmrc
           npm publish
