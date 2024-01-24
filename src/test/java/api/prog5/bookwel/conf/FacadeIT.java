@@ -1,14 +1,14 @@
 package api.prog5.bookwel.conf;
 
+import static java.lang.Runtime.getRuntime;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-
-import static java.lang.Runtime.getRuntime;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Slf4j
@@ -18,8 +18,7 @@ public class FacadeIT {
   @BeforeAll
   static void setUp() {
     POSTGRES_CONF.start();
-    getRuntime()
-        .addShutdownHook(new Thread(POSTGRES_CONF::stop));
+    getRuntime().addShutdownHook(new Thread(POSTGRES_CONF::stop));
   }
 
   @SneakyThrows
