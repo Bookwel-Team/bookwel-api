@@ -1,17 +1,20 @@
 package api.prog5.bookwel.integration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import api.prog5.bookwel.conf.FacadeIT;
-import api.prog5.bookwel.endpoint.controller.HealthController;
+import api.prog5.bookwel.endpoint.rest.controller.HealthController;
+import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class HealthControllerIT extends CustomFacadeIT {
+  @Autowired HealthController subject;
 
-
-public class HealthControllerIT extends FacadeIT {
-  @Autowired
-  HealthController subject;
+  @BeforeEach
+  void setup() {
+    setupFirebaseAuthenticator(firebaseAuthenticator);
+  }
 
   @Test
   public void hello() {
