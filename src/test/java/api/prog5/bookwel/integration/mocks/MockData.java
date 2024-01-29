@@ -4,6 +4,7 @@ import static api.prog5.bookwel.model.User.Role.ADMIN;
 import static api.prog5.bookwel.model.User.Role.CLIENT;
 import static org.mockito.Mockito.when;
 
+import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.endpoint.rest.security.auth.firebase.FirebaseAuthenticator;
 import api.prog5.bookwel.model.User;
 
@@ -12,6 +13,9 @@ public class MockData {
   public static String USER_ONE_EMAIL = "first@gmail.com";
   public static String USER_TWO_ID = "user_two";
   public static String USER_TWO_EMAIL = "second@gmail.com";
+
+  public static String BOOK_ONE_ID = "book_one_id";
+  public static String BOOK_TWO_ID = "book_two_id";
 
   public static User userOne() {
     return User.builder()
@@ -40,5 +44,23 @@ public class MockData {
   void setupFirebase(FirebaseAuthenticator authenticator) {
     when(authenticator.getEmail(USER_ONE_ID_TOKEN)).thenReturn(USER_ONE_EMAIL);
     when(authenticator.getEmail(USER_TWO_ID_TOKEN)).thenReturn(USER_TWO_EMAIL);
+  }
+
+  public static Book bookOne(){
+    return Book.builder()
+            .id(BOOK_ONE_ID)
+            .author("Author one")
+            .category("Biopic")
+            .title("The first book")
+            .build();
+  }
+
+  public static Book bookTwo(){
+    return Book.builder()
+            .id(BOOK_TWO_ID)
+            .author("Author two")
+            .category("Romance")
+            .title("The second book")
+            .build();
   }
 }

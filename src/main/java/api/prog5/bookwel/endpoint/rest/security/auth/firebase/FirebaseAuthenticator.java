@@ -1,6 +1,6 @@
 package api.prog5.bookwel.endpoint.rest.security.auth.firebase;
 
-import api.prog5.bookwel.endpoint.rest.security.exception.ForbiddenException;
+import api.prog5.bookwel.endpoint.rest.exception.ForbiddenException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
