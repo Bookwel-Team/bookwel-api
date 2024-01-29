@@ -1,6 +1,7 @@
 package api.prog5.bookwel.endpoint;
 
-import api.prog5.bookwel.endpoint.rest.security.exception.ForbiddenException;
+import api.prog5.bookwel.endpoint.rest.exception.ForbiddenException;
+import api.prog5.bookwel.endpoint.rest.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +34,13 @@ public class InternalToRestExceptionHandler {
     log.info("Forbidden", e);
 
     return new ResponseEntity<>(e, HttpStatus.FORBIDDEN);
+  }
+
+  @ExceptionHandler (
+          value = {
+                  NotFoundException.class
+          })
+  ResponseEntity<Exception> handleNotFound(Exception e){
+    return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
   }
 }

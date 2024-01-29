@@ -1,4 +1,4 @@
-package api.prog5.bookwel.endpoint.rest.security.exception;
+package api.prog5.bookwel.endpoint.rest.exception;
 
 import lombok.Getter;
 

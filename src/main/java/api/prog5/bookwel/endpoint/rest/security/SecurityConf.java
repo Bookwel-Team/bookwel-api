@@ -6,7 +6,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import api.prog5.bookwel.endpoint.rest.security.auth.AuthProvider;
-import api.prog5.bookwel.endpoint.rest.security.exception.ForbiddenException;
+import api.prog5.bookwel.endpoint.rest.exception.ForbiddenException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -80,7 +80,12 @@ public class SecurityConf {
                     .requestMatchers("/users")
                     .hasRole(ADMIN.getRole())
                     .requestMatchers("/client")
-                    .hasRole(CLIENT.getRole()));
+                    .hasRole(CLIENT.getRole())
+                    .requestMatchers(GET, "/books")
+                    .authenticated()
+                    .requestMatchers(GET, "/books/*")
+                    .authenticated()
+        );
     return http.build();
   }
 
