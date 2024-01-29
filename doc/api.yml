@@ -22,23 +22,21 @@ paths:
                 schema:
                   type: string
                   example: "Hello from the Bookwel Team!"
-
-  /books:
-    put:
-      summary: Crupdate book
+  '/categories':
+    get:
       tags:
         - Book
-      security: []
-      operationId: crupdateBook
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              $ref: "#/components/schemas/CreateBook"
+      summary: Get all categories of book
+      operationId: getAllCategories
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
-          description: The created book
+          description: All categories
           content:
             application/json:
               schema:
@@ -51,6 +49,78 @@ paths:
           $ref: "#/components/responses/500"
         '404':
           $ref: "#/components/responses/404"
+
+  '/books':
+    get:
+      tags:
+        - Book
+      summary: Get all books
+      parameters:
+        - name: author
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+      operationId: getBooks
+      responses:
+        200:
+          description: All books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    put:
+      summary: Crupdate book
+      tags:
+        - Book
+      security: [ ]
+      operationId: crupdateBook
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/CreateBook"
+      responses:
+        200:
+          description: Book created
+
+  '/books/{id}':
+    get:
+      tags:
+        - Book
+      summary: Get book by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: getBookById
+      responses:
+        200:
+          description: All books
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
 
 components:
   responses:
@@ -152,7 +222,6 @@ components:
           type: string
         file_link:
           type: string
-
     CreateBook:
       type: object
       properties:
@@ -169,3 +238,10 @@ components:
           type: string
           format: binary
           description: The book as pdf format
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
