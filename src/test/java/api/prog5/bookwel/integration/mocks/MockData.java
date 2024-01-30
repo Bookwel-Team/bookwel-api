@@ -8,9 +8,9 @@ import api.prog5.bookwel.model.User;
 
 public class MockData {
   public static String USER_ONE_ID = "user_one";
-  public static String USER_ONE_EMAIL = "first@gmail.com";
+  public static String USER_ONE_EMAIL = "user.one@gmail.com";
   public static String USER_TWO_ID = "user_two";
-  public static String USER_TWO_EMAIL = "second@gmail.com";
+  public static String USER_TWO_EMAIL = "user.two@gmail.com";
 
   public static String BOOK_ONE_ID = "book_one_id";
   public static String BOOK_TWO_ID = "book_two_id";

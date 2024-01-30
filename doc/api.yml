@@ -25,7 +25,7 @@ paths:
   '/categories':
     get:
       tags:
-        - Book
+        - Category
       summary: Get all categories of book
       operationId: getAllCategories
       parameters:
@@ -42,7 +42,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Book"
+                  $ref: "#/components/schemas/Category"
         '400':
           $ref: "#/components/responses/400"
         '500':

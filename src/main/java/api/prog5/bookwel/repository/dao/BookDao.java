@@ -1,9 +1,11 @@
 package api.prog5.bookwel.repository.dao;
 
 import api.prog5.bookwel.model.Book;
+import api.prog5.bookwel.model.Category;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class BookDao {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Book> query = builder.createQuery(Book.class);
         Root<Book> root = query.from(Book.class);
+        Join<Book, Category> join = root.join("category");
 
         List<Predicate> predicates = new ArrayList<>();
 
@@ -37,8 +40,8 @@ public class BookDao {
         if (category != null){
             predicates.add(
                     builder.or(
-                            builder.like(builder.lower(root.get("category")), "%" + category + "%"),
-                            builder.like(root.get("category"), "%" + category + "%")));
+                            builder.like(builder.lower(join.get("name")), "%" + category + "%"),
+                            builder.like(join.get("name"), "%" + category + "%")));
         }
 
         if (!predicates.isEmpty()) {
