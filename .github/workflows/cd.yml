@@ -37,6 +37,7 @@ jobs:
       - name: Build application
         run: |
           chmod +x gradlew
+          chmod +x ./.shell/publish_gen_to_maven_local.sh
           ./gradlew build -x test
 
       - name: Set up QEMU

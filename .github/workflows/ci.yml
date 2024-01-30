@@ -27,7 +27,7 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
 
-      - name: Add execution permission to executables
+      - name: Give permission to executables
         run: |
           chmod +x gradlew
           chmod +x ./.shell/publish_gen_to_maven_local.sh
