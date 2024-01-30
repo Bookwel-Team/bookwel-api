@@ -1,9 +1,12 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
 
-    id 'org.openapi.generator' version '5.3.0'
+    id 'org.openapi.generator' version '5.2.0'
 
     id 'jacoco'
 }
@@ -40,6 +43,42 @@ task generateTsClient(type: org.openapitools.generator.gradle.plugin.tasks.Gener
             npmVersion        : project.properties["args"] ?: "latest"
     ]
 }
+
+task generateJavaClient(type: GenerateTask) {
+    generatorName = "java"
+    inputSpec = "$rootDir/doc/api.yml".toString()
+    outputDir = "$buildDir/gen".toString()
+    apiPackage = "api.prog5.bookwel.endpoint.rest.api"
+    invokerPackage = "api.prog5.bookwel.endpoint.rest.client"
+    modelPackage = "api.prog5.bookwel.endpoint.rest.model"
+
+    configOptions = [
+            serializationLibrary: "jackson",
+            dateLibrary: "custom"
+    ]
+    typeMappings = [
+            // What date-time type to use when? https://i.stack.imgur.com/QPhGW.png
+            Date: "java.time.LocalDate",
+            DateTime: "java.time.Instant",
+    ]
+    library = "native"
+
+    groupId = 'api.prog5'
+    id = 'bookwel-gen'
+    skipValidateSpec = false
+    logToStderr = true
+    generateAliasAsModel = false
+    enablePostProcessFile = false
+}
+
+task publishJavaClientToMavenLocal(type: Exec, dependsOn: generateJavaClient) {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)){
+        commandLine './.shell/publish_gen_to_maven_local.bat'
+    } else {
+        commandLine './.shell/publish_gen_to_maven_local.sh'
+    }
+}
+tasks.compileJava.dependsOn publishJavaClientToMavenLocal
 
 test {
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
@@ -90,6 +129,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
     implementation 'io.swagger:swagger-annotations:1.6.12'
