@@ -1,9 +1,11 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
 
-    id 'org.openapi.generator' version '5.3.0'
+    id 'org.openapi.generator' version '5.2.0'
 
     id 'jacoco'
 }
@@ -22,8 +24,8 @@ configurations {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 task generateTsClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
@@ -92,7 +94,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
-    implementation 'io.swagger:swagger-annotations:1.6.12'
 
     implementation 'org.flywaydb:flyway-core'
 
