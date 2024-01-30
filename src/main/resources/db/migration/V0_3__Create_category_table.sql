@@ -3,5 +3,5 @@ create table if not exists category (
     name varchar not null unique
 );
 
-alter table "book" rename column "category" if exists to "category_id";
-alter table "book" add constraint if not exists fk_book_category foreign key book("category_id") references category("id");
+alter table "book" rename column "category" to "category_id";
+alter table "book" add constraint fk_book_category foreign key ("category_id") references "category" ("id");

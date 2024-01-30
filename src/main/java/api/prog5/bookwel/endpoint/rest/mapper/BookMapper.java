@@ -14,6 +14,7 @@ public class BookMapper {
                 .author(domain.getAuthor())
                 .fileLink(domain.getFileLink())
                 .category(domain.getCategory().getName())
+                .title(domain.getTitle())
                 .build();
     }
 

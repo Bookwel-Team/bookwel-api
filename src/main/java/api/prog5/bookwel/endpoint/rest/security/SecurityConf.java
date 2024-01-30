@@ -85,6 +85,8 @@ public class SecurityConf {
                     .authenticated()
                     .requestMatchers(GET, "/books/*")
                     .authenticated()
+                    .requestMatchers(GET, "/categories")
+                    .permitAll()
         );
     return http.build();
   }
