@@ -1,12 +1,11 @@
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
 
-    id 'org.openapi.generator' version '5.3.0'
+    id 'org.openapi.generator' version '5.2.0'
 
     id 'jacoco'
 }
@@ -130,8 +129,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    implementation 'api.prog5:bookwel-gen:latest'
+
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
-    implementation 'io.swagger:swagger-annotations:1.6.12'
 
     implementation 'org.flywaydb:flyway-core'
 
