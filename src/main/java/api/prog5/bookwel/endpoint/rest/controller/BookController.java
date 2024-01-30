@@ -3,7 +3,9 @@ package api.prog5.bookwel.endpoint.rest.controller;
 import api.prog5.bookwel.endpoint.rest.mapper.BookMapper;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
+import api.prog5.bookwel.model.Category;
 import api.prog5.bookwel.service.BookService;
+import api.prog5.bookwel.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ public class BookController {
 
     private final BookService bookService;
     private final BookMapper bookMapper;
+    private final CategoryService categoryService;
 
     @GetMapping("/books")
     public List<Book> getBooks(
@@ -35,6 +38,11 @@ public class BookController {
     @GetMapping("/books/{id}")
     public Book getBookById(@PathVariable String id){
         return bookMapper.toRest(bookService.getBookById(id));
+    }
+
+    @GetMapping("/categories")
+    public List<Category> getCategories(@RequestParam(value = "name", required = false) String name){
+        return name == null ? categoryService.getAllCategories() : categoryService.getByName(name);
     }
 
 }
