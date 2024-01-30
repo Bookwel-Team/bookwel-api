@@ -49,7 +49,6 @@ paths:
           $ref: "#/components/responses/500"
         '404':
           $ref: "#/components/responses/404"
-
   '/books':
     get:
       tags:
@@ -222,7 +221,111 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CategoryReaction'
-
+  /users:
+    get:
+      tags:
+        - Users
+      summary: get all users
+      operationId: getAllUsers
+      responses:
+        200:
+          description: the users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/400"
+        500:
+          $ref: "#/components/responses/500"
+        404:
+          $ref: "#/components/responses/404"
+  /users/{userId}:
+    get:
+      tags:
+        - Users
+      summary: getUserById
+      operationId: getUserById
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: the user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/400"
+        500:
+          $ref: "#/components/responses/500"
+        404:
+          $ref: "#/components/responses/404"
+    put:
+      tags:
+        - Users
+      summary: CrupdateUser
+      operationId: crupdateUser
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+      responses:
+        200:
+          description: the created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/400"
+        500:
+          $ref: "#/components/responses/500"
+        404:
+          $ref: "#/components/responses/404"
+  /users/{userId}/profile:
+    put:
+      tags:
+        - Users
+      summary: update user profile
+      operationId: updateUserProfile
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserProfile"
+      responses:
+        200:
+          description: the created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/400"
+        500:
+          $ref: "#/components/responses/500"
+        404:
+          $ref: "#/components/responses/404"
 components:
   responses:
     400:
@@ -294,17 +397,23 @@ components:
       example:
         type: TooManyRequestsException
         message: Too many requests
-    User:
+    UserProfile:
       type: object
       properties:
-        id:
-          type: string
         first_name:
           type: string
         last_name:
           type: string
         email:
           type: string
+          format: email
+    User:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/CreateUser"
+      properties:
+        profile:
+          $ref: "#/components/schemas/UserProfile"
         status:
           type: string
           enum:
@@ -322,6 +431,13 @@ components:
         category:
           type: string
         file_link:
+          type: string
+    CreateUser:
+      type: object
+      properties:
+        id:
+          type: string
+        firebaseId:
           type: string
     CreateBook:
       type: object

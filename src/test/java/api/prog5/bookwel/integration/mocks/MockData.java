@@ -28,8 +28,8 @@ public class MockData {
   public static User userTwo() {
     return User.builder()
         .id(USER_TWO_ID)
-        .firstName("One")
-        .lastName("First")
+        .firstName("Two")
+        .lastName("Second")
         .email(USER_TWO_EMAIL)
         .role(CLIENT)
         .build();

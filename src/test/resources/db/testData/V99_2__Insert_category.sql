@@ -1,0 +1,1 @@
+insert into category(id, name) values ('category_one_id', 'Biopic'), ('category_two_id', 'Romance');

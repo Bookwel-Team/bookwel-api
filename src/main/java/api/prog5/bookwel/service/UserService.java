@@ -9,21 +9,25 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UserService {
-  private final UserRepository userRepository;
+  private final UserRepository repository;
 
   public List<User> getAll() {
-    return userRepository.findAll();
+    return repository.findAll();
   }
 
   public User getById(String id) {
-    return userRepository
+    return repository
         .findById(id)
         .orElseThrow(() -> new RuntimeException("User.Id = " + id + " not found."));
   }
 
   public User getByEmail(String email) {
-    return userRepository
+    return repository
         .findByEmail(email)
         .orElseThrow(() -> new RuntimeException("User.Email = " + email + " not found."));
+  }
+
+  public User save(User user) {
+    return repository.save(user);
   }
 }

@@ -8,6 +8,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 import api.prog5.bookwel.endpoint.rest.exception.ForbiddenException;
 import api.prog5.bookwel.endpoint.rest.security.auth.AuthProvider;
+import api.prog5.bookwel.endpoint.rest.security.auth.AuthenticatedResourceProvider;
+import api.prog5.bookwel.endpoint.rest.security.matcher.SelfUserMatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,12 +36,14 @@ public class SecurityConf {
 
   private final AuthProvider authProvider;
   private final HandlerExceptionResolver exceptionResolver;
+  private final AuthenticatedResourceProvider authenticatedResourceProvider;
 
   public SecurityConf(
-      AuthProvider authProvider,
-      @Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver) {
+          AuthProvider authProvider,
+          @Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver, AuthenticatedResourceProvider authenticatedResourceProvider) {
     this.authProvider = authProvider;
     this.exceptionResolver = exceptionResolver;
+    this.authenticatedResourceProvider = authenticatedResourceProvider;
   }
 
   @Bean
@@ -78,6 +82,14 @@ public class SecurityConf {
                     .requestMatchers("/hello")
                     .permitAll()
                     .requestMatchers("/users")
+                    .hasRole(ADMIN.getRole())
+                    .requestMatchers(PUT, "/users/*")
+                    .permitAll()
+                    .requestMatchers(GET, "/users/*")
+                    .authenticated()
+                    .requestMatchers(new SelfUserMatcher(PUT, "/users/*/profile", authenticatedResourceProvider))
+                    .hasRole(CLIENT.getRole())
+                    .requestMatchers(PUT, "/users/*/profile")
                     .hasRole(ADMIN.getRole())
                     .requestMatchers("/client")
                     .hasRole(CLIENT.getRole())
