@@ -60,9 +60,9 @@ jobs:
           tags: ${{ vars.DOCKER_USERNAME }}/bookwel-api:${{ github.sha }}
           build-args: |
             version=${{ steps.read-semver.outputs.version }}
-            DB_URL=${{ secrets.DB_URL }}
-            DB_USERNAME=${{ secrets.DB_USERNAME }}
-            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}
+            SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}
+            SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}
 
       - name: Setup SSH connection
         run: |
@@ -78,7 +78,5 @@ jobs:
         run: |
           chmod 600 ~/.ssh/private_key.pem
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/private_key.pem ubuntu@${{ secrets.INSTANCE_IP }} "\
-            docker stop \${{ github.ref_name }}-bookwel-api || true; \
-            docker rm \${{ github.ref_name }}-bookwel-api || true; \
             docker pull \${{ vars.DOCKER_USERNAME }}/bookwel-api:${{ github.sha }}; \
-            docker run -d -p 3000:8080 --name \${{ github.ref_name }}-bookwel-api \${{ vars.DOCKER_USERNAME }}/bookwel-api:${{ github.sha }} -e DB_URL=$PG_HOST -e DB_USERNAME=$PG_USERNAME -e DB_PASSWORD=$PG_PASSWORD"
+            docker run -d -p 3000:8080 --name \${{ github.ref_name }}-bookwel-api \${{ vars.DOCKER_USERNAME }}/bookwel-api:${{ github.sha }} -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}"
