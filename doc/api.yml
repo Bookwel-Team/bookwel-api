@@ -122,6 +122,117 @@ paths:
               schema:
                 $ref: '#/components/schemas/Book'
 
+  '/books/{book_id}/reactions':
+    get:
+      tags:
+        - Reaction
+      summary: Get all reactions to a specified book
+      parameters:
+        - name: book_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: reaction_status
+          in: query
+          required: false
+          schema:
+            type: string
+      operationId: getReactionsToABook
+      responses:
+        200:
+          description: All reactions requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookReaction'
+
+  '/books/{book_id}/reactions/{reaction_id}':
+    put:
+      tags:
+        - Reaction
+      summary: Create a reaction to a book if `id` is provided, update it otherwise
+      parameters:
+        - name: book_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: reaction_id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: crupdateReactionToABook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CrupdateReaction"
+      responses:
+        200:
+          description: Reaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookReaction'
+
+  '/categories/{category_id}/reactions':
+    get:
+      tags:
+        - Reaction
+      summary: Get all reactions to a specified category
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: reaction_status
+          in: query
+          required: false
+          schema:
+            type: string
+      operationId: getReactionsToCategory
+      responses:
+        200:
+          description: All reactions requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryReaction'
+  '/categories/{category_id}/reactions/{reaction_id}':
+    put:
+      tags:
+        - Reaction
+      summary: Create a reaction to a category if `id` is provided, update it otherwise
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: reaction_id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: crupdateReactionToACategory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CrupdateReaction"
+      responses:
+        200:
+          description: Reaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryReaction'
+
 components:
   responses:
     400:
@@ -244,4 +355,42 @@ components:
         id:
           type: string
         name:
+          type: string
+    ReactionStatus:
+      type: string
+      enum:
+        - LIKE
+        - DISLIKE
+    CrupdateReaction:
+      type: object
+      properties:
+        id:
+          type: string
+        reactor_id:
+          type: string
+        reaction_status:
+            $ref: '#/components/schemas/ReactionStatus'
+    BookReaction:
+      allOf:
+        - $ref: '#/components/schemas/CrupdateReaction'
+      type: object
+      properties:
+        book_title:
+          type: string
+        creation_datetime:
+          type: string
+          format: date-time
+        reactor_name:
+          type: string
+    CategoryReaction:
+      allOf:
+        - $ref: '#/components/schemas/CrupdateReaction'
+      type: object
+      properties:
+        category:
+          type: string
+        creation_datetime:
+          type: string
+          format: date-time
+        reactor_name:
           type: string
