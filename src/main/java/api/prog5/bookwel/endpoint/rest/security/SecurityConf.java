@@ -3,10 +3,11 @@ package api.prog5.bookwel.endpoint.rest.security;
 import static api.prog5.bookwel.endpoint.rest.security.model.Role.ADMIN;
 import static api.prog5.bookwel.endpoint.rest.security.model.Role.CLIENT;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import api.prog5.bookwel.endpoint.rest.security.auth.AuthProvider;
 import api.prog5.bookwel.endpoint.rest.exception.ForbiddenException;
+import api.prog5.bookwel.endpoint.rest.security.auth.AuthProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -65,8 +66,7 @@ public class SecurityConf {
                             exceptionResolver.resolveException(
                                 req, res, null, forbiddenWithRemoteInfo(e, req))))
         .csrf(AbstractHttpConfigurer::disable)
-        .sessionManagement(
-            session -> session.sessionCreationPolicy(STATELESS))
+        .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
         .addFilterBefore(
             bearerFilter(
                 new NegatedRequestMatcher(
@@ -87,7 +87,14 @@ public class SecurityConf {
                     .authenticated()
                     .requestMatchers(GET, "/categories")
                     .permitAll()
-        );
+                    .requestMatchers(GET, "/books/*/reactions")
+                    .authenticated()
+                    .requestMatchers(PUT, "/books/*/reactions/*")
+                    .authenticated()
+                    .requestMatchers(GET, "/categories/*/reactions")
+                    .authenticated()
+                    .requestMatchers(PUT, "/categories/*/reactions/*")
+                    .authenticated());
     return http.build();
   }
 
