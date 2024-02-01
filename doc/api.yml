@@ -147,18 +147,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/BookReaction'
 
-  '/books/{book_id}/reactions/{reaction_id}':
+  '/books/{book_id}/reaction':
     put:
       tags:
         - Reaction
-      summary: Create a reaction to a book if `id` is provided, update it otherwise
+      summary: set or unset a reaction on a book
       parameters:
         - name: book_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: reaction_id
           in: path
           required: true
           schema:
@@ -202,18 +197,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CategoryReaction'
-  '/categories/{category_id}/reactions/{reaction_id}':
+  '/categories/{category_id}/reaction':
     put:
       tags:
         - Reaction
-      summary: Create a reaction to a category if `id` is provided, update it otherwise
+      summary: set or unset reaction on a category
       parameters:
         - name: category_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: reaction_id
           in: path
           required: true
           schema:
@@ -361,6 +351,7 @@ components:
       enum:
         - LIKE
         - DISLIKE
+        - UNSET
     CrupdateReaction:
       type: object
       properties:

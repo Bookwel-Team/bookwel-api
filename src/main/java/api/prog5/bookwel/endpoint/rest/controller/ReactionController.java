@@ -47,19 +47,17 @@ public class ReactionController {
         .collect(Collectors.toUnmodifiableList());
   }
 
-  @PutMapping("/books/{bookId}/reactions/{reactionId}")
+  @PutMapping("/books/{bookId}/reaction")
   public BookReaction crupdateBookReaction(
       @PathVariable String bookId,
-      @PathVariable String reactionId,
       @RequestBody CrupdateReaction crupdateReaction) {
     return bookReactionMapper.toRest(
         bookReactionService.crupdateBookReaction(crupdateReaction, bookId));
   }
 
-  @PutMapping("/categories/{categoryId}/reactions/{reactionId}")
+  @PutMapping("/categories/{categoryId}/reaction")
   public CategoryReaction crupdateCategoryReaction(
       @PathVariable String categoryId,
-      @PathVariable String reactionId,
       @RequestBody CrupdateReaction crupdateReaction) {
     return categoryReactionMapper.toRest(
         categoryReactionService.crupdateCategoryReaction(crupdateReaction, categoryId));

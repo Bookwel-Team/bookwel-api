@@ -89,11 +89,11 @@ public class SecurityConf {
                     .permitAll()
                     .requestMatchers(GET, "/books/*/reactions")
                     .authenticated()
-                    .requestMatchers(PUT, "/books/*/reactions/*")
+                    .requestMatchers(PUT, "/books/*/reaction")
                     .authenticated()
                     .requestMatchers(GET, "/categories/*/reactions")
                     .authenticated()
-                    .requestMatchers(PUT, "/categories/*/reactions/*")
+                    .requestMatchers(PUT, "/categories/*/reaction")
                     .authenticated());
     return http.build();
   }
