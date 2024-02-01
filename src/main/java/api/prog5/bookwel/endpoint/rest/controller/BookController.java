@@ -23,13 +23,13 @@ public class BookController {
       @RequestParam(value = "category", required = false) String category,
       @RequestParam(value = "page", defaultValue = "1") Integer page,
       @RequestParam(value = "page_size", defaultValue = "20") Integer pageSize) {
-    return bookService.getBooksByCriteria(author, category, page, pageSize).stream()
+    return bookService.getAllByCriteria(author, category, page, pageSize).stream()
         .map(bookMapper::toRest)
         .toList();
   }
 
   @GetMapping("/books/{id}")
   public Book getBookById(@PathVariable String id) {
-    return bookMapper.toRest(bookService.getBookById(id));
+    return bookMapper.toRest(bookService.getById(id));
   }
 }
