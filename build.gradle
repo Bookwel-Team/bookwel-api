@@ -27,6 +27,8 @@ configurations {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 task generateTsClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
