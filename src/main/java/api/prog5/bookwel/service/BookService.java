@@ -19,13 +19,13 @@ public class BookService {
   private final BookDao bookDao;
   private final BookRepository bookRepository;
 
-  public List<Book> getBooksByCriteria(
+  public List<Book> getAllByCriteria(
       String author, String category, Integer page, Integer pageSize) {
     Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(DESC, "author"));
     return bookDao.findByCriteria(author, category, pageable);
   }
 
-  public Book getBookById(String id) {
+  public Book getById(String id) {
     return bookRepository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));

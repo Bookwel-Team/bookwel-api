@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 public class UserService {
   private final UserRepository userRepository;
 
-  public List<User> getAllUsers() {
+  public List<User> getAll() {
     return userRepository.findAll();
   }
 
-  public User getUserById(String id) {
+  public User getById(String id) {
     return userRepository
         .findById(id)
         .orElseThrow(() -> new RuntimeException("User.Id = " + id + " not found."));
   }
 
-  public User getUserByEmail(String email) {
+  public User getByEmail(String email) {
     return userRepository
         .findByEmail(email)
         .orElseThrow(() -> new RuntimeException("User.Email = " + email + " not found."));
