@@ -1,5 +1,3 @@
 package api.prog5.bookwel.utils;
 
-public class TestUtils {
-
-}
+public class TestUtils {}
