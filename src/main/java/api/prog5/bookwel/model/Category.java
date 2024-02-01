@@ -19,7 +19,6 @@ import lombok.ToString;
 @ToString
 @Table(name = "category")
 public class Category {
-    @Id
-    private String id;
-    private String name;
+  @Id private String id;
+  private String name;
 }

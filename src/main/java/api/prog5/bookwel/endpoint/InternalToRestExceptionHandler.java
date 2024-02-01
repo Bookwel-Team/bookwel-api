@@ -36,11 +36,8 @@ public class InternalToRestExceptionHandler {
     return new ResponseEntity<>(e, HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler (
-          value = {
-                  NotFoundException.class
-          })
-  ResponseEntity<Exception> handleNotFound(Exception e){
+  @ExceptionHandler(value = {NotFoundException.class})
+  ResponseEntity<Exception> handleNotFound(Exception e) {
     return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
   }
 }
