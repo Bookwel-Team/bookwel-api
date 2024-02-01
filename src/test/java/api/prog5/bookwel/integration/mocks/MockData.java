@@ -39,21 +39,19 @@ public class MockData {
 
   public static String USER_TWO_ID_TOKEN = "user_two_id_token";
 
-  public static Book bookOne(){
-    return Book.builder()
-            .id(BOOK_ONE_ID)
-            .author("Author one")
-            .category("Biopic")
-            .title("The first book")
-            .build();
+  public static Book bookOne() {
+    return new Book()
+        .id(BOOK_ONE_ID)
+        .author("Author one")
+        .category("Biopic")
+        .title("The first book");
   }
 
-  public static Book bookTwo(){
-    return Book.builder()
-            .id(BOOK_TWO_ID)
-            .author("Author two")
-            .category("Romance")
-            .title("The second book")
-            .build();
+  public static Book bookTwo() {
+    return new Book()
+        .id(BOOK_TWO_ID)
+        .author("Author two")
+        .category("Romance")
+        .title("The second book");
   }
 }
