@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Builder
@@ -36,6 +37,7 @@ public class BookReaction {
 
   @Enumerated(STRING)
   @Column(name = "reaction")
+  @ColumnTransformer(write = "?::reaction_status")
   private ReactionStatus reaction;
 
   @ManyToOne
