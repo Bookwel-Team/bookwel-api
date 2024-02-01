@@ -3,10 +3,10 @@ package api.prog5.bookwel.service;
 import lombok.AllArgsConstructor;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.Generation;
-import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.chat.prompt.PromptTemplate;
-import org.springframework.ai.chat.prompt.SystemPromptTemplate;
+import org.springframework.ai.prompt.Prompt;
+import org.springframework.ai.prompt.PromptTemplate;
+import org.springframework.ai.prompt.SystemPromptTemplate;
+import org.springframework.ai.prompt.messages.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class BookRecoService {
   private static ChatClient chatClient;
 
-  public static Generation bookReco(String title, String author, String category) {
+  public Generation bookReco(String title, String author, String category) {
     String systemPrompt = """
                 You are an AI Literary Recommendation Engine, providing book suggestions based on the given book titles, genres, and descriptions.
                 """;
@@ -51,6 +51,6 @@ public class BookRecoService {
 
     Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
 
-    return chatClient.call(prompt).getResult();
+    return chatClient.generate(prompt).getGeneration();
   }
 }
