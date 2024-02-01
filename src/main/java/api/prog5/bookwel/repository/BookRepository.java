@@ -1,6 +1,6 @@
 package api.prog5.bookwel.repository;
 
-import api.prog5.bookwel.model.Book;
+import api.prog5.bookwel.repository.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

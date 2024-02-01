@@ -1,10 +1,10 @@
 package api.prog5.bookwel.integration.mocks;
 
-import static api.prog5.bookwel.model.User.Role.ADMIN;
-import static api.prog5.bookwel.model.User.Role.CLIENT;
+import static api.prog5.bookwel.repository.model.User.Role.ADMIN;
+import static api.prog5.bookwel.repository.model.User.Role.CLIENT;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
-import api.prog5.bookwel.model.User;
+import api.prog5.bookwel.repository.model.User;
 
 public class MockData {
   public static String USER_ONE_ID = "user_one";

@@ -1,9 +1,9 @@
 package api.prog5.bookwel.service;
 
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatus;
-import api.prog5.bookwel.model.Book;
-import api.prog5.bookwel.model.BookReaction;
 import api.prog5.bookwel.repository.BookReactionRepository;
+import api.prog5.bookwel.repository.model.Book;
+import api.prog5.bookwel.repository.model.BookReaction;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

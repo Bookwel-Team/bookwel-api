@@ -1,8 +1,8 @@
 package api.prog5.bookwel.repository;
 
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatus;
-import api.prog5.bookwel.model.Book;
-import api.prog5.bookwel.model.BookReaction;
+import api.prog5.bookwel.repository.model.Book;
+import api.prog5.bookwel.repository.model.BookReaction;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

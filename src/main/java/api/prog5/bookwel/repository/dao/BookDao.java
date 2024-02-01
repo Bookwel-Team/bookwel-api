@@ -1,7 +1,7 @@
 package api.prog5.bookwel.repository.dao;
 
-import api.prog5.bookwel.model.Book;
-import api.prog5.bookwel.model.Category;
+import api.prog5.bookwel.repository.model.Book;
+import api.prog5.bookwel.repository.model.Category;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

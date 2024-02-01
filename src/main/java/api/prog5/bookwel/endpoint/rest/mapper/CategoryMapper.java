@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CategoryMapper {
-  public Category toRest(api.prog5.bookwel.model.Category domain) {
+  public Category toRest(api.prog5.bookwel.repository.model.Category domain) {
     return new Category().id(domain.getId()).name(domain.getName());
   }
 }

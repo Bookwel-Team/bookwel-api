@@ -1,4 +1,4 @@
-package api.prog5.bookwel.model;
+package api.prog5.bookwel.repository.model;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -29,8 +29,8 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @Setter
 @ToString
-@Table(name = "book_reaction")
-public class BookReaction {
+@Table(name = "category_reaction")
+public class CategoryReaction {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private String id;
@@ -41,8 +41,8 @@ public class BookReaction {
   private ReactionStatus reaction;
 
   @ManyToOne
-  @JoinColumn(name = "book_id")
-  private Book book;
+  @JoinColumn(name = "category_id")
+  private Category category;
 
   @ManyToOne
   @JoinColumn(name = "user_id")

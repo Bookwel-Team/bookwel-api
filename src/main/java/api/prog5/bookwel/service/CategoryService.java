@@ -1,7 +1,7 @@
 package api.prog5.bookwel.service;
 
-import api.prog5.bookwel.model.Category;
 import api.prog5.bookwel.repository.CategoryRepository;
+import api.prog5.bookwel.repository.model.Category;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

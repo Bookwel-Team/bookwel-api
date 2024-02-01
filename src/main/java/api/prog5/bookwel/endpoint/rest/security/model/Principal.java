@@ -1,6 +1,6 @@
 package api.prog5.bookwel.endpoint.rest.security.model;
 
-import api.prog5.bookwel.model.User;
+import api.prog5.bookwel.repository.model.User;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
