@@ -1,4 +1,4 @@
-package api.prog5.bookwel.model;
+package api.prog5.bookwel.repository.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

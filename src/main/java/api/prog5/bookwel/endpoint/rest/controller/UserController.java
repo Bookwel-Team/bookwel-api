@@ -1,6 +1,6 @@
 package api.prog5.bookwel.endpoint.rest.controller;
 
-import api.prog5.bookwel.model.User;
+import api.prog5.bookwel.repository.model.User;
 import api.prog5.bookwel.service.UserService;
 import java.util.List;
 import lombok.AllArgsConstructor;

@@ -13,7 +13,7 @@ public class CategoryReactionMapper {
   private final CategoryService categoryService;
   private final UserService userService;
 
-  public CategoryReaction toRest(api.prog5.bookwel.model.CategoryReaction domain) {
+  public CategoryReaction toRest(api.prog5.bookwel.repository.model.CategoryReaction domain) {
     return new CategoryReaction()
         .category(domain.getCategory().getName())
         .id(domain.getId())
@@ -23,9 +23,9 @@ public class CategoryReactionMapper {
         .reactorName(domain.getReactor().getLastName());
   }
 
-  public api.prog5.bookwel.model.CategoryReaction toDomain(
+  public api.prog5.bookwel.repository.model.CategoryReaction toDomain(
       CrupdateReaction rest, String categoryId) {
-    return api.prog5.bookwel.model.CategoryReaction.builder()
+    return api.prog5.bookwel.repository.model.CategoryReaction.builder()
         .reaction(rest.getReactionStatus())
         .reactor(userService.getById(rest.getReactorId()))
         .category(categoryService.getById(categoryId))

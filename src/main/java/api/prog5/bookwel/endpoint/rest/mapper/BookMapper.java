@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class BookMapper {
 
-  public Book toRest(api.prog5.bookwel.model.Book domain) {
+  public Book toRest(api.prog5.bookwel.repository.model.Book domain) {
     return new Book()
         .id(domain.getId())
         .author(domain.getAuthor())

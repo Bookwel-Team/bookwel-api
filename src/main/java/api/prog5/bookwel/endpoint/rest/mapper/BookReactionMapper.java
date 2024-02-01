@@ -13,7 +13,7 @@ public class BookReactionMapper {
   private final UserService userService;
   private final BookService bookService;
 
-  public BookReaction toRest(api.prog5.bookwel.model.BookReaction domain) {
+  public BookReaction toRest(api.prog5.bookwel.repository.model.BookReaction domain) {
     return new BookReaction()
         .bookTitle(domain.getBook().getTitle())
         .id(domain.getId())
@@ -23,8 +23,9 @@ public class BookReactionMapper {
         .reactorId(domain.getReactor().getId());
   }
 
-  public api.prog5.bookwel.model.BookReaction toDomain(CrupdateReaction rest, String bookId) {
-    return api.prog5.bookwel.model.BookReaction.builder()
+  public api.prog5.bookwel.repository.model.BookReaction toDomain(
+      CrupdateReaction rest, String bookId) {
+    return api.prog5.bookwel.repository.model.BookReaction.builder()
         .book(bookService.getById(bookId))
         .reactor(userService.getById(rest.getReactorId()))
         .reaction(rest.getReactionStatus())

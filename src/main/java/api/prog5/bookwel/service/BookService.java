@@ -3,9 +3,9 @@ package api.prog5.bookwel.service;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import api.prog5.bookwel.endpoint.rest.exception.NotFoundException;
-import api.prog5.bookwel.model.Book;
 import api.prog5.bookwel.repository.BookRepository;
 import api.prog5.bookwel.repository.dao.BookDao;
+import api.prog5.bookwel.repository.model.Book;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
