@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class BookRecoService {
   private final ChatClient chatClient;
 
+//  TODO: book recommendation should come from the database
   public Generation bookReco(String title, String author, String category) {
     String systemPrompt = """
                     You are an AI Literary Recommendation Engine, providing book suggestions based on the given book titles, genres, and descriptions.
@@ -39,7 +40,6 @@ public class BookRecoService {
                     Synopsis:
                     Category:
                     Reason for Recommendation:
-
                     """);
 
     Message userMessage = promptTemplate.createMessage(Map.of(
