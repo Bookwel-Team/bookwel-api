@@ -28,7 +28,7 @@ public class BookRecoService {
     PromptTemplate promptTemplate = new PromptTemplate("""
                     %INSTRUCTIONS:
                     Task:
-                    As an AI literary recommendation engine, your task is to analyze this book having this tiltle:  {title}, its genre is: {category}, written by {author} , provided by the user %s.
+                    As an AI literary recommendation engine, your task is to analyze this book having this title:  {title}, its genre is: {category}, written by {author} , provided by the user %s.
                     Based on the title, genres, and synopsis of each given book, you should suggest similar lesser-known books that the user might enjoy %s.
                     Your recommendations should come from a diverse range of authors and prioritize books that aren't mainstream or widely popular but that are equally good or even better than the provided books %s.
                     Your recommendations should not be bound by publication date or a fiction/non-fiction distinction unless specified in the input %s.
