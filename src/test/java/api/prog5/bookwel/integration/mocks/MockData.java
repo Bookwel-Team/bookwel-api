@@ -4,6 +4,7 @@ import static api.prog5.bookwel.endpoint.rest.model.User.StatusEnum.CLIENT;
 import static api.prog5.bookwel.endpoint.rest.model.User.StatusEnum.ADMIN;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
+import api.prog5.bookwel.endpoint.rest.model.Category;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
 
@@ -50,5 +51,17 @@ public class MockData {
         .category("Biopic")
         .title("The second book")
         .fileLink("none");
+  }
+
+  public static Category categoryOne(){
+    return new Category()
+            .id("category_one_id")
+            .name("Biopic");
+  }
+
+  public static Category categoryTwo(){
+    return new Category()
+            .id("category_two_id")
+            .name("Romance");
   }
 }
