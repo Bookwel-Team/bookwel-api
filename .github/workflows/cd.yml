@@ -64,6 +64,7 @@ jobs:
             SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}
             SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}
             SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}
+            FIREBASE_DATA_CONFIG=${{ secrets.FIREBASE_DATA_CONFIG }}
 
       - name: Setup SSH connection
         run: |
