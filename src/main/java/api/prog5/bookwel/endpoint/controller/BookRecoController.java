@@ -15,7 +15,7 @@ public class BookRecoController {
   private final BookRecoService bookRecoService;
 
   @GetMapping("/book")
-  public Generation bookReco(
+  public String bookReco(
     @RequestParam(name = "title") String title, @RequestParam(name = "author") String author, @RequestParam(name = "category") String category) {
     return bookRecoService.bookReco(title, author, category);
   }

@@ -17,7 +17,7 @@ public class BookRecoService {
   private final ChatClient chatClient;
 
 //  TODO: book recommendation should come from the database
-  public Generation bookReco(String title, String author, String category) {
+  public String bookReco(String title, String author, String category) {
     String systemPrompt = """
                     You are an AI Literary Recommendation Engine, providing book suggestions based on the given book titles, genres, and descriptions.
                     """;
@@ -49,6 +49,6 @@ public class BookRecoService {
     ));
 
     Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
-    return chatClient.call(prompt).getResult();
+    return chatClient.call(prompt).getResult().getOutput().getContent();
   }
 }
