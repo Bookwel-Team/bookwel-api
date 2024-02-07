@@ -1,12 +1,13 @@
 package api.prog5.bookwel.integration.mocks;
 
-import static api.prog5.bookwel.endpoint.rest.model.User.StatusEnum.CLIENT;
-import static api.prog5.bookwel.endpoint.rest.model.User.StatusEnum.ADMIN;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.endpoint.rest.model.Category;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
+
+import static api.prog5.bookwel.endpoint.rest.model.UserStatus.ADMIN;
+import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 
 public class MockData {
   public static String USER_ONE_ID = "user_one";

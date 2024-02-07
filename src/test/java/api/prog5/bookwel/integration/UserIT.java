@@ -1,6 +1,6 @@
 package api.prog5.bookwel.integration;
 
-import static api.prog5.bookwel.endpoint.rest.model.User.StatusEnum.CLIENT;
+import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.userOne;
 import static api.prog5.bookwel.integration.mocks.MockData.userTwo;
@@ -14,6 +14,7 @@ import api.prog5.bookwel.endpoint.rest.client.ApiException;
 import api.prog5.bookwel.endpoint.rest.model.CreateUser;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
+import api.prog5.bookwel.endpoint.rest.model.UserStatus;
 import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.utils.TestUtils;
 import java.util.List;
@@ -70,7 +71,7 @@ public class UserIT extends CustomFacadeIT {
             .id(randomUUID().toString())
             .firebaseId(randomUUID().toString());
   }
-  User from(CreateUser createUser, User.StatusEnum status){
+  User from(CreateUser createUser, UserStatus status){
     return new User()
             .id(createUser.getId())
             .firebaseId(createUser.getFirebaseId())
