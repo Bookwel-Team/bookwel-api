@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.ai.chat.ChatClient;
-import org.springframework.ai.chat.Generation;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class BookRecoService {
   private final ChatClient chatClient;
 
-//  TODO: book recommendation should come from the database
+  //  TODO: book recommendation should come from the database
   public String bookReco(String title, String author, String category) {
     String systemPrompt = """
                     You are an AI Literary Recommendation Engine, providing book suggestions based on the given book titles, genres, and descriptions.
@@ -43,9 +42,9 @@ public class BookRecoService {
                     """);
 
     Message userMessage = promptTemplate.createMessage(Map.of(
-        "title", title,
-        "author", author,
-        "category", category
+            "title", title,
+            "author", author,
+            "category", category
     ));
 
     Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
