@@ -415,10 +415,12 @@ components:
         profile:
           $ref: "#/components/schemas/UserProfile"
         status:
-          type: string
-          enum:
-            - ADMIN
-            - CLIENT
+          $ref: "#/components/schemas/UserStatus"
+    UserStatus:
+      type: string
+      enum:
+        - ADMIN
+        - CLIENT
     Book:
       type: object
       properties:
