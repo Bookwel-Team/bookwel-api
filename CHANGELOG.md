@@ -1,3 +1,12 @@
+## [1.2.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.2.0...v1.2.1) (2024-02-07)
+
+
+### Bug Fixes
+
+* **infra:** include necessary DOM librairies in typescript client ([71f8e26](https://github.com/Bookwel-Team/bookwel-api/commit/71f8e26e8e2a343d521761fe2d310fb28a6e3ba4))
+
+
+
 # [1.2.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.1.0...v1.2.0) (2024-02-07)
 
 
