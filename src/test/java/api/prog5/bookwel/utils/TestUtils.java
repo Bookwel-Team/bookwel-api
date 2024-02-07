@@ -22,4 +22,11 @@ public class TestUtils {
     ApiException apiException = assertThrows(ApiException.class, executable);
     assertEquals(expectedBody, apiException.getResponseBody());
   }
+
+  public static void assertThrowsForbiddenException(Executable executable, String message) {
+    ApiException apiException = assertThrows(ApiException.class, executable);
+    String responseBody = apiException.getResponseBody();
+    assertEquals(
+        "{" + "\"type\":\"403 FORBIDDEN\"," + "\"message\":\"" + message + "\"}", responseBody);
+  }
 }
