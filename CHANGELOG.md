@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.3.0...v1.3.1) (2024-02-08)
+
+
+### Bug Fixes
+
+* **infra:** make api url as env variable in typescript client ([7cc972b](https://github.com/Bookwel-Team/bookwel-api/commit/7cc972ba3a0ffe55f4aff143fabae9417298d662))
+
+
+
 # [1.3.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.2.1...v1.3.0) (2024-02-08)
 
 
