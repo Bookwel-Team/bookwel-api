@@ -83,9 +83,7 @@ public class UserIT extends CustomFacadeIT {
     User expected = expectedClientAfterUpdate();
 
     assertEquals(expected, actual);
-  }
-
-  CreateUser creatableUser() {
+  }CreateUser creatableUser() {
     return new CreateUser().firebaseId(randomUUID().toString());
   }
 

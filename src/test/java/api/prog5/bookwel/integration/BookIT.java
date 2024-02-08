@@ -1,9 +1,11 @@
 package api.prog5.bookwel.integration;
 
+import static api.prog5.bookwel.integration.mocks.MockData.NON_EXISTENT_BOOK_ID;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.bookOne;
 import static api.prog5.bookwel.integration.mocks.MockData.bookTwo;
 import static api.prog5.bookwel.utils.TestUtils.anApiClient;
+import static api.prog5.bookwel.utils.TestUtils.assertThrowsApiException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,5 +47,18 @@ public class BookIT extends CustomFacadeIT {
     Book actual = api.getBookById(expected.getId());
 
     assertEquals(expected, actual);
+  }
+
+  @Test
+  void get_not_existing_book_ko() {
+    ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
+    BookApi api = new BookApi(userOneClient);
+
+    assertThrowsApiException("{"
+        + "\"type\":\"404 NOT_FOUND\","
+        + "\"message\":\"Book with id: "
+        + NON_EXISTENT_BOOK_ID
+        + " not found\""
+        + "}", () -> api.getBookById(NON_EXISTENT_BOOK_ID));
   }
 }
