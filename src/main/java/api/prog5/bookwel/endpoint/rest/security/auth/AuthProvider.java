@@ -39,6 +39,9 @@ public class AuthProvider extends AbstractUserDetailsAuthenticationProvider {
       throw new UsernameNotFoundException("bad credentials");
     }
     String email = firebaseAuthenticator.getEmail(bearer);
+    if (email == null) {
+      throw new UsernameNotFoundException("bad credentials");
+    }
     return new Principal(userService.getByEmail(email), bearer);
   }
 

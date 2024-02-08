@@ -1,6 +1,8 @@
 package api.prog5.bookwel.endpoint;
 
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import api.prog5.bookwel.endpoint.rest.exception.ForbiddenException;
 import api.prog5.bookwel.endpoint.rest.exception.NotFoundException;
@@ -35,12 +37,13 @@ public class InternalToRestExceptionHandler {
      * https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses */
     log.info("Forbidden", e);
 
-    return new ResponseEntity<>(toRest(e, HttpStatus.FORBIDDEN), HttpStatus.FORBIDDEN);
+    return new ResponseEntity<>(toRest(e, FORBIDDEN), FORBIDDEN);
   }
 
   @ExceptionHandler(value = {NotFoundException.class})
-  ResponseEntity<api.prog5.bookwel.endpoint.rest.model.Exception> handleNotFound(Exception e) {
-    return new ResponseEntity<>(toRest(e, HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+  ResponseEntity<api.prog5.bookwel.endpoint.rest.model.Exception> handleNotFound(
+      NotFoundException e) {
+    return new ResponseEntity<>(toRest(e, NOT_FOUND), NOT_FOUND);
   }
 
   private api.prog5.bookwel.endpoint.rest.model.Exception toRest(

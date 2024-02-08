@@ -1,5 +1,6 @@
 package api.prog5.bookwel.integration.mocks;
 
+import static api.prog5.bookwel.integration.mocks.MockData.UNKNOWN_USER_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_EMAIL;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_TWO_EMAIL;
@@ -28,6 +29,7 @@ public class CustomFacadeIT extends FacadeIT {
   protected void setupFirebaseAuthenticator(FirebaseAuthenticator firebaseAuthenticator) {
     when(firebaseAuthenticator.getEmail(USER_ONE_ID_TOKEN)).thenReturn(USER_ONE_EMAIL);
     when(firebaseAuthenticator.getEmail(USER_TWO_ID_TOKEN)).thenReturn(USER_TWO_EMAIL);
+    when(firebaseAuthenticator.getEmail(UNKNOWN_USER_TOKEN)).thenReturn(null);
   }
 
   protected void setupBucketComponent(BucketComponent bucketComponent)

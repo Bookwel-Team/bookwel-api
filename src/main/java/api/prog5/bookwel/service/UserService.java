@@ -1,5 +1,6 @@
 package api.prog5.bookwel.service;
 
+import api.prog5.bookwel.endpoint.rest.exception.NotFoundException;
 import api.prog5.bookwel.repository.UserRepository;
 import api.prog5.bookwel.repository.model.User;
 import java.util.List;
@@ -18,13 +19,13 @@ public class UserService {
   public User getById(String id) {
     return repository
         .findById(id)
-        .orElseThrow(() -> new RuntimeException("User.Id = " + id + " not found."));
+        .orElseThrow(() -> new NotFoundException("User.Id = " + id + " not found."));
   }
 
   public User getByEmail(String email) {
     return repository
         .findByEmail(email)
-        .orElseThrow(() -> new RuntimeException("User.Email = " + email + " not found."));
+        .orElseThrow(() -> new NotFoundException("User.Email = " + email + " not found."));
   }
 
   public User save(User user) {
