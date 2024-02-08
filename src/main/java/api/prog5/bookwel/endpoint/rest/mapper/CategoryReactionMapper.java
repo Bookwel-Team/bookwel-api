@@ -1,5 +1,7 @@
 package api.prog5.bookwel.endpoint.rest.mapper;
 
+import static java.util.UUID.randomUUID;
+
 import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
 import api.prog5.bookwel.service.CategoryService;
@@ -26,6 +28,7 @@ public class CategoryReactionMapper {
   public api.prog5.bookwel.repository.model.CategoryReaction toDomain(
       CrupdateReaction rest, String categoryId) {
     return api.prog5.bookwel.repository.model.CategoryReaction.builder()
+        .id(randomUUID().toString())
         .reaction(rest.getReactionStatus())
         .reactor(userService.getById(rest.getReactorId()))
         .category(categoryService.getById(categoryId))

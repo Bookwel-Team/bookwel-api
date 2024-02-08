@@ -1,14 +1,17 @@
 package api.prog5.bookwel.integration.mocks;
 
+import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.LIKE;
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.ADMIN;
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.endpoint.rest.model.Category;
+import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
 
 public class MockData {
+  public static String BOOK_REACTION_ONE_ID = "reaction1_id";
   public static String USER_ONE_ID = "user_one";
   public static String USER_ONE_EMAIL = "user.one@gmail.com";
   public static String USER_TWO_ID = "user_two";
@@ -68,6 +71,13 @@ public class MockData {
         .title("The second book")
         .fileLink(null)
         .fileName("none");
+  }
+
+  public static CrupdateReaction crupdateReaction() {
+    return new CrupdateReaction()
+        .id(BOOK_REACTION_ONE_ID)
+        .reactionStatus(LIKE)
+        .reactorId(USER_ONE_ID);
   }
 
   public static Category categoryOne() {
