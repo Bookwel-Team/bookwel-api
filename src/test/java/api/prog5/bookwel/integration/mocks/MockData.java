@@ -56,6 +56,7 @@ public class MockData {
   public static String USER_ONE_ID_TOKEN = "user_one_id_token";
 
   public static String USER_TWO_ID_TOKEN = "user_two_id_token";
+  public static final String UNKNOWN_USER_TOKEN = "bad_token";
 
   public static Book bookOne() {
     return new Book()

@@ -117,7 +117,9 @@ public class SecurityConf {
                     .requestMatchers(GET, "/categories/*/reactions")
                     .authenticated()
                     .requestMatchers(PUT, "/categories/*/reaction")
-                    .authenticated());
+                    .authenticated()
+                    .requestMatchers("/**")
+                    .denyAll());
     return http.build();
   }
 
@@ -144,5 +146,4 @@ public class SecurityConf {
             req.getRemoteAddr(), req.getRemoteHost(), req.getRemotePort()));
     return new ForbiddenException(e.getMessage());
   }
-  // TODO: rest exceptions
 }
