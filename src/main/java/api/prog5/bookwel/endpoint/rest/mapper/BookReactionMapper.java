@@ -1,5 +1,7 @@
 package api.prog5.bookwel.endpoint.rest.mapper;
 
+import static java.util.UUID.randomUUID;
+
 import api.prog5.bookwel.endpoint.rest.model.BookReaction;
 import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
 import api.prog5.bookwel.service.BookService;
@@ -15,8 +17,8 @@ public class BookReactionMapper {
 
   public BookReaction toRest(api.prog5.bookwel.repository.model.BookReaction domain) {
     return new BookReaction()
-        .bookTitle(domain.getBook().getTitle())
         .id(domain.getId())
+        .bookTitle(domain.getBook().getTitle())
         .reactionStatus(domain.getReaction())
         .creationDatetime(domain.getCreationDatetime())
         .reactorName(domain.getReactor().getLastName())
@@ -26,6 +28,7 @@ public class BookReactionMapper {
   public api.prog5.bookwel.repository.model.BookReaction toDomain(
       CrupdateReaction rest, String bookId) {
     return api.prog5.bookwel.repository.model.BookReaction.builder()
+        .id(randomUUID().toString())
         .book(bookService.getById(bookId))
         .reactor(userService.getById(rest.getReactorId()))
         .reaction(rest.getReactionStatus())
