@@ -6,6 +6,7 @@ import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.endpoint.rest.model.Category;
+import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
@@ -78,6 +79,16 @@ public class MockData {
         .id(BOOK_REACTION_ONE_ID)
         .reactionStatus(LIKE)
         .reactorId(USER_ONE_ID);
+  }
+
+  public static CategoryReaction expectedCategoryReaction() {
+    return new CategoryReaction()
+        .id(null)
+        .creationDatetime(null)
+        .category("Biopic")
+        .reactorName("First")
+        .reactorId("user_one")
+        .reactionStatus(LIKE);
   }
 
   public static Category categoryOne() {
