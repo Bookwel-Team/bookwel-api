@@ -55,15 +55,18 @@ public class ReactionIT extends CustomFacadeIT {
 
     assertEquals(expectedCategoryReaction(), categoryReaction);
   }
-  
+
   @Test
   void read_category_reactions_ok() throws ApiException {
     ApiClient userTwoClient = anApiClient(USER_TWO_ID_TOKEN);
     ReactionApi api = new ReactionApi(userTwoClient);
 
-    List<CategoryReaction> actualReactionsToCategoryOne = api.getReactionsToCategory(categoryOne().getId(), null);
-    List<CategoryReaction> actualLikesToCategoryOne = api.getReactionsToCategory(categoryOne().getId(), LIKE);
-    List<CategoryReaction> actualDislikesToCategoryOne = api.getReactionsToCategory(categoryOne().getId(), DISLIKE);
+    List<CategoryReaction> actualReactionsToCategoryOne =
+        api.getReactionsToCategory(categoryOne().getId(), null);
+    List<CategoryReaction> actualLikesToCategoryOne =
+        api.getReactionsToCategory(categoryOne().getId(), LIKE);
+    List<CategoryReaction> actualDislikesToCategoryOne =
+        api.getReactionsToCategory(categoryOne().getId(), DISLIKE);
 
     assertEquals(List.of(categoryReaction1(), categoryReaction3()), actualReactionsToCategoryOne);
     assertEquals(List.of(categoryReaction1(), categoryReaction3()), actualLikesToCategoryOne);
@@ -77,7 +80,8 @@ public class ReactionIT extends CustomFacadeIT {
 
     List<BookReaction> actualReactionsToBookOne = api.getReactionsToABook(bookOne().getId(), null);
     List<BookReaction> actualLikesToBookOne = api.getReactionsToABook(bookOne().getId(), LIKE);
-    List<BookReaction> actualDislikesToBookOne = api.getReactionsToABook(bookOne().getId(), DISLIKE);
+    List<BookReaction> actualDislikesToBookOne =
+        api.getReactionsToABook(bookOne().getId(), DISLIKE);
 
     assertEquals(List.of(bookReaction1(), bookReaction3()), actualReactionsToBookOne);
     assertEquals(List.of(bookReaction1()), actualLikesToBookOne);

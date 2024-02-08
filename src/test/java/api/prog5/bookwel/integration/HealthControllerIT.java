@@ -16,7 +16,7 @@ public class HealthControllerIT extends CustomFacadeIT {
   }
 
   @Test
-  void client_hello(){
+  void client_hello() {
     assertEquals("Hello from a client", subject.sayHello());
   }
 }

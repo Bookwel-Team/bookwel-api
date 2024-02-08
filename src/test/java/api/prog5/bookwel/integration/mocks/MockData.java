@@ -78,9 +78,7 @@ public class MockData {
   }
 
   public static CrupdateReaction crupdateReaction() {
-    return new CrupdateReaction()
-        .reactionStatus(LIKE)
-        .reactorId(USER_ONE_ID);
+    return new CrupdateReaction().reactionStatus(LIKE).reactorId(USER_ONE_ID);
   }
 
   public static CategoryReaction expectedCategoryReaction() {
@@ -92,43 +90,46 @@ public class MockData {
         .reactorId("user_one")
         .reactionStatus(LIKE);
   }
+
   public static BookReaction bookReaction1() {
     return new BookReaction()
-            .id("book_reaction_1_id")
-            .creationDatetime(Instant.parse("2024-02-08T11:18:38.662017Z"))
-            .bookTitle("The first book")
-            .reactorName("First")
-            .reactorId("user_one")
-            .reactionStatus(LIKE);
-  }
-  public static BookReaction bookReaction3() {
-    return new BookReaction()
-            .id("book_reaction_3_id")
-            .creationDatetime(Instant.parse("2024-02-08T11:13:38.662017Z"))
-            .bookTitle("The first book")
-            .reactorName("Second")
-            .reactorId("user_two")
-            .reactionStatus(DISLIKE);
-  }
-  public static CategoryReaction categoryReaction1() {
-    return new CategoryReaction()
-            .id("category_reaction_1_id")
-            .creationDatetime(Instant.parse("2024-02-08T11:15:38.662017Z"))
-            .category("Biopic")
-            .reactorName("First")
-            .reactorId("user_one")
-            .reactionStatus(LIKE);
-  }
-  public static CategoryReaction categoryReaction3() {
-    return new CategoryReaction()
-            .id("category_reaction_3_id")
-            .creationDatetime(Instant.parse("2024-02-08T11:08:38.662017Z"))
-            .category("Biopic")
-            .reactorName("Second")
-            .reactorId("user_two")
-            .reactionStatus(LIKE);
+        .id("book_reaction_1_id")
+        .creationDatetime(Instant.parse("2024-02-08T11:18:38.662017Z"))
+        .bookTitle("The first book")
+        .reactorName("First")
+        .reactorId("user_one")
+        .reactionStatus(LIKE);
   }
 
+  public static BookReaction bookReaction3() {
+    return new BookReaction()
+        .id("book_reaction_3_id")
+        .creationDatetime(Instant.parse("2024-02-08T11:13:38.662017Z"))
+        .bookTitle("The first book")
+        .reactorName("Second")
+        .reactorId("user_two")
+        .reactionStatus(DISLIKE);
+  }
+
+  public static CategoryReaction categoryReaction1() {
+    return new CategoryReaction()
+        .id("category_reaction_1_id")
+        .creationDatetime(Instant.parse("2024-02-08T11:15:38.662017Z"))
+        .category("Biopic")
+        .reactorName("First")
+        .reactorId("user_one")
+        .reactionStatus(LIKE);
+  }
+
+  public static CategoryReaction categoryReaction3() {
+    return new CategoryReaction()
+        .id("category_reaction_3_id")
+        .creationDatetime(Instant.parse("2024-02-08T11:08:38.662017Z"))
+        .category("Biopic")
+        .reactorName("Second")
+        .reactorId("user_two")
+        .reactionStatus(LIKE);
+  }
 
   public static Category categoryOne() {
     return new Category().id("category_one_id").name("Biopic");

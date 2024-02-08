@@ -13,5 +13,6 @@ public interface BookReactionRepository extends JpaRepository<BookReaction, Stri
   List<BookReaction> findAllByBook(Book book);
 
   List<BookReaction> findAllByBookAndReaction(Book book, ReactionStatus reactionStatus);
+
   Optional<BookReaction> findByBookIdAndReactorId(String bookId, String reactorId);
 }
