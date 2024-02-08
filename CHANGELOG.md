@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.3.2...v1.4.0) (2024-02-08)
+
+
+### Features
+
+* whoami ([444186d](https://github.com/Bookwel-Team/bookwel-api/commit/444186d9d825ecb6601398bc19a8c91c8afe3f45))
+
+
+
 ## [1.3.2](https://github.com/Bookwel-Team/bookwel-api/compare/v1.3.1...v1.3.2) (2024-02-08)
 
 
