@@ -1,3 +1,12 @@
+## [1.3.2](https://github.com/Bookwel-Team/bookwel-api/compare/v1.3.1...v1.3.2) (2024-02-08)
+
+
+### Bug Fixes
+
+* change env variable referencement in typescript client ([99a7048](https://github.com/Bookwel-Team/bookwel-api/commit/99a70489bf67855723afddee77b86ae4f102c760))
+
+
+
 ## [1.3.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.3.0...v1.3.1) (2024-02-08)
 
 
