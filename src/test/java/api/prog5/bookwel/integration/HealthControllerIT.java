@@ -11,7 +11,12 @@ public class HealthControllerIT extends CustomFacadeIT {
   @Autowired HealthController subject;
 
   @Test
-  public void hello() {
+  void hello() {
     assertEquals("Hello from the Bookwel Team!", subject.checkHealth());
+  }
+
+  @Test
+  void client_hello(){
+    assertEquals("Hello from a client", subject.sayHello());
   }
 }
