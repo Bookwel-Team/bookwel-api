@@ -1,6 +1,7 @@
 package api.prog5.bookwel.repository.model;
 
 import static jakarta.persistence.EnumType.STRING;
+import static org.hibernate.type.SqlTypes.NAMED_ENUM;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnTransformer;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Builder
 @AllArgsConstructor
@@ -37,7 +39,7 @@ public class User implements Serializable {
 
   @Enumerated(STRING)
   @Column(name = "status")
-  @ColumnTransformer(write = "?::user_status")
+  @JdbcTypeCode(NAMED_ENUM)
   private Role role;
 
   public enum Role {

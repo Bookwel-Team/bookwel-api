@@ -2,6 +2,7 @@ package api.prog5.bookwel.repository.model;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static org.hibernate.type.SqlTypes.NAMED_ENUM;
 
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatus;
 import jakarta.persistence.Column;
@@ -21,6 +22,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Builder
 @AllArgsConstructor
@@ -37,7 +39,7 @@ public class CategoryReaction {
 
   @Enumerated(STRING)
   @Column(name = "reaction")
-  @ColumnTransformer(write = "?::reaction_status")
+  @JdbcTypeCode(NAMED_ENUM)
   private ReactionStatus reaction;
 
   @ManyToOne

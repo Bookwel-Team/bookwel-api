@@ -28,7 +28,6 @@ public class CategoryReactionMapper {
   public api.prog5.bookwel.repository.model.CategoryReaction toDomain(
       CrupdateReaction rest, String categoryId) {
     return api.prog5.bookwel.repository.model.CategoryReaction.builder()
-        .id(randomUUID().toString())
         .reaction(rest.getReactionStatus())
         .reactor(userService.getById(rest.getReactorId()))
         .category(categoryService.getById(categoryId))
