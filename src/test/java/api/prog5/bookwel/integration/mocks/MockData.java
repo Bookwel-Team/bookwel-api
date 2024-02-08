@@ -1,13 +1,12 @@
 package api.prog5.bookwel.integration.mocks;
 
+import static api.prog5.bookwel.endpoint.rest.model.UserStatus.ADMIN;
+import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.endpoint.rest.model.Category;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
-
-import static api.prog5.bookwel.endpoint.rest.model.UserStatus.ADMIN;
-import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 
 public class MockData {
   public static String USER_ONE_ID = "user_one";
@@ -22,6 +21,7 @@ public class MockData {
     return new User()
         .id(USER_ONE_ID)
         .profile(new UserProfile().firstName("One").lastName("First").email(USER_ONE_EMAIL))
+        .firebaseId(null)
         .status(ADMIN);
   }
 
@@ -29,9 +29,32 @@ public class MockData {
     return new User()
         .id(USER_TWO_ID)
         .profile(new UserProfile().firstName("Two").lastName("Second").email(USER_TWO_EMAIL))
+        .firebaseId(null)
         .status(CLIENT);
   }
 
+  public static UserProfile userProfile(){
+    return new UserProfile()
+            .firstName("John")
+            .lastName("Doe")
+            .email("john.doe@gmail.com");
+  }
+
+  public static User expectedAdminAfterUpdate(){
+    return new User()
+            .id(USER_ONE_ID)
+            .profile(userProfile())
+            .firebaseId(null)
+            .status(ADMIN);
+  }
+
+  public static User expectedClientAfterUpdate(){
+    return new User()
+            .id(USER_TWO_ID)
+            .profile(userProfile())
+            .firebaseId(null)
+            .status(CLIENT);
+  }
   public static String USER_ONE_ID_TOKEN = "user_one_id_token";
 
   public static String USER_TWO_ID_TOKEN = "user_two_id_token";
@@ -54,15 +77,11 @@ public class MockData {
         .fileLink("none");
   }
 
-  public static Category categoryOne(){
-    return new Category()
-            .id("category_one_id")
-            .name("Biopic");
+  public static Category categoryOne() {
+    return new Category().id("category_one_id").name("Biopic");
   }
 
-  public static Category categoryTwo(){
-    return new Category()
-            .id("category_two_id")
-            .name("Romance");
+  public static Category categoryTwo() {
+    return new Category().id("category_two_id").name("Romance");
   }
 }

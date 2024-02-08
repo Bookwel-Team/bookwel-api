@@ -17,22 +17,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 public class CategoryIT extends CustomFacadeIT {
-    @LocalServerPort
-    private int serverPort;
+  @LocalServerPort private int serverPort;
 
-    private ApiClient anApiClient(String token) {
-        return TestUtils.anApiClient(token, serverPort);
-    }
-    @Test
-    void get_categories_ok() throws ApiException {
-        ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
-        CategoryApi api = new CategoryApi(userOneClient);
+  private ApiClient anApiClient(String token) {
+    return TestUtils.anApiClient(token, serverPort);
+  }
 
-        List<Category> actualCategories = api.getAllCategories(null);
-        List<Category> actualCategoriesFiltered = api.getAllCategories(categoryTwo().getName());
+  @Test
+  void get_categories_ok() throws ApiException {
+    ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
+    CategoryApi api = new CategoryApi(userOneClient);
 
-        assertTrue(actualCategories.containsAll(List.of(categoryOne(), categoryTwo())));
-        assertTrue(actualCategoriesFiltered.contains(categoryTwo()));
-        assertEquals(1, actualCategoriesFiltered.size());
-    }
+    List<Category> actualCategories = api.getAllCategories(null);
+    List<Category> actualCategoriesFiltered = api.getAllCategories(categoryTwo().getName());
+
+    assertTrue(actualCategories.containsAll(List.of(categoryOne(), categoryTwo())));
+    assertTrue(actualCategoriesFiltered.contains(categoryTwo()));
+    assertEquals(1, actualCategoriesFiltered.size());
+  }
 }

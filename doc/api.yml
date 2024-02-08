@@ -245,14 +245,8 @@ paths:
     post:
       tags:
         - Users
-      summary: CrupdateUser
-      operationId: crupdateUser
-      parameters:
-        - name: userId
-          in: path
-          schema:
-            type: string
-          required: true
+      summary: CreateUser
+      operationId: createUser
       requestBody:
         content:
           application/json:
@@ -409,13 +403,15 @@ components:
           format: email
     User:
       type: object
-      allOf:
-        - $ref: "#/components/schemas/CreateUser"
       properties:
+        id:
+          type: string
         profile:
           $ref: "#/components/schemas/UserProfile"
         status:
           $ref: "#/components/schemas/UserStatus"
+      allOf:
+        - $ref: "#/components/schemas/CreateUser"
     UserStatus:
       type: string
       enum:
@@ -437,8 +433,6 @@ components:
     CreateUser:
       type: object
       properties:
-        id:
-          type: string
         firebaseId:
           type: string
     CreateBook:

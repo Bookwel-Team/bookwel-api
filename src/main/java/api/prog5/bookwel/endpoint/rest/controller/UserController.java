@@ -32,12 +32,12 @@ public class UserController {
   }
 
   @PostMapping("/users")
-  public User crupdateUser(@RequestBody CreateUser createUser) {
+  public User createUser(@RequestBody CreateUser createUser) {
     return mapper.toRest(userService.save(mapper.toDomain(createUser)));
   }
 
   @PutMapping("/users/{userId}/profile")
-  public User updateUser(@PathVariable String userId, @RequestBody UserProfile userProfile) {
+  public User updateUserProfile(@PathVariable String userId, @RequestBody UserProfile userProfile) {
     return mapper.toRest(userService.save(mapper.toDomain(userProfile, userId)));
   }
 }

@@ -45,8 +45,7 @@ public class ReactionController {
 
   @PutMapping("/books/{bookId}/reaction")
   public BookReaction crupdateBookReaction(
-      @PathVariable String bookId,
-      @RequestBody CrupdateReaction crupdateReaction) {
+      @PathVariable String bookId, @RequestBody CrupdateReaction crupdateReaction) {
     return bookReactionMapper.toRest(
         bookReactionService.crupdateBookReaction(
             bookReactionMapper.toDomain(crupdateReaction, bookId)));
@@ -54,8 +53,7 @@ public class ReactionController {
 
   @PutMapping("/categories/{categoryId}/reaction")
   public CategoryReaction crupdateCategoryReaction(
-      @PathVariable String categoryId,
-      @RequestBody CrupdateReaction crupdateReaction) {
+      @PathVariable String categoryId, @RequestBody CrupdateReaction crupdateReaction) {
     return categoryReactionMapper.toRest(
         categoryReactionService.crupdateCategoryReaction(
             categoryReactionMapper.toDomain(crupdateReaction, categoryId)));
