@@ -17,7 +17,7 @@ public class BookMapper {
         .author(domain.getAuthor())
         .fileName(filename)
         .fileLink(bookService.getPresignedUrlFromFilename(filename).toString())
-        .category(domain.getCategory().getName())
+        .category(domain.getCategory() != null ? domain.getCategory().getName() : null)
         .title(domain.getTitle());
   }
 }

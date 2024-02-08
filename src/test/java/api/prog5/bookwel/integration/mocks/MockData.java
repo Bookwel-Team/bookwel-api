@@ -16,6 +16,7 @@ import java.time.Instant;
 
 public class MockData {
   public static String BOOK_REACTION_ONE_ID = "reaction1_id";
+  public static final String MOCK_PRESIGNED_URL = "http://localhost";
   public static String USER_ONE_ID = "user_one";
   public static String USER_ONE_EMAIL = "user.one@gmail.com";
   public static String USER_TWO_ID = "user_two";
@@ -130,6 +131,10 @@ public class MockData {
         .reactorName("Second")
         .reactorId("user_two")
         .reactionStatus(LIKE);
+  }
+
+  public static Book createdBook() {
+    return new Book().fileName("Securite.pdf").fileLink(MOCK_PRESIGNED_URL);
   }
 
   public static Category categoryOne() {
