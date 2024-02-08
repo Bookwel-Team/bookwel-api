@@ -1,3 +1,21 @@
+# [1.3.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.2.1...v1.3.0) (2024-02-08)
+
+
+### Bug Fixes
+
+* missing aws.region for BucketConf ([3300138](https://github.com/Bookwel-Team/bookwel-api/commit/3300138c8a0a23216472c5b5265472a506985ce8))
+* update imports after java client update ([370720c](https://github.com/Bookwel-Team/bookwel-api/commit/370720c8decb35b8093b86322a208b6807050457))
+* user reactions are mishandled, you can only react one on a category / book and this is the reaction which gets updated all the time ([b464e87](https://github.com/Bookwel-Team/bookwel-api/commit/b464e87eb8a897167dc2da35b0edb0caa93f6a64))
+
+
+### Features
+
+* rest exceptions mapping, user creation endpoint is made by post method ([e7894f0](https://github.com/Bookwel-Team/bookwel-api/commit/e7894f047588a7ba007858df3ae1dad4d09600a8))
+* s3 presigned url ([2290d49](https://github.com/Bookwel-Team/bookwel-api/commit/2290d49e4a2e0f0aa0cdc40a2257cbb1baed1aa4))
+* **tests:** increase test coverage ([ddd1d85](https://github.com/Bookwel-Team/bookwel-api/commit/ddd1d855eea2115f0075e00b0beabd61df14d837))
+
+
+
 ## [1.2.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.2.0...v1.2.1) (2024-02-07)
 
 
