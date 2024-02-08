@@ -67,7 +67,8 @@ public class MockData {
         .author("Author one")
         .category("Biopic")
         .title("The first book")
-        .fileLink("none");
+        .fileLink(null)
+        .fileName("none");
   }
 
   public static Book bookTwo() {
@@ -76,7 +77,8 @@ public class MockData {
         .author("Author two")
         .category("Biopic")
         .title("The second book")
-        .fileLink("none");
+        .fileLink(null)
+        .fileName("none");
   }
 
   public static Category categoryOne() {
