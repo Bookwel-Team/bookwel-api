@@ -3,6 +3,7 @@ package api.prog5.bookwel.endpoint.rest.mapper;
 import static api.prog5.bookwel.endpoint.rest.exception.ApiException.ExceptionType.SERVER_EXCEPTION;
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.ADMIN;
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
+import static java.util.UUID.randomUUID;
 
 import api.prog5.bookwel.endpoint.rest.exception.ApiException;
 import api.prog5.bookwel.endpoint.rest.model.CreateUser;
@@ -31,9 +32,9 @@ public class UserMapper {
                 .email(user.getEmail()));
   }
 
-  public api.prog5.bookwel.repository.model.User toDomain(CreateUser createUser, String id) {
+  public api.prog5.bookwel.repository.model.User toDomain(CreateUser createUser) {
     return api.prog5.bookwel.repository.model.User.builder()
-        .id(id)
+        .id(randomUUID().toString())
         .role(api.prog5.bookwel.repository.model.User.Role.CLIENT)
         .firebaseId(createUser.getFirebaseId())
         .build();

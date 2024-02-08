@@ -242,32 +242,7 @@ paths:
           $ref: "#/components/responses/500"
         404:
           $ref: "#/components/responses/404"
-  /users/{userId}:
-    get:
-      tags:
-        - Users
-      summary: getUserById
-      operationId: getUserById
-      parameters:
-        - name: userId
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        200:
-          description: the user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        400:
-          $ref: "#/components/responses/400"
-        500:
-          $ref: "#/components/responses/500"
-        404:
-          $ref: "#/components/responses/404"
-    put:
+    post:
       tags:
         - Users
       summary: CrupdateUser
@@ -286,6 +261,31 @@ paths:
       responses:
         200:
           description: the created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/400"
+        500:
+          $ref: "#/components/responses/500"
+        404:
+          $ref: "#/components/responses/404"
+  /users/{userId}:
+    get:
+      tags:
+        - Users
+      summary: getUserById
+      operationId: getUserById
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: the user
           content:
             application/json:
               schema:

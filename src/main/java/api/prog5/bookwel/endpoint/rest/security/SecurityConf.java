@@ -3,6 +3,8 @@ package api.prog5.bookwel.endpoint.rest.security;
 import static api.prog5.bookwel.endpoint.rest.security.model.Role.ADMIN;
 import static api.prog5.bookwel.endpoint.rest.security.model.Role.CLIENT;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.OPTIONS;
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -39,8 +41,9 @@ public class SecurityConf {
   private final AuthenticatedResourceProvider authenticatedResourceProvider;
 
   public SecurityConf(
-          AuthProvider authProvider,
-          @Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver, AuthenticatedResourceProvider authenticatedResourceProvider) {
+      AuthProvider authProvider,
+      @Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver,
+      AuthenticatedResourceProvider authenticatedResourceProvider) {
     this.authProvider = authProvider;
     this.exceptionResolver = exceptionResolver;
     this.authenticatedResourceProvider = authenticatedResourceProvider;
@@ -70,24 +73,34 @@ public class SecurityConf {
                             exceptionResolver.resolveException(
                                 req, res, null, forbiddenWithRemoteInfo(e, req))))
         .csrf(AbstractHttpConfigurer::disable)
+        .cors(AbstractHttpConfigurer::disable)
         .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
         .addFilterBefore(
             bearerFilter(
                 new NegatedRequestMatcher(
-                    new OrRequestMatcher(new AntPathRequestMatcher("/hello", GET.toString())))),
+                    new OrRequestMatcher(
+                        new AntPathRequestMatcher("/**", OPTIONS.toString()),
+                        new AntPathRequestMatcher("/hello", GET.toString()),
+                        new AntPathRequestMatcher("/categories", GET.toString()),
+                        new AntPathRequestMatcher("/users", POST.toString())))),
             AnonymousAuthenticationFilter.class)
         .authorizeHttpRequests(
             (authorize) ->
                 authorize
-                    .requestMatchers("/hello")
+                    .requestMatchers(OPTIONS, "/**")
                     .permitAll()
-                    .requestMatchers("/users")
+                    .requestMatchers(GET, "/hello")
+                    .permitAll()
+                    .requestMatchers(GET, "/categories")
+                    .permitAll()
+                    .requestMatchers(POST, "/users")
+                    .permitAll()
+                    .requestMatchers(GET, "/users")
                     .hasRole(ADMIN.getRole())
-                    .requestMatchers(PUT, "/users/*")
-                    .permitAll()
                     .requestMatchers(GET, "/users/*")
                     .authenticated()
-                    .requestMatchers(new SelfUserMatcher(PUT, "/users/*/profile", authenticatedResourceProvider))
+                    .requestMatchers(
+                        new SelfUserMatcher(PUT, "/users/*/profile", authenticatedResourceProvider))
                     .hasRole(CLIENT.getRole())
                     .requestMatchers(PUT, "/users/*/profile")
                     .hasRole(ADMIN.getRole())
@@ -97,8 +110,6 @@ public class SecurityConf {
                     .authenticated()
                     .requestMatchers(GET, "/books/*")
                     .authenticated()
-                    .requestMatchers(GET, "/categories")
-                    .permitAll()
                     .requestMatchers(GET, "/books/*/reactions")
                     .authenticated()
                     .requestMatchers(PUT, "/books/*/reaction")
@@ -110,7 +121,7 @@ public class SecurityConf {
     return http.build();
   }
 
-  private BearerAuthFilter bearerFilter(RequestMatcher requestMatcher) throws Exception {
+  private BearerAuthFilter bearerFilter(RequestMatcher requestMatcher) {
     BearerAuthFilter bearerFilter = new BearerAuthFilter(requestMatcher, AUTHORIZATION_HEADER);
     bearerFilter.setAuthenticationManager(authenticationManager());
     bearerFilter.setAuthenticationSuccessHandler(
