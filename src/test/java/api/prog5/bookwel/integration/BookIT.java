@@ -6,6 +6,7 @@ import static api.prog5.bookwel.integration.mocks.MockData.bookOne;
 import static api.prog5.bookwel.integration.mocks.MockData.bookTwo;
 import static api.prog5.bookwel.utils.TestUtils.assertThrowsApiException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import api.prog5.bookwel.endpoint.rest.api.BookApi;
@@ -33,10 +34,21 @@ public class BookIT extends CustomFacadeIT {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     BookApi api = new BookApi(userOneClient);
 
-    List<Book> books = api.getBooks(null, null, null, null);
-    books = books.stream().map(this::ignoreFilelink).collect(Collectors.toList());
+    List<Book> books = api.getBooks(null, null, 1, 30)
+            .stream().map(this::ignoreFilelink).toList();
+    List<Book> authorFilteredBooks = api.getBooks("one", null, null, null)
+            .stream().map(this::ignoreFilelink).toList();
+    List<Book> categoryFilteredBooks = api.getBooks(null, "Bio", null, null)
+            .stream().map(this::ignoreFilelink).toList();
+    List<Book> fullFilteredBooks = api.getBooks("one", "Bio", null, null)
+            .stream().map(this::ignoreFilelink).toList();
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
+    assertTrue(authorFilteredBooks.contains(bookOne()));
+    assertFalse(authorFilteredBooks.contains(bookTwo()));
+    assertTrue(categoryFilteredBooks.containsAll(List.of(bookOne(), bookTwo())));
+    assertTrue(fullFilteredBooks.contains(bookOne()));
+    assertFalse(fullFilteredBooks.contains(bookTwo()));
   }
 
   @Test
