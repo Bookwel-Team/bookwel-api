@@ -46,6 +46,7 @@ public class BookIT extends CustomFacadeIT {
     var expected = bookOne();
 
     Book actual = api.getBookById(expected.getId());
+
     actual = ignoreFilelink(actual);
     assertEquals(expected, actual);
   }

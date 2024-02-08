@@ -3,13 +3,16 @@ package api.prog5.bookwel.integration;
 import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.LIKE;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_TWO_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.bookOne;
+import static api.prog5.bookwel.integration.mocks.MockData.categoryOne;
 import static api.prog5.bookwel.integration.mocks.MockData.crupdateReaction;
+import static api.prog5.bookwel.integration.mocks.MockData.expectedCategoryReaction;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import api.prog5.bookwel.endpoint.rest.api.ReactionApi;
 import api.prog5.bookwel.endpoint.rest.client.ApiClient;
 import api.prog5.bookwel.endpoint.rest.client.ApiException;
 import api.prog5.bookwel.endpoint.rest.model.BookReaction;
+import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.utils.TestUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -34,5 +37,18 @@ public class ReactionIT extends CustomFacadeIT {
     BookReaction book = api.crupdateReactionToABook(bookOne().getId(), crupdateReaction());
 
     assertEquals(book.getReactionStatus().getValue(), LIKE.toString());
+  }
+
+  @Test
+  void crupdate_category_reaction() throws ApiException {
+    ApiClient userTwoClient = anApiClient(USER_TWO_ID_TOKEN);
+    ReactionApi api = new ReactionApi(userTwoClient);
+
+    CategoryReaction categoryReaction =
+        api.crupdateReactionToACategory(categoryOne().getId(), crupdateReaction());
+    categoryReaction.setId(null);
+    categoryReaction.setCreationDatetime(null);
+
+    assertEquals(expectedCategoryReaction(), categoryReaction);
   }
 }
