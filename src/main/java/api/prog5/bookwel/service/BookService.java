@@ -9,14 +9,20 @@ import api.prog5.bookwel.repository.dao.BookDao;
 import api.prog5.bookwel.repository.model.Book;
 import api.prog5.bookwel.repository.model.BookReaction;
 import api.prog5.bookwel.service.AI.DataProcesser.BookUserSpecificDataProcesser;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @AllArgsConstructor
@@ -43,6 +49,16 @@ public class BookService {
     return repository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));
+  }
+
+  public Book crupdateBook(MultipartFile bookAsFile) throws IOException {
+    String dir = "/tmp";
+    Path filepath = Paths.get(dir, bookAsFile.getOriginalFilename());
+    bookAsFile.transferTo(filepath);
+    File file = new File(filepath.toUri());
+    String filename = file.toString().substring(5);
+    bucketComponent.upload(file, file.getName());
+    return repository.save(Book.builder().filename(filename).build());
   }
 
   public URL getPresignedUrlFromFilename(String filename) {

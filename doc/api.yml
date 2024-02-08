@@ -156,6 +156,10 @@ paths:
       responses:
         200:
           description: Book created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
 
   '/books/{id}':
     get:
