@@ -136,7 +136,7 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            $ref: "#/components/schemas/ReactionStatus"
       operationId: getReactionsToABook
       responses:
         200:
@@ -144,7 +144,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BookReaction'
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookReaction'
 
   '/books/{book_id}/reaction':
     put:
@@ -187,7 +189,7 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            $ref: "#/components/schemas/ReactionStatus"
       operationId: getReactionsToCategory
       responses:
         200:
@@ -195,7 +197,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CategoryReaction'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryReaction'
   '/categories/{category_id}/reaction':
     put:
       tags:
@@ -469,8 +473,6 @@ components:
     CrupdateReaction:
       type: object
       properties:
-        id:
-          type: string
         reactor_id:
           type: string
         reaction_status:
@@ -480,6 +482,8 @@ components:
         - $ref: '#/components/schemas/CrupdateReaction'
       type: object
       properties:
+        id:
+          type: string
         book_title:
           type: string
         creation_datetime:
@@ -492,6 +496,8 @@ components:
         - $ref: '#/components/schemas/CrupdateReaction'
       type: object
       properties:
+        id:
+          type: string
         category:
           type: string
         creation_datetime:

@@ -28,7 +28,6 @@ public class BookReactionMapper {
   public api.prog5.bookwel.repository.model.BookReaction toDomain(
       CrupdateReaction rest, String bookId) {
     return api.prog5.bookwel.repository.model.BookReaction.builder()
-        .id(randomUUID().toString())
         .book(bookService.getById(bookId))
         .reactor(userService.getById(rest.getReactorId()))
         .reaction(rest.getReactionStatus())

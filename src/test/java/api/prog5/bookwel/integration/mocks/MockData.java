@@ -1,15 +1,18 @@
 package api.prog5.bookwel.integration.mocks;
 
+import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.DISLIKE;
 import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.LIKE;
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.ADMIN;
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
+import api.prog5.bookwel.endpoint.rest.model.BookReaction;
 import api.prog5.bookwel.endpoint.rest.model.Category;
 import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
+import java.time.Instant;
 
 public class MockData {
   public static String BOOK_REACTION_ONE_ID = "reaction1_id";
@@ -76,7 +79,6 @@ public class MockData {
 
   public static CrupdateReaction crupdateReaction() {
     return new CrupdateReaction()
-        .id(BOOK_REACTION_ONE_ID)
         .reactionStatus(LIKE)
         .reactorId(USER_ONE_ID);
   }
@@ -90,6 +92,43 @@ public class MockData {
         .reactorId("user_one")
         .reactionStatus(LIKE);
   }
+  public static BookReaction bookReaction1() {
+    return new BookReaction()
+            .id("book_reaction_1_id")
+            .creationDatetime(Instant.parse("2024-02-08T11:18:38.662017Z"))
+            .bookTitle("The first book")
+            .reactorName("First")
+            .reactorId("user_one")
+            .reactionStatus(LIKE);
+  }
+  public static BookReaction bookReaction3() {
+    return new BookReaction()
+            .id("book_reaction_3_id")
+            .creationDatetime(Instant.parse("2024-02-08T11:13:38.662017Z"))
+            .bookTitle("The first book")
+            .reactorName("Second")
+            .reactorId("user_two")
+            .reactionStatus(DISLIKE);
+  }
+  public static CategoryReaction categoryReaction1() {
+    return new CategoryReaction()
+            .id("category_reaction_1_id")
+            .creationDatetime(Instant.parse("2024-02-08T11:15:38.662017Z"))
+            .category("Biopic")
+            .reactorName("First")
+            .reactorId("user_one")
+            .reactionStatus(LIKE);
+  }
+  public static CategoryReaction categoryReaction3() {
+    return new CategoryReaction()
+            .id("category_reaction_3_id")
+            .creationDatetime(Instant.parse("2024-02-08T11:08:38.662017Z"))
+            .category("Biopic")
+            .reactorName("Second")
+            .reactorId("user_two")
+            .reactionStatus(LIKE);
+  }
+
 
   public static Category categoryOne() {
     return new Category().id("category_one_id").name("Biopic");
