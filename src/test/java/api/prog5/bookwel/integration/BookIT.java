@@ -16,14 +16,11 @@ import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.utils.TestUtils;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-@Slf4j
 public class BookIT extends CustomFacadeIT {
   @LocalServerPort private int serverPort;
 
@@ -37,7 +34,7 @@ public class BookIT extends CustomFacadeIT {
     BookApi api = new BookApi(userOneClient);
 
     List<Book> books = api.getBooks(null, null, null, null);
-    books.stream().map(this::ignoreFilelink).collect(Collectors.toList());
+    books = books.stream().map(this::ignoreFilelink).collect(Collectors.toList());
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
   }
@@ -49,7 +46,7 @@ public class BookIT extends CustomFacadeIT {
     var expected = bookOne();
 
     Book actual = api.getBookById(expected.getId());
-    ignoreFilelink(actual);
+    actual = ignoreFilelink(actual);
     assertEquals(expected, actual);
   }
 
@@ -58,15 +55,17 @@ public class BookIT extends CustomFacadeIT {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     BookApi api = new BookApi(userOneClient);
 
-    assertThrowsApiException("{"
-        + "\"type\":\"404 NOT_FOUND\","
-        + "\"message\":\"Book with id: "
-        + NON_EXISTENT_BOOK_ID
-        + " not found\""
-        + "}", () -> api.getBookById(NON_EXISTENT_BOOK_ID));
+    assertThrowsApiException(
+        "{"
+            + "\"type\":\"404 NOT_FOUND\","
+            + "\"message\":\"Book with id: "
+            + NON_EXISTENT_BOOK_ID
+            + " not found\""
+            + "}",
+        () -> api.getBookById(NON_EXISTENT_BOOK_ID));
   }
 
-  public Book ignoreFilelink(Book book){
+  private Book ignoreFilelink(Book book) {
     book.setFileLink(null);
     return book;
   }

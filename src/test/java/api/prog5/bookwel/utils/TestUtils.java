@@ -1,11 +1,11 @@
 package api.prog5.bookwel.utils;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import api.prog5.bookwel.endpoint.rest.client.ApiClient;
 import api.prog5.bookwel.endpoint.rest.client.ApiException;
 import org.junit.jupiter.api.function.Executable;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestUtils {
   public static ApiClient anApiClient(String token, int serverPort) {
@@ -18,7 +18,7 @@ public class TestUtils {
     return client;
   }
 
-  public static void assertThrowsApiException (String expectedBody, Executable executable) {
+  public static void assertThrowsApiException(String expectedBody, Executable executable) {
     ApiException apiException = assertThrows(ApiException.class, executable);
     assertEquals(expectedBody, apiException.getResponseBody());
   }

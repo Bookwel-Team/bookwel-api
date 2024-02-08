@@ -7,7 +7,6 @@ import api.prog5.bookwel.file.BucketComponent;
 import api.prog5.bookwel.repository.BookRepository;
 import api.prog5.bookwel.repository.dao.BookDao;
 import api.prog5.bookwel.repository.model.Book;
-
 import java.net.URL;
 import java.time.Duration;
 import java.util.List;
@@ -36,7 +35,7 @@ public class BookService {
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));
   }
 
-  public URL getPresignedUrlFromFilename(String filename){
+  public URL getPresignedUrlFromFilename(String filename) {
     return bucketComponent.presign(filename, Duration.ofMinutes(2));
   }
 }
