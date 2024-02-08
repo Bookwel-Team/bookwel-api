@@ -11,6 +11,8 @@ security:
 paths:
   '/hello':
       get:
+        security:
+          [ ]
         tags:
           - HealthController
         operationId: checkHealth
@@ -24,6 +26,8 @@ paths:
                   example: "Hello from the Bookwel Team!"
   '/categories':
     get:
+      security:
+        [ ]
       tags:
         - Category
       summary: Get all categories of book
@@ -247,6 +251,8 @@ paths:
         404:
           $ref: "#/components/responses/404"
     post:
+      security:
+        [ ]
       tags:
         - Users
       summary: CreateUser
@@ -325,6 +331,10 @@ paths:
         404:
           $ref: "#/components/responses/404"
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
   responses:
     400:
       description: Bad request
