@@ -18,7 +18,6 @@ public class MockData {
   public static String BOOK_TWO_ID = "book_two_id";
   public static String NON_EXISTENT_BOOK_ID = "non_existend_book_id";
 
-
   public static User userOne() {
     return new User()
         .id(USER_ONE_ID)
@@ -35,28 +34,18 @@ public class MockData {
         .status(CLIENT);
   }
 
-  public static UserProfile userProfile(){
-    return new UserProfile()
-            .firstName("John")
-            .lastName("Doe")
-            .email("john.doe@gmail.com");
+  public static UserProfile userProfile() {
+    return new UserProfile().firstName("John").lastName("Doe").email("john.doe@gmail.com");
   }
 
-  public static User expectedAdminAfterUpdate(){
-    return new User()
-            .id(USER_ONE_ID)
-            .profile(userProfile())
-            .firebaseId(null)
-            .status(ADMIN);
+  public static User expectedAdminAfterUpdate() {
+    return new User().id(USER_ONE_ID).profile(userProfile()).firebaseId(null).status(ADMIN);
   }
 
-  public static User expectedClientAfterUpdate(){
-    return new User()
-            .id(USER_TWO_ID)
-            .profile(userProfile())
-            .firebaseId(null)
-            .status(CLIENT);
+  public static User expectedClientAfterUpdate() {
+    return new User().id(USER_TWO_ID).profile(userProfile()).firebaseId(null).status(CLIENT);
   }
+
   public static String USER_ONE_ID_TOKEN = "user_one_id_token";
 
   public static String USER_TWO_ID_TOKEN = "user_two_id_token";
@@ -67,7 +56,8 @@ public class MockData {
         .author("Author one")
         .category("Biopic")
         .title("The first book")
-        .fileLink("none");
+        .fileLink(null)
+        .fileName("none");
   }
 
   public static Book bookTwo() {
@@ -76,7 +66,8 @@ public class MockData {
         .author("Author two")
         .category("Biopic")
         .title("The second book")
-        .fileLink("none");
+        .fileLink(null)
+        .fileName("none");
   }
 
   public static Category categoryOne() {

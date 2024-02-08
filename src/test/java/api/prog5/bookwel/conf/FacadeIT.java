@@ -25,6 +25,7 @@ public class FacadeIT {
   @DynamicPropertySource
   static void configureProperties(DynamicPropertyRegistry registry) {
     POSTGRES_CONF.configureProperties(registry);
+    new BucketConf().configureProperties(registry);
 
     try {
       var envConfClazz = Class.forName("api.prog5.bookwel.conf.EnvConf");

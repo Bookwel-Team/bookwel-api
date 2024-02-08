@@ -430,6 +430,8 @@ components:
           type: string
         file_link:
           type: string
+        file_name:
+          type: string
     CreateUser:
       type: object
       properties:

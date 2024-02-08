@@ -10,6 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+
 @RestControllerAdvice
 @Slf4j
 public class InternalToRestExceptionHandler {
@@ -17,7 +19,8 @@ public class InternalToRestExceptionHandler {
   @ExceptionHandler(value = {Exception.class})
   ResponseEntity<api.prog5.bookwel.endpoint.rest.model.Exception> handleDefault(Exception e) {
     log.error("Internal error", e);
-    return new ResponseEntity<>(toRest(e, HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<>(
+        toRest(e, INTERNAL_SERVER_ERROR), INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(
@@ -41,7 +44,8 @@ public class InternalToRestExceptionHandler {
     return new ResponseEntity<>(toRest(e, HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
   }
 
-  private api.prog5.bookwel.endpoint.rest.model.Exception toRest(java.lang.Exception e, HttpStatus status) {
+  private api.prog5.bookwel.endpoint.rest.model.Exception toRest(
+      java.lang.Exception e, HttpStatus status) {
     var restException = new api.prog5.bookwel.endpoint.rest.model.Exception();
     restException.setType(status.toString());
     restException.setMessage(e.getMessage());

@@ -7,7 +7,6 @@ import static api.prog5.bookwel.integration.mocks.MockData.expectedClientAfterUp
 import static api.prog5.bookwel.integration.mocks.MockData.userOne;
 import static api.prog5.bookwel.integration.mocks.MockData.userProfile;
 import static api.prog5.bookwel.integration.mocks.MockData.userTwo;
-
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,7 +21,6 @@ import api.prog5.bookwel.endpoint.rest.model.UserStatus;
 import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.utils.TestUtils;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -74,7 +72,7 @@ public class UserIT extends CustomFacadeIT {
   }
 
   @Test
-  void update_user_profile_as_client() throws ApiException{
+  void update_user_profile_as_client() throws ApiException {
     ApiClient userOneClient = anApiClient(USER_TWO_ID_TOKEN);
     UsersApi api = new UsersApi(userOneClient);
     User user = userTwo();
@@ -83,7 +81,9 @@ public class UserIT extends CustomFacadeIT {
     User expected = expectedClientAfterUpdate();
 
     assertEquals(expected, actual);
-  }CreateUser creatableUser() {
+  }
+
+  CreateUser creatableUser() {
     return new CreateUser().firebaseId(randomUUID().toString());
   }
 
