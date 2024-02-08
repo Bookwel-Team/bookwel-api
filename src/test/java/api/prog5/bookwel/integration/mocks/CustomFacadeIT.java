@@ -30,9 +30,11 @@ public class CustomFacadeIT extends FacadeIT {
     when(firebaseAuthenticator.getEmail(USER_TWO_ID_TOKEN)).thenReturn(USER_TWO_EMAIL);
   }
 
-  protected void setupBucketComponent(BucketComponent bucketComponent) throws MalformedURLException {
+  protected void setupBucketComponent(BucketComponent bucketComponent)
+      throws MalformedURLException {
     when(bucketComponent.presign(any(), any())).thenReturn(new URL("http://localhost"));
   }
+
   @BeforeEach
   void setup() throws MalformedURLException {
     setupFirebaseAuthenticator(firebaseAuthenticator);

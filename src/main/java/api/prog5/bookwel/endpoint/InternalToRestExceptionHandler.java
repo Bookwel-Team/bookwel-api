@@ -1,5 +1,7 @@
 package api.prog5.bookwel.endpoint;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+
 import api.prog5.bookwel.endpoint.rest.exception.ForbiddenException;
 import api.prog5.bookwel.endpoint.rest.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +12,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-
 @RestControllerAdvice
 @Slf4j
 public class InternalToRestExceptionHandler {
@@ -19,8 +19,7 @@ public class InternalToRestExceptionHandler {
   @ExceptionHandler(value = {Exception.class})
   ResponseEntity<api.prog5.bookwel.endpoint.rest.model.Exception> handleDefault(Exception e) {
     log.error("Internal error", e);
-    return new ResponseEntity<>(
-        toRest(e, INTERNAL_SERVER_ERROR), INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<>(toRest(e, INTERNAL_SERVER_ERROR), INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(

@@ -27,7 +27,8 @@ public class ReactionController {
 
   @GetMapping("/books/{bookId}/reactions")
   public List<BookReaction> getBookReactions(
-      @PathVariable String bookId, @RequestParam(value = "reaction_status", required = false) ReactionStatus status) {
+      @PathVariable String bookId,
+      @RequestParam(value = "reaction_status", required = false) ReactionStatus status) {
     return bookReactionService.getReactionsByBook(bookId, status).stream()
         .map(bookReactionMapper::toRest)
         .toList();
@@ -35,10 +36,9 @@ public class ReactionController {
 
   @GetMapping("/categories/{categoryId}/reactions")
   public List<CategoryReaction> getCategoryReactions(
-      @PathVariable String categoryId, @RequestParam(value = "reaction_status", required = false) ReactionStatus status) {
-    return categoryReactionService
-        .getReactionsByCategory(categoryId, status)
-        .stream()
+      @PathVariable String categoryId,
+      @RequestParam(value = "reaction_status", required = false) ReactionStatus status) {
+    return categoryReactionService.getReactionsByCategory(categoryId, status).stream()
         .map(categoryReactionMapper::toRest)
         .toList();
   }

@@ -25,14 +25,15 @@ public class CategoryReactionService {
 
   public CategoryReaction crupdateCategoryReaction(CategoryReaction toSave) {
     Optional<CategoryReaction> optionalExistingReaction =
-            repository.findByCategoryIdAndReactorId(toSave.getCategory().getId(), toSave.getReactor().getId());
+        repository.findByCategoryIdAndReactorId(
+            toSave.getCategory().getId(), toSave.getReactor().getId());
     return repository.save(
-            optionalExistingReaction.map(
-                    cr -> {
-                      cr.setReaction(toSave.getReaction());
-                      return cr;
-                    }
-            ).orElse(toSave)
-    );
+        optionalExistingReaction
+            .map(
+                cr -> {
+                  cr.setReaction(toSave.getReaction());
+                  return cr;
+                })
+            .orElse(toSave));
   }
 }

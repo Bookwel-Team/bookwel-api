@@ -1,7 +1,5 @@
 package api.prog5.bookwel.endpoint.rest.mapper;
 
-import static java.util.UUID.randomUUID;
-
 import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
 import api.prog5.bookwel.service.CategoryService;

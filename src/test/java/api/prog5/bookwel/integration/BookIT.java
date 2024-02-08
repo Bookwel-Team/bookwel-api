@@ -16,7 +16,6 @@ import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.utils.TestUtils;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -34,14 +33,13 @@ public class BookIT extends CustomFacadeIT {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     BookApi api = new BookApi(userOneClient);
 
-    List<Book> books = api.getBooks(null, null, 1, 30)
-            .stream().map(this::ignoreFilelink).toList();
-    List<Book> authorFilteredBooks = api.getBooks("one", null, null, null)
-            .stream().map(this::ignoreFilelink).toList();
-    List<Book> categoryFilteredBooks = api.getBooks(null, "Bio", null, null)
-            .stream().map(this::ignoreFilelink).toList();
-    List<Book> fullFilteredBooks = api.getBooks("one", "Bio", null, null)
-            .stream().map(this::ignoreFilelink).toList();
+    List<Book> books = api.getBooks(null, null, 1, 30).stream().map(this::ignoreFilelink).toList();
+    List<Book> authorFilteredBooks =
+        api.getBooks("one", null, null, null).stream().map(this::ignoreFilelink).toList();
+    List<Book> categoryFilteredBooks =
+        api.getBooks(null, "Bio", null, null).stream().map(this::ignoreFilelink).toList();
+    List<Book> fullFilteredBooks =
+        api.getBooks("one", "Bio", null, null).stream().map(this::ignoreFilelink).toList();
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
     assertTrue(authorFilteredBooks.contains(bookOne()));

@@ -2,11 +2,11 @@ package api.prog5.bookwel.repository.model;
 
 import static jakarta.persistence.EnumType.STRING;
 import static org.hibernate.type.SqlTypes.NAMED_ENUM;
+
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,9 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.JdbcTypeCode;
 
 @Builder
@@ -32,8 +30,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @ToString
 @Table(name = "book_reaction")
 public class BookReaction {
-  @Id
-  private String id;
+  @Id private String id;
 
   @Enumerated(STRING)
   @Column(name = "reaction")

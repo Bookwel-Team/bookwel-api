@@ -25,14 +25,14 @@ public class BookReactionService {
 
   public BookReaction crupdateBookReaction(BookReaction toSave) {
     Optional<BookReaction> optionalExistingReaction =
-            repository.findByBookIdAndReactorId(toSave.getBook().getId(), toSave.getReactor().getId());
+        repository.findByBookIdAndReactorId(toSave.getBook().getId(), toSave.getReactor().getId());
     return repository.save(
-            optionalExistingReaction.map(
-                    br -> {
-                      br.setReaction(toSave.getReaction());
-                      return br;
-                    }
-            ).orElse(toSave)
-    );
+        optionalExistingReaction
+            .map(
+                br -> {
+                  br.setReaction(toSave.getReaction());
+                  return br;
+                })
+            .orElse(toSave));
   }
 }
