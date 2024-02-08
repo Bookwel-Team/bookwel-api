@@ -95,6 +95,8 @@ public class SecurityConf {
                     .permitAll()
                     .requestMatchers(POST, "/users")
                     .permitAll()
+                    .requestMatchers(GET, "/whoami")
+                    .authenticated()
                     .requestMatchers(GET, "/users")
                     .hasRole(ADMIN.getRole())
                     .requestMatchers(GET, "/users/*")

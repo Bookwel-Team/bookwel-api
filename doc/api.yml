@@ -24,6 +24,19 @@ paths:
                 schema:
                   type: string
                   example: "Hello from the Bookwel Team!"
+  '/whoami':
+    get:
+      tags:
+        - Security
+      description: tells you who you are
+      operationId: whoami
+      responses:
+        "200":
+          description: your identity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Whoami"
   '/categories':
     get:
       security:
@@ -405,6 +418,10 @@ components:
       example:
         type: TooManyRequestsException
         message: Too many requests
+    Whoami:
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
     UserProfile:
       type: object
       properties:
