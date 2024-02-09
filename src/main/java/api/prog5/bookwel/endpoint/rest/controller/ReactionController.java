@@ -29,7 +29,7 @@ public class ReactionController {
   public List<BookReaction> getBookReactions(
       @PathVariable String bookId,
       @RequestParam(value = "reaction_status", required = false) ReactionStatus status) {
-    return bookReactionService.getReactionsByBook(bookId, status).stream()
+    return bookReactionService.getAllBy(bookId, status).stream()
         .map(bookReactionMapper::toRest)
         .toList();
   }

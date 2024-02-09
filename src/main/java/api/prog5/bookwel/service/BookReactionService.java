@@ -14,13 +14,11 @@ import org.springframework.stereotype.Service;
 public class BookReactionService {
 
   private final BookReactionRepository repository;
-  private final BookService service;
 
-  public List<BookReaction> getReactionsByBook(String bookId, ReactionStatus status) {
-    Book book = service.getById(bookId);
+  public List<BookReaction> getAllBy(String bookId, ReactionStatus status) {
     return status == null
-        ? repository.findAllByBook(book)
-        : repository.findAllByBookAndReaction(book, status);
+        ? repository.findAllByBookId(bookId)
+        : repository.findAllByBookIdAndReaction(bookId, status);
   }
 
   public BookReaction crupdateBookReaction(BookReaction toSave) {
@@ -34,5 +32,9 @@ public class BookReactionService {
                   return br;
                 })
             .orElse(toSave));
+  }
+
+  public List<BookReaction> getAllBy(String reactorId) {
+    return repository.findAllByReactorId(reactorId);
   }
 }

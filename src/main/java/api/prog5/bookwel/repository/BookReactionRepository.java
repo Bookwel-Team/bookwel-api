@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookReactionRepository extends JpaRepository<BookReaction, String> {
-  List<BookReaction> findAllByBook(Book book);
+  List<BookReaction> findAllByBookId(String bookId);
 
-  List<BookReaction> findAllByBookAndReaction(Book book, ReactionStatus reactionStatus);
+  List<BookReaction> findAllByBookIdAndReaction(String bookId, ReactionStatus reactionStatus);
 
   Optional<BookReaction> findByBookIdAndReactorId(String bookId, String reactorId);
+
+  List<BookReaction> findAllByReactorId(String reactorId);
 }
