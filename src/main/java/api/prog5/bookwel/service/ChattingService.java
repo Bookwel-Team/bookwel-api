@@ -1,5 +1,6 @@
 package api.prog5.bookwel.service;
 
+import api.prog5.bookwel.Generated;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Generated
 public class ChattingService {
   private final ChatClient chatClient;
   private final String systemPrompt = """

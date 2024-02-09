@@ -1,5 +1,6 @@
 package api.prog5.bookwel.endpoint.rest.controller;
 
+import api.prog5.bookwel.Generated;
 import api.prog5.bookwel.service.ChattingService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
+@Generated
 public class ChatBotController {
   private final ChattingService chattingService;
 
