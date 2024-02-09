@@ -81,6 +81,7 @@ public class SecurityConf {
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/**", OPTIONS.toString()),
                         new AntPathRequestMatcher("/hello", GET.toString()),
+                        new AntPathRequestMatcher("/books", GET.toString()),
                         new AntPathRequestMatcher("/categories", GET.toString()),
                         new AntPathRequestMatcher("/users", POST.toString())))),
             AnonymousAuthenticationFilter.class)
@@ -95,6 +96,8 @@ public class SecurityConf {
                     .permitAll()
                     .requestMatchers(POST, "/users")
                     .permitAll()
+                    .requestMatchers(GET, "/books")
+                    .permitAll()
                     .requestMatchers(GET, "/whoami")
                     .authenticated()
                     .requestMatchers(GET, "/users")
@@ -108,8 +111,6 @@ public class SecurityConf {
                     .hasRole(ADMIN.getRole())
                     .requestMatchers("/client")
                     .hasRole(CLIENT.getRole())
-                    .requestMatchers(GET, "/books")
-                    .authenticated()
                     .requestMatchers(GET, "/books/*")
                     .authenticated()
                     .requestMatchers(GET, "/books/*/reactions")
