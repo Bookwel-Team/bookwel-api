@@ -9,6 +9,7 @@ import api.prog5.bookwel.conf.FacadeIT;
 import api.prog5.bookwel.endpoint.rest.exception.ForbiddenException;
 import api.prog5.bookwel.endpoint.rest.security.auth.firebase.FirebaseAuthenticator;
 import api.prog5.bookwel.endpoint.rest.security.auth.firebase.FirebaseConf;
+import api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.RecommendationAPI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -22,6 +23,8 @@ public class FirebaseAuthenticatorTest extends FacadeIT {
   public static final String BAD_TOKEN = "bad_token";
   @Autowired FirebaseAuthenticator subject;
   @MockBean FirebaseAuth firebaseAuthMock;
+  @MockBean
+  RecommendationAPI recommendationAPIMock;
   FirebaseToken firebaseTokenMock = mock(FirebaseToken.class);
 
   @Test
