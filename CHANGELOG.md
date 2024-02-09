@@ -1,3 +1,14 @@
+# [1.5.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.4.0...v1.5.0) (2024-02-09)
+
+
+### Features
+
+* ai book recommendation from liked / disliked books ([d051a08](https://github.com/Bookwel-Team/bookwel-api/commit/d051a0845a1297ad272b7b1798396db7f34e1c4e))
+* filter books by title also ([401accd](https://github.com/Bookwel-Team/bookwel-api/commit/401accd7616714a0f2dad0fa390f060acea2420c))
+* integrate ai chatbot ([13ae7a3](https://github.com/Bookwel-Team/bookwel-api/commit/13ae7a30faed919fc602b4cee82f0638ccd8e3a3))
+
+
+
 # [1.4.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.3.2...v1.4.0) (2024-02-08)
 
 
