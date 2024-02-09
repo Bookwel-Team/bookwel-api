@@ -134,7 +134,12 @@ public class MockData {
   }
 
   public static Book createdBook() {
-    return new Book().fileName("Securite.pdf").fileLink(MOCK_PRESIGNED_URL);
+    return new Book()
+            .fileName("Securite.pdf")
+            .fileLink(MOCK_PRESIGNED_URL)
+            .category("Science")
+            .author("random")
+            .title("sécurité");
   }
 
   public static Category categoryOne() {

@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
@@ -44,7 +45,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public class BookIT extends CustomFacadeIT {
   @LocalServerPort private int serverPort;
   @Autowired BookService bookService;
-  ObjectMapper om = new ObjectMapper();
+  @Autowired ObjectMapper om;
   String filepath = "Securite.pdf";
   File file = getMock();
 
@@ -141,9 +142,13 @@ public class BookIT extends CustomFacadeIT {
         Bytes.concat(requestBodyPrefix.getBytes(), fileBytes, requestBodySuffix.getBytes());
 
     InputStream requestBodyStream = new ByteArrayInputStream(requestBody);
+    UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUri(URI.create(basePath + "/books"))
+            .queryParam("title", "sécurité")
+            .queryParam("author", "random")
+            .queryParam("category", "Science");
     HttpRequest request =
         HttpRequest.newBuilder()
-            .uri(URI.create(basePath + "/books"))
+            .uri(uriComponentsBuilder.build().toUri())
             .header("Content-Type", contentTypeHeader)
             .header("Authorization", "Bearer " + USER_ONE_ID_TOKEN)
             .PUT(HttpRequest.BodyPublishers.ofInputStream(() -> requestBodyStream))
@@ -152,7 +157,7 @@ public class BookIT extends CustomFacadeIT {
     HttpResponse<InputStream> response =
         client.send(request, HttpResponse.BodyHandlers.ofInputStream());
 
-    Book book = om.readValue(response.body(), new TypeReference<Book>() {});
+    Book book = om.readValue(response.body(), new TypeReference<>() {});
     ignoreId(book);
     assertEquals(200, response.statusCode());
     assertEquals(createdBook(), book);

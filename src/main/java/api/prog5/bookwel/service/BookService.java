@@ -16,6 +16,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
+
+import api.prog5.bookwel.repository.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +35,7 @@ public class BookService {
   private final BookUserSpecificDataProcesser dataProcesser;
   private final BookReactionService reactionService;
   private final CategoryReactionService categoryReactionService;
+  private final CategoryService categoryService;
 
   public List<Book> getAllByCriteria(
       String author, String title, String category, Integer page, Integer pageSize) {
@@ -51,14 +54,20 @@ public class BookService {
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));
   }
 
-  public Book crupdateBook(MultipartFile bookAsFile) throws IOException {
+  public Book crupdateBook(MultipartFile bookAsFile, String title, String author, String category) throws IOException {
     String dir = "/tmp";
     Path filepath = Paths.get(dir, bookAsFile.getOriginalFilename());
     bookAsFile.transferTo(filepath);
     File file = new File(filepath.toUri());
     String filename = file.toString().substring(5);
+    Category persistedCategory = categoryService.getByName(category);
     bucketComponent.upload(file, file.getName());
-    return repository.save(Book.builder().filename(filename).build());
+    return repository.save(Book.builder()
+                    .author(author)
+                    .title(title)
+                    .category(persistedCategory)
+                    .filename(filename)
+            .build());
   }
 
   public URL getPresignedUrlFromFilename(String filename) {
