@@ -139,4 +139,17 @@ public class MockData {
   public static Category categoryTwo() {
     return new Category().id("category_two_id").name("Romance");
   }
+
+  public static api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.model.Book likedBookOneMockAsAiBook(){
+    Book book = bookOne();
+    var result = new api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.model.Book();
+    result.setId(book.getId());
+    result.setCategory(new api.prog5.bookwel.repository.model.Category("id", book.getCategory()));
+    result.setAuthor(book.getAuthor());
+    result.setTitle(book.getTitle());
+    result.setFilename(book.getFileName());
+    result.setUserId(USER_ONE_ID);
+    result.setUserReaction(LIKE);
+    return result;
+  }
 }

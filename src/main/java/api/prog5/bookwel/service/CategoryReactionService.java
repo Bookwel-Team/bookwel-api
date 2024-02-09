@@ -36,4 +36,8 @@ public class CategoryReactionService {
                 })
             .orElse(toSave));
   }
+
+  public List<CategoryReaction> getAllBy(String reactorId){
+    return repository.findAllByReactorId(reactorId);
+  }
 }

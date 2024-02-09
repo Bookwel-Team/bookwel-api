@@ -114,6 +114,8 @@ public class SecurityConf {
                     .hasRole(ADMIN.getRole())
                     .requestMatchers("/client")
                     .hasRole(CLIENT.getRole())
+                    .requestMatchers(GET, "/recommended-books")
+                    .authenticated()
                     .requestMatchers(GET, "/books/*")
                     .authenticated()
                     .requestMatchers(GET, "/books/*/reactions")

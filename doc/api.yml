@@ -85,6 +85,21 @@ paths:
           $ref: "#/components/responses/500"
         '404':
           $ref: "#/components/responses/404"
+  '/recommended-books':
+    get:
+      tags:
+        - Book
+      summary: Get all books recommended by AI
+      operationId: getRecommendedBooks
+      responses:
+        200:
+          description: All recommended books for the connected user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
   '/books':
     get:
       tags:

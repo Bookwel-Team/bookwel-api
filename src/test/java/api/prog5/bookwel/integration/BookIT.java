@@ -42,6 +42,8 @@ public class BookIT extends CustomFacadeIT {
         api.getBooks(null, "first","Bio", null, null).stream().map(this::ignoreFilelink).toList();
     List<Book> fullFilteredBooks =
         api.getBooks("one", null,"Bio", null, null).stream().map(this::ignoreFilelink).toList();
+    List<Book> recommendedBooksOnly =
+            api.getRecommendedBooks().stream().map(this::ignoreFilelink).toList();
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
     assertTrue(authorFilteredBooks.contains(bookOne()));
@@ -50,6 +52,7 @@ public class BookIT extends CustomFacadeIT {
     assertTrue(titleFilteredBooks.contains(bookOne()));
     assertTrue(fullFilteredBooks.contains(bookOne()));
     assertFalse(fullFilteredBooks.contains(bookTwo()));
+    assertTrue(recommendedBooksOnly.contains(bookOne()));
   }
 
   @Test

@@ -7,6 +7,8 @@ import api.prog5.bookwel.file.BucketComponent;
 import api.prog5.bookwel.repository.BookRepository;
 import api.prog5.bookwel.repository.dao.BookDao;
 import api.prog5.bookwel.repository.model.Book;
+import api.prog5.bookwel.repository.model.BookReaction;
+import api.prog5.bookwel.service.AI.DataProcesser.BookUserSpecificDataProcesser;
 import java.net.URL;
 import java.time.Duration;
 import java.util.List;
@@ -19,18 +21,26 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class BookService {
-  private final BookDao bookDao;
-  private final BookRepository bookRepository;
+  private final BookDao dao;
+  private final BookRepository repository;
   private final BucketComponent bucketComponent;
+  private final BookUserSpecificDataProcesser dataProcesser;
+  private final BookReactionService reactionService;
+  private final CategoryReactionService categoryReactionService;
 
   public List<Book> getAllByCriteria(
       String author, String title, String category, Integer page, Integer pageSize) {
     Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(DESC, "author"));
-    return bookDao.findByCriteria(author, title, category, pageable);
+    return dao.findByCriteria(author, title, category, pageable);
+  }
+
+  public List<Book> getAllRecommendedBooksFor(String userId) {
+    List<BookReaction> reactedBooks = reactionService.getAllBy(userId);
+    return dataProcesser.process(reactedBooks, repository.findAll(), categoryReactionService.getAllBy(userId), userId);
   }
 
   public Book getById(String id) {
-    return bookRepository
+    return repository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));
   }
