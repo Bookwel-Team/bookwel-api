@@ -9,6 +9,25 @@ security:
   - BearerAuth: [ ]
 
 paths:
+  '/chats':
+    post:
+      tags:
+        - AI
+      operationId: chat
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        200:
+          description: Response from AI
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Response from the AI"
+
   '/hello':
       get:
         security:

@@ -79,7 +79,7 @@ public class SecurityConf {
             bearerFilter(
                 new NegatedRequestMatcher(
                     new OrRequestMatcher(
-                        new AntPathRequestMatcher("/chatbot", POST.toString()),
+                        new AntPathRequestMatcher("/chats", POST.toString()),
                         new AntPathRequestMatcher("/**", OPTIONS.toString()),
                         new AntPathRequestMatcher("/hello", GET.toString()),
                         new AntPathRequestMatcher("/books", GET.toString()),
@@ -93,7 +93,7 @@ public class SecurityConf {
                     .permitAll()
                     .requestMatchers(GET, "/hello")
                     .permitAll()
-                    .requestMatchers(POST, "/chatbot")
+                    .requestMatchers(POST, "/chats")
                     .permitAll()
                     .requestMatchers(GET, "/categories")
                     .permitAll()
