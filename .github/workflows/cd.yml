@@ -69,6 +69,7 @@ jobs:
             AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+            BOOK_RECOMMENDATION_API_URL=${{ secrets.BOOK_RECOMMENDATION_API_URL }}
 
       - name: Setup SSH connection
         run: |
@@ -87,4 +88,4 @@ jobs:
             docker stop \${{ github.ref_name }}-bookwel-api || true; \
             docker rm \${{ github.ref_name }}-bookwel-api || true; \
             docker pull \${{ vars.DOCKER_USERNAME }}/bookwel-api:${{ github.sha }}; \
-            docker run -d -p 3000:8080 --name \${{ github.ref_name }}-bookwel-api \${{ vars.DOCKER_USERNAME }}/bookwel-api:${{ github.sha }} -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} -e FIREBASE_DATA_CONFIG=${{ secrets.FIREBASE_DATA_CONFIG }} -e AWS_S3_BUCKET=${{ secrets.AWS_S3_BUCKET }} -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}"
+            docker run -d -p 3000:8080 --name \${{ github.ref_name }}-bookwel-api \${{ vars.DOCKER_USERNAME }}/bookwel-api:${{ github.sha }} -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} -e FIREBASE_DATA_CONFIG=${{ secrets.FIREBASE_DATA_CONFIG }} -e AWS_S3_BUCKET=${{ secrets.AWS_S3_BUCKET }} -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} -e BOOK_RECOMMENDATION_API_URL=${{ secrets.BOOK_RECOMMENDATION_API_URL }}"

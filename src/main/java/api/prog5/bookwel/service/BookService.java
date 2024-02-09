@@ -36,6 +36,6 @@ public class BookService {
   }
 
   public URL getPresignedUrlFromFilename(String filename) {
-    return bucketComponent.presign(filename, Duration.ofMinutes(2));
+    return bucketComponent.presign(filename, Duration.ofMinutes(10));
   }
 }
