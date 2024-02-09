@@ -33,18 +33,21 @@ public class BookIT extends CustomFacadeIT {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     BookApi api = new BookApi(userOneClient);
 
-    List<Book> books = api.getBooks(null, null, 1, 30).stream().map(this::ignoreFilelink).toList();
+    List<Book> books = api.getBooks(null, null, null, 1, 30).stream().map(this::ignoreFilelink).toList();
     List<Book> authorFilteredBooks =
-        api.getBooks("one", null, null, null).stream().map(this::ignoreFilelink).toList();
+        api.getBooks("one", null,null, null, null).stream().map(this::ignoreFilelink).toList();
     List<Book> categoryFilteredBooks =
-        api.getBooks(null, "Bio", null, null).stream().map(this::ignoreFilelink).toList();
+        api.getBooks(null, null,"Bio", null, null).stream().map(this::ignoreFilelink).toList();
+    List<Book> titleFilteredBooks =
+        api.getBooks(null, "first","Bio", null, null).stream().map(this::ignoreFilelink).toList();
     List<Book> fullFilteredBooks =
-        api.getBooks("one", "Bio", null, null).stream().map(this::ignoreFilelink).toList();
+        api.getBooks("one", null,"Bio", null, null).stream().map(this::ignoreFilelink).toList();
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
     assertTrue(authorFilteredBooks.contains(bookOne()));
     assertFalse(authorFilteredBooks.contains(bookTwo()));
     assertTrue(categoryFilteredBooks.containsAll(List.of(bookOne(), bookTwo())));
+    assertTrue(titleFilteredBooks.contains(bookOne()));
     assertTrue(fullFilteredBooks.contains(bookOne()));
     assertFalse(fullFilteredBooks.contains(bookTwo()));
   }

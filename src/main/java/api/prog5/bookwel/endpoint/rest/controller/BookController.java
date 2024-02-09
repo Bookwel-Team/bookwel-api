@@ -21,9 +21,10 @@ public class BookController {
   public List<Book> getBooks(
       @RequestParam(value = "author", required = false) String author,
       @RequestParam(value = "category", required = false) String category,
+      @RequestParam(value = "title", required = false) String title,
       @RequestParam(value = "page", defaultValue = "1") Integer page,
       @RequestParam(value = "page_size", defaultValue = "20") Integer pageSize) {
-    return bookService.getAllByCriteria(author, category, page, pageSize).stream()
+    return bookService.getAllByCriteria(author, title, category, page, pageSize).stream()
         .map(bookMapper::toRest)
         .toList();
   }

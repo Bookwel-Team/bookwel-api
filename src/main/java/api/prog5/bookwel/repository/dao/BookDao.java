@@ -21,7 +21,7 @@ public class BookDao {
 
   private final EntityManager entityManager;
 
-  public List<Book> findByCriteria(String author, String category, Pageable pageable) {
+  public List<Book> findByCriteria(String author, String title, String category, Pageable pageable) {
     CriteriaBuilder builder = entityManager.getCriteriaBuilder();
     CriteriaQuery<Book> query = builder.createQuery(Book.class);
     Root<Book> root = query.from(Book.class);
@@ -34,6 +34,13 @@ public class BookDao {
           builder.or(
               builder.like(builder.lower(root.get("author")), "%" + author + "%"),
               builder.like(root.get("author"), "%" + author + "%")));
+    }
+
+    if (title != null) {
+      predicates.add(
+              builder.or(
+                      builder.like(builder.lower(root.get("title")), "%" + title + "%"),
+                      builder.like(root.get("title"), "%" + title + "%")));
     }
 
     if (category != null) {

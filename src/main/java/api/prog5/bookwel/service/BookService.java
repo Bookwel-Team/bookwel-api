@@ -24,9 +24,9 @@ public class BookService {
   private final BucketComponent bucketComponent;
 
   public List<Book> getAllByCriteria(
-      String author, String category, Integer page, Integer pageSize) {
+      String author, String title, String category, Integer page, Integer pageSize) {
     Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(DESC, "author"));
-    return bookDao.findByCriteria(author, category, pageable);
+    return bookDao.findByCriteria(author, title, category, pageable);
   }
 
   public Book getById(String id) {
