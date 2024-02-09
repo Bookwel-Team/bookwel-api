@@ -50,11 +50,11 @@ public class BookController {
       value = "/books",
       consumes = {"multipart/form-data"})
   public Book crupdateBook(
-      @RequestParam(name = "title", required = false) String title,
-      @RequestParam(name = "author", required = false) String author,
-      @RequestParam(name = "category", required = false) String category,
-      @RequestParam(name = "book", required = true) MultipartFile book)
+      @RequestParam(name = "title") String title,
+      @RequestParam(name = "author") String author,
+      @RequestParam(name = "category") String category,
+      @RequestParam(name = "book") MultipartFile book)
       throws IOException {
-    return bookMapper.toRest(bookService.crupdateBook(book));
+    return bookMapper.toRest(bookService.crupdateBook(book, title ,author, category));
   }
 }
