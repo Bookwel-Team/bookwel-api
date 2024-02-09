@@ -23,10 +23,11 @@ paths:
         200:
           description: Response from AI
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "Response from the AI"
+                type: array
+                items:
+                  $ref: "#/components/schemas/AiResponse"
 
   '/hello':
       get:
@@ -574,4 +575,17 @@ components:
           type: string
           format: date-time
         reactor_name:
+          type: string
+    AiResponse:
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        synopsis:
+          type: string
+        category:
+          type: string
+        reason:
           type: string

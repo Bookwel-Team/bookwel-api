@@ -35,13 +35,13 @@ public class ChattingService {
                     Your recommendations should not be bound by publication date or a fiction/non-fiction distinction unless specified in the input %s.
                     For every recommended book, provide a brief synopsis (up-to 3 lines) and the reason for your choice %s.
                     Then give a pdf link to the book so that the user can watch it directly %s.
-                    Provide up-to 3 book suggestions %s.
-                    When suggesting books, use below format %s.
-                    Title:
-                    Author:
-                    Synopsis:
-                    Category:
-                    Reason for Recommendation:
+                    Provide up-to 10 book suggestions %s.
+                    When suggesting books, use below format in json array format like this %s.
+                    title:
+                    author:
+                    synopsis:
+                    category:
+                    reason:
                     """);
 
     Message userMessage = promptTemplate.createMessage(Map.of("userPrompt", userPrompt));
