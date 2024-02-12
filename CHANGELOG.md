@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.5.0...v1.6.0) (2024-02-12)
+
+
+### Features
+
+* create book ([2418975](https://github.com/Bookwel-Team/bookwel-api/commit/2418975d817275e0f40cd1bb75822220470becd7))
+* map books with their reactions ([3789733](https://github.com/Bookwel-Team/bookwel-api/commit/378973304a4ce0030bb895efef85db8518b263b8))
+* map CategoryReactions to category ([c4810c0](https://github.com/Bookwel-Team/bookwel-api/commit/c4810c02ea0a3772267e5bfd2a9c767e8ed57fb6))
+* remove get Reactions by book or category, refactor categoryReaction endpoint ([7dcb195](https://github.com/Bookwel-Team/bookwel-api/commit/7dcb1950270be4ef227f47d3ececda4e3314454a))
+
+
+
 # [1.5.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.4.0...v1.5.0) (2024-02-09)
 
 
