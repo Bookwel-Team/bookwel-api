@@ -124,9 +124,7 @@ public class SecurityConf {
                     .authenticated()
                     .requestMatchers(PUT, "/books/*/reaction")
                     .authenticated()
-                    .requestMatchers(GET, "/categories/*/reactions")
-                    .authenticated()
-                    .requestMatchers(PUT, "/categories/*/reaction")
+                    .requestMatchers(PUT, "/categories/reactions")
                     .authenticated()
                     .requestMatchers("/**")
                     .denyAll());

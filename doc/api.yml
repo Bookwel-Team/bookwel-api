@@ -181,34 +181,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book'
-
-  '/books/{book_id}/reactions':
-    get:
-      tags:
-        - Reaction
-      summary: Get all reactions to a specified book
-      parameters:
-        - name: book_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: reaction_status
-          in: query
-          required: false
-          schema:
-            $ref: "#/components/schemas/ReactionStatus"
-      operationId: getReactionsToABook
-      responses:
-        200:
-          description: All reactions requested
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BookReaction'
-
   '/books/{book_id}/reaction':
     put:
       tags:
@@ -234,58 +206,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookReaction'
-
-  '/categories/{category_id}/reactions':
-    get:
-      tags:
-        - Reaction
-      summary: Get all reactions to a specified category
-      parameters:
-        - name: category_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: reaction_status
-          in: query
-          required: false
-          schema:
-            $ref: "#/components/schemas/ReactionStatus"
-      operationId: getReactionsToCategory
-      responses:
-        200:
-          description: All reactions requested
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CategoryReaction'
-  '/categories/{category_id}/reaction':
+  '/categories/reactions':
     put:
       tags:
         - Reaction
-      summary: set or unset reaction on a category
-      parameters:
-        - name: category_id
-          in: path
-          required: true
-          schema:
-            type: string
-      operationId: crupdateReactionToACategory
+      summary: set or unset reactions categories
+      operationId: crupdateReactionsToCategories
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CrupdateReaction"
+              type: array
+              items:
+                $ref: "#/components/schemas/CategoryCrupdateReaction"
       responses:
         200:
           description: Reaction created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CategoryReaction'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryReaction'
   /users:
     get:
       tags:
@@ -494,6 +437,8 @@ components:
         - CLIENT
     Book:
       type: object
+      allOf:
+        - $ref: "#/components/schemas/Reacted"
       properties:
         id:
           type: string
@@ -507,6 +452,20 @@ components:
           type: string
         file_name:
           type: string
+    Reacted:
+      type: object
+      properties:
+        reactionStatistics:
+          $ref: "#/components/schemas/ReactionStatistics"
+    ReactionStatistics:
+      type: object
+      properties:
+        like_numbers:
+          type: integer
+        dislike_numbers:
+          type: integer
+        byCurrentUser:
+          $ref: "#/components/schemas/ReactionStatus"
     CreateUser:
       type: object
       properties:
@@ -530,6 +489,8 @@ components:
           description: The book as pdf format
     Category:
       type: object
+      allOf:
+        - $ref: "#/components/schemas/Reacted"
       properties:
         id:
           type: string
@@ -548,6 +509,12 @@ components:
           type: string
         reaction_status:
             $ref: '#/components/schemas/ReactionStatus'
+    CategoryCrupdateReaction:
+      allOf:
+        - $ref: "#/components/schemas/CrupdateReaction"
+      properties:
+        categoryId:
+          type: string
     BookReaction:
       allOf:
         - $ref: '#/components/schemas/CrupdateReaction'

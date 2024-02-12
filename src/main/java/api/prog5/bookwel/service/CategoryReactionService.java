@@ -14,15 +14,10 @@ import org.springframework.stereotype.Service;
 public class CategoryReactionService {
 
   private final CategoryReactionRepository repository;
-  private final CategoryService categoryService;
 
-  public List<CategoryReaction> getReactionsByCategory(String bookId, ReactionStatus status) {
-    Category category = categoryService.getById(bookId);
-    return status == null
-        ? repository.findAllByCategory(category)
-        : repository.findAllByCategoryAndReaction(category, status);
+  public List<CategoryReaction> crupdateCategoryReactions(List<CategoryReaction> reactions){
+      return reactions.stream().map(this::crupdateCategoryReaction).toList();
   }
-
   public CategoryReaction crupdateCategoryReaction(CategoryReaction toSave) {
     Optional<CategoryReaction> optionalExistingReaction =
         repository.findByCategoryIdAndReactorId(
