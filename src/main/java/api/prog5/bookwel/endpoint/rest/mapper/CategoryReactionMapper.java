@@ -1,7 +1,7 @@
 package api.prog5.bookwel.endpoint.rest.mapper;
 
 import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
-import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
+import api.prog5.bookwel.endpoint.rest.model.CategoryCrupdateReaction;
 import api.prog5.bookwel.service.CategoryService;
 import api.prog5.bookwel.service.UserService;
 import lombok.AllArgsConstructor;
@@ -24,11 +24,11 @@ public class CategoryReactionMapper {
   }
 
   public api.prog5.bookwel.repository.model.CategoryReaction toDomain(
-      CrupdateReaction rest, String categoryId) {
+      CategoryCrupdateReaction rest) {
     return api.prog5.bookwel.repository.model.CategoryReaction.builder()
         .reaction(rest.getReactionStatus())
         .reactor(userService.getById(rest.getReactorId()))
-        .category(categoryService.getById(categoryId))
+        .category(categoryService.getById(rest.getCategoryId()))
         .build();
   }
 }
