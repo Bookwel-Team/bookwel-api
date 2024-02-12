@@ -10,6 +10,7 @@ import api.prog5.bookwel.endpoint.rest.api.CategoryApi;
 import api.prog5.bookwel.endpoint.rest.client.ApiClient;
 import api.prog5.bookwel.endpoint.rest.client.ApiException;
 import api.prog5.bookwel.endpoint.rest.model.Category;
+import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
 import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.utils.TestUtils;
 import java.util.List;
@@ -28,11 +29,16 @@ public class CategoryIT extends CustomFacadeIT {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     CategoryApi api = new CategoryApi(userOneClient);
 
-    List<Category> actualCategories = api.getAllCategories(null);
-    List<Category> actualCategoriesFiltered = api.getAllCategories(categoryTwo().getName());
+    List<Category> actualCategories = api.getAllCategories(null).stream().map(CategoryIT::unsetCategoryReactionStatistics).toList();
+    List<Category> actualCategoriesFiltered = api.getAllCategories(categoryTwo().getName()).stream().map(CategoryIT::unsetCategoryReactionStatistics).toList();
 
     assertTrue(actualCategories.containsAll(List.of(categoryOne(), categoryTwo())));
     assertTrue(actualCategoriesFiltered.contains(categoryTwo()));
     assertEquals(1, actualCategoriesFiltered.size());
+  }
+
+  private static Category unsetCategoryReactionStatistics(Category category){
+    category.setReactionStatistics(new ReactionStatistics());
+    return category;
   }
 }

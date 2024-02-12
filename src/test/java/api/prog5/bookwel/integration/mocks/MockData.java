@@ -151,11 +151,11 @@ public class MockData {
   }
 
   public static Category categoryOne() {
-    return new Category().id("category_one_id").name("Biopic");
+    return new Category().id("category_one_id").name("Biopic").reactionStatistics(new ReactionStatistics());
   }
 
   public static Category categoryTwo() {
-    return new Category().id("category_two_id").name("Romance");
+    return new Category().id("category_two_id").name("Romance").reactionStatistics(new ReactionStatistics());
   }
 
   public static api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.model.Book likedBookOneMockAsAiBook(){
