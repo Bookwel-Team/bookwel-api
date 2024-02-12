@@ -28,22 +28,26 @@ public class BookController {
       @RequestParam(value = "category", required = false) String category,
       @RequestParam(value = "title", required = false) String title,
       @RequestParam(value = "page", defaultValue = "1") Integer page,
-      @RequestParam(value = "page_size", defaultValue = "20") Integer pageSize) {
+      @RequestParam(value = "page_size", defaultValue = "20") Integer pageSize,
+      @AuthenticationPrincipal
+      Principal principal) {
+    //added currentUser check because endpoint is permitAll so anonymous users have UNSET reaction
+    var currentUser = principal == null ? null : principal.getUser();
     return bookService.getAllByCriteria(author, title, category, page, pageSize).stream()
-        .map(bookMapper::toRest)
+        .map(b -> bookMapper.toRest(b, currentUser))
         .toList();
   }
 
   @GetMapping("/recommended-books")
   public List<Book> getRecommendedBooks(@AuthenticationPrincipal Principal principal) {
     return bookService.getAllRecommendedBooksFor(principal.getUser().getId()).stream()
-        .map(bookMapper::toRest)
+        .map(b -> bookMapper.toRest(b, null))
         .toList();
   }
 
   @GetMapping("/books/{id}")
-  public Book getBookById(@PathVariable String id) {
-    return bookMapper.toRest(bookService.getById(id));
+  public Book getBookById(@PathVariable String id, @AuthenticationPrincipal Principal principal) {
+    return bookMapper.toRest(bookService.getById(id), principal.getUser());
   }
 
   @PutMapping(
@@ -53,8 +57,9 @@ public class BookController {
       @RequestParam(name = "title") String title,
       @RequestParam(name = "author") String author,
       @RequestParam(name = "category") String category,
-      @RequestParam(name = "book") MultipartFile book)
+      @RequestParam(name = "book") MultipartFile book,
+      @AuthenticationPrincipal Principal principal)
       throws IOException {
-    return bookMapper.toRest(bookService.crupdateBook(book, title ,author, category));
+    return bookMapper.toRest(bookService.crupdateBook(book, title ,author, category), principal.getUser());
   }
 }

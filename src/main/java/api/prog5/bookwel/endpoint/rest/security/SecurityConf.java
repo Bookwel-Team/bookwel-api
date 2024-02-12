@@ -120,8 +120,6 @@ public class SecurityConf {
                     .hasAnyRole(CLIENT.getRole(), ADMIN.getRole())
                     .requestMatchers(GET, "/books/*")
                     .authenticated()
-                    .requestMatchers(GET, "/books/*/reactions")
-                    .authenticated()
                     .requestMatchers(PUT, "/books/*/reaction")
                     .authenticated()
                     .requestMatchers(PUT, "/categories/reactions")
