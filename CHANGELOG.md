@@ -1,3 +1,12 @@
+## [1.6.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.6.0...v1.6.1) (2024-02-12)
+
+
+### Bug Fixes
+
+* fixed case for all entities in docs ([870d2ec](https://github.com/Bookwel-Team/bookwel-api/commit/870d2ec3bb493cf2147d499040a5912c6058dec3))
+
+
+
 # [1.6.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.5.0...v1.6.0) (2024-02-12)
 
 
