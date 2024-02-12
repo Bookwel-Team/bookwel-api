@@ -14,9 +14,7 @@ import api.prog5.bookwel.conf.FacadeIT;
 import api.prog5.bookwel.endpoint.rest.security.auth.firebase.FirebaseAuthenticator;
 import api.prog5.bookwel.endpoint.rest.security.auth.firebase.FirebaseConf;
 import api.prog5.bookwel.file.BucketComponent;
-import api.prog5.bookwel.service.AI.DataProcesser.BookUserSpecificDataProcesser;
 import api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.RecommendationAPI;
-import api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.model.Book;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import java.net.MalformedURLException;
@@ -44,9 +42,10 @@ public class CustomFacadeIT extends FacadeIT {
     when(bucketComponent.presign(any(), any())).thenReturn(new URL("http://localhost"));
   }
 
-  protected void setupRecommendationApi(RecommendationAPI recommendationAPI){
-    //return all books without filtering
-    when(recommendationAPI.apply(anyList(), anyList(), anyList())).thenAnswer((i) -> List.of(likedBookOneMockAsAiBook()));
+  protected void setupRecommendationApi(RecommendationAPI recommendationAPI) {
+    // return all books without filtering
+    when(recommendationAPI.apply(anyList(), anyList(), anyList()))
+        .thenAnswer((i) -> List.of(likedBookOneMockAsAiBook()));
   }
 
   @BeforeEach

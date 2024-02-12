@@ -29,9 +29,8 @@ public class BookController {
       @RequestParam(value = "title", required = false) String title,
       @RequestParam(value = "page", defaultValue = "1") Integer page,
       @RequestParam(value = "page_size", defaultValue = "20") Integer pageSize,
-      @AuthenticationPrincipal
-      Principal principal) {
-    //added currentUser check because endpoint is permitAll so anonymous users have UNSET reaction
+      @AuthenticationPrincipal Principal principal) {
+    // added currentUser check because endpoint is permitAll so anonymous users have UNSET reaction
     var currentUser = principal == null ? null : principal.getUser();
     return bookService.getAllByCriteria(author, title, category, page, pageSize).stream()
         .map(b -> bookMapper.toRest(b, currentUser))
@@ -60,6 +59,7 @@ public class BookController {
       @RequestParam(name = "book") MultipartFile book,
       @AuthenticationPrincipal Principal principal)
       throws IOException {
-    return bookMapper.toRest(bookService.crupdateBook(book, title ,author, category), principal.getUser());
+    return bookMapper.toRest(
+        bookService.crupdateBook(book, title, author, category), principal.getUser());
   }
 }

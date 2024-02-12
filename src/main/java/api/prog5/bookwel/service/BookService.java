@@ -8,6 +8,7 @@ import api.prog5.bookwel.repository.BookRepository;
 import api.prog5.bookwel.repository.dao.BookDao;
 import api.prog5.bookwel.repository.model.Book;
 import api.prog5.bookwel.repository.model.BookReaction;
+import api.prog5.bookwel.repository.model.Category;
 import api.prog5.bookwel.service.AI.DataProcesser.BookUserSpecificDataProcesser;
 import java.io.File;
 import java.io.IOException;
@@ -16,10 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
-
-import api.prog5.bookwel.repository.model.Category;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -45,7 +43,8 @@ public class BookService {
 
   public List<Book> getAllRecommendedBooksFor(String userId) {
     List<BookReaction> reactedBooks = reactionService.getAllBy(userId);
-    return dataProcesser.process(reactedBooks, repository.findAll(), categoryReactionService.getAllBy(userId), userId);
+    return dataProcesser.process(
+        reactedBooks, repository.findAll(), categoryReactionService.getAllBy(userId), userId);
   }
 
   public Book getById(String id) {
@@ -54,7 +53,8 @@ public class BookService {
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));
   }
 
-  public Book crupdateBook(MultipartFile bookAsFile, String title, String author, String category) throws IOException {
+  public Book crupdateBook(MultipartFile bookAsFile, String title, String author, String category)
+      throws IOException {
     String dir = "/tmp";
     Path filepath = Paths.get(dir, bookAsFile.getOriginalFilename());
     bookAsFile.transferTo(filepath);
@@ -62,11 +62,12 @@ public class BookService {
     String filename = file.toString().substring(5);
     Category persistedCategory = categoryService.getByName(category);
     bucketComponent.upload(file, file.getName());
-    return repository.save(Book.builder()
-                    .author(author)
-                    .title(title)
-                    .category(persistedCategory)
-                    .filename(filename)
+    return repository.save(
+        Book.builder()
+            .author(author)
+            .title(title)
+            .category(persistedCategory)
+            .filename(filename)
             .build());
   }
 

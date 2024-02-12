@@ -33,11 +33,14 @@ public class BookReactionService {
     return repository.findAllByReactorId(reactorId);
   }
 
-  public int countAllBy(String bookId, ReactionStatus status){
-      return repository.countAllByBookIdAndReaction(bookId,status);
+  public int countAllBy(String bookId, ReactionStatus status) {
+    return repository.countAllByBookIdAndReaction(bookId, status);
   }
 
-  public ReactionStatus getReactionStatusBy(String bookId, String reactorId){
-      return repository.findByBookIdAndReactorId(bookId, reactorId).map(BookReaction::getReaction).orElse(UNSET);
+  public ReactionStatus getReactionStatusBy(String bookId, String reactorId) {
+    return repository
+        .findByBookIdAndReactorId(bookId, reactorId)
+        .map(BookReaction::getReaction)
+        .orElse(UNSET);
   }
 }

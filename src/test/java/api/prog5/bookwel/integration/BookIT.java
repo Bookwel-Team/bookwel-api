@@ -62,17 +62,28 @@ public class BookIT extends CustomFacadeIT {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     BookApi api = new BookApi(userOneClient);
 
-    List<Book> books = api.getBooks(null, null, null, 1, 30).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
+    List<Book> books =
+        api.getBooks(null, null, null, 1, 30).stream()
+            .map(this::unsetFileLinkAndReactionStatistics)
+            .toList();
     List<Book> authorFilteredBooks =
-        api.getBooks("one", null,null, null, null).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
+        api.getBooks("one", null, null, null, null).stream()
+            .map(this::unsetFileLinkAndReactionStatistics)
+            .toList();
     List<Book> categoryFilteredBooks =
-        api.getBooks(null, null,"Bio", null, null).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
+        api.getBooks(null, null, "Bio", null, null).stream()
+            .map(this::unsetFileLinkAndReactionStatistics)
+            .toList();
     List<Book> titleFilteredBooks =
-        api.getBooks(null, "first","Bio", null, null).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
+        api.getBooks(null, "first", "Bio", null, null).stream()
+            .map(this::unsetFileLinkAndReactionStatistics)
+            .toList();
     List<Book> fullFilteredBooks =
-        api.getBooks("one", null,"Bio", null, null).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
+        api.getBooks("one", null, "Bio", null, null).stream()
+            .map(this::unsetFileLinkAndReactionStatistics)
+            .toList();
     List<Book> recommendedBooksOnly =
-            api.getRecommendedBooks().stream().map(this::unsetFileLinkAndReactionStatistics).toList();
+        api.getRecommendedBooks().stream().map(this::unsetFileLinkAndReactionStatistics).toList();
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
     assertTrue(authorFilteredBooks.contains(bookOne()));
@@ -141,7 +152,8 @@ public class BookIT extends CustomFacadeIT {
         Bytes.concat(requestBodyPrefix.getBytes(), fileBytes, requestBodySuffix.getBytes());
 
     InputStream requestBodyStream = new ByteArrayInputStream(requestBody);
-    UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUri(URI.create(basePath + "/books"))
+    UriComponentsBuilder uriComponentsBuilder =
+        UriComponentsBuilder.fromUri(URI.create(basePath + "/books"))
             .queryParam("title", "sécurité")
             .queryParam("author", "random")
             .queryParam("category", "Science");

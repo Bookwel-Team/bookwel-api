@@ -23,8 +23,7 @@ public class FirebaseAuthenticatorTest extends FacadeIT {
   public static final String BAD_TOKEN = "bad_token";
   @Autowired FirebaseAuthenticator subject;
   @MockBean FirebaseAuth firebaseAuthMock;
-  @MockBean
-  RecommendationAPI recommendationAPIMock;
+  @MockBean RecommendationAPI recommendationAPIMock;
   FirebaseToken firebaseTokenMock = mock(FirebaseToken.class);
 
   @Test

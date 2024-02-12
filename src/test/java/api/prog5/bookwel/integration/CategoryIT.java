@@ -29,15 +29,21 @@ public class CategoryIT extends CustomFacadeIT {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     CategoryApi api = new CategoryApi(userOneClient);
 
-    List<Category> actualCategories = api.getAllCategories(null).stream().map(CategoryIT::unsetCategoryReactionStatistics).toList();
-    List<Category> actualCategoriesFiltered = api.getAllCategories(categoryTwo().getName()).stream().map(CategoryIT::unsetCategoryReactionStatistics).toList();
+    List<Category> actualCategories =
+        api.getAllCategories(null).stream()
+            .map(CategoryIT::unsetCategoryReactionStatistics)
+            .toList();
+    List<Category> actualCategoriesFiltered =
+        api.getAllCategories(categoryTwo().getName()).stream()
+            .map(CategoryIT::unsetCategoryReactionStatistics)
+            .toList();
 
     assertTrue(actualCategories.containsAll(List.of(categoryOne(), categoryTwo())));
     assertTrue(actualCategoriesFiltered.contains(categoryTwo()));
     assertEquals(1, actualCategoriesFiltered.size());
   }
 
-  private static Category unsetCategoryReactionStatistics(Category category){
+  private static Category unsetCategoryReactionStatistics(Category category) {
     category.setReactionStatistics(new ReactionStatistics());
     return category;
   }

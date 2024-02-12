@@ -22,6 +22,7 @@ public class Payload implements Serializable {
 
   @JsonProperty("all_books")
   private List<api.prog5.bookwel.repository.model.Book> allBooks;
+
   @JsonProperty("user_categories")
   private List<Category> userCategories;
 }

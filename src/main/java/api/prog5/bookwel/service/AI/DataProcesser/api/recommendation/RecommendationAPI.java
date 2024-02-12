@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.function.BiFunction;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,9 @@ public class RecommendationAPI {
   }
 
   public List<Book> apply(
-          List<Book> filteredBooks, List<api.prog5.bookwel.repository.model.Book> notFilteredBooks, List<Category> categories) {
+      List<Book> filteredBooks,
+      List<api.prog5.bookwel.repository.model.Book> notFilteredBooks,
+      List<Category> categories) {
     RestTemplate restTemplate = new RestTemplate();
     UriComponentsBuilder uriComponentsBuilder =
         UriComponentsBuilder.fromUri(baseUrl).path("/recommandation/recommandation/");
@@ -45,11 +46,10 @@ public class RecommendationAPI {
           new HttpEntity<>(
               om.writeValueAsString(
                   Payload.builder()
-                          .allBooks(notFilteredBooks)
-                          .userBooks(filteredBooks)
-                          .userCategories(categories)
-                          .build())
-          );
+                      .allBooks(notFilteredBooks)
+                      .userBooks(filteredBooks)
+                      .userCategories(categories)
+                      .build()));
     } catch (JsonProcessingException e) {
       throw new ApiException(SERVER_EXCEPTION, e.getMessage());
     }

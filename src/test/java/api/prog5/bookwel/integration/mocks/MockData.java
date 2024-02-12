@@ -87,10 +87,13 @@ public class MockData {
     return new CrupdateReaction().reactionStatus(LIKE).reactorId(USER_ONE_ID);
   }
 
-  public static CategoryCrupdateReaction categoryCrupdateReaction(){
-    return new CategoryCrupdateReaction().reactionStatus(LIKE).reactorId(USER_ONE_ID)
-            .categoryId(categoryOne().getId());
+  public static CategoryCrupdateReaction categoryCrupdateReaction() {
+    return new CategoryCrupdateReaction()
+        .reactionStatus(LIKE)
+        .reactorId(USER_ONE_ID)
+        .categoryId(categoryOne().getId());
   }
+
   public static CategoryReaction expectedCategoryReaction() {
     return new CategoryReaction()
         .id(null)
@@ -151,14 +154,21 @@ public class MockData {
   }
 
   public static Category categoryOne() {
-    return new Category().id("category_one_id").name("Biopic").reactionStatistics(new ReactionStatistics());
+    return new Category()
+        .id("category_one_id")
+        .name("Biopic")
+        .reactionStatistics(new ReactionStatistics());
   }
 
   public static Category categoryTwo() {
-    return new Category().id("category_two_id").name("Romance").reactionStatistics(new ReactionStatistics());
+    return new Category()
+        .id("category_two_id")
+        .name("Romance")
+        .reactionStatistics(new ReactionStatistics());
   }
 
-  public static api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.model.Book likedBookOneMockAsAiBook(){
+  public static api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.model.Book
+      likedBookOneMockAsAiBook() {
     Book book = bookOne();
     var result = new api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.model.Book();
     result.setId(book.getId());

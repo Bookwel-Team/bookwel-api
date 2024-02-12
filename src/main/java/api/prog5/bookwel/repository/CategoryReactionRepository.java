@@ -17,6 +17,8 @@ public interface CategoryReactionRepository extends JpaRepository<CategoryReacti
       Category category, ReactionStatus reactionStatus);
 
   Optional<CategoryReaction> findByCategoryIdAndReactorId(String categoryId, String reactorId);
+
   List<CategoryReaction> findAllByReactorId(String reactorId);
+
   int countAllByCategoryIdAndReaction(String categoryId, ReactionStatus reaction);
 }

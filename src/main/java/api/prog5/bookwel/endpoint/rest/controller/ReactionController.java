@@ -3,8 +3,8 @@ package api.prog5.bookwel.endpoint.rest.controller;
 import api.prog5.bookwel.endpoint.rest.mapper.BookReactionMapper;
 import api.prog5.bookwel.endpoint.rest.mapper.CategoryReactionMapper;
 import api.prog5.bookwel.endpoint.rest.model.BookReaction;
-import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.endpoint.rest.model.CategoryCrupdateReaction;
+import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
 import api.prog5.bookwel.service.BookReactionService;
 import api.prog5.bookwel.service.CategoryReactionService;
@@ -32,9 +32,11 @@ public class ReactionController {
   }
 
   @PutMapping("/categories/reactions")
-  public List<CategoryReaction> crupdateCategoryReaction(@RequestBody List<CategoryCrupdateReaction> crupdateReactions) {
+  public List<CategoryReaction> crupdateCategoryReaction(
+      @RequestBody List<CategoryCrupdateReaction> crupdateReactions) {
     var mappedToDomain = crupdateReactions.stream().map(categoryReactionMapper::toDomain).toList();
-    return
-        categoryReactionService.crupdateCategoryReactions(mappedToDomain).stream().map(categoryReactionMapper::toRest).toList();
+    return categoryReactionService.crupdateCategoryReactions(mappedToDomain).stream()
+        .map(categoryReactionMapper::toRest)
+        .toList();
   }
 }

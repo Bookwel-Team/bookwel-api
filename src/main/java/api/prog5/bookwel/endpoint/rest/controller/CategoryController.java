@@ -19,9 +19,10 @@ public class CategoryController {
 
   @GetMapping("/categories")
   public List<Category> getAllCategories(
-          @RequestParam(required = false) String name,
-          @AuthenticationPrincipal Principal principal) {
+      @RequestParam(required = false) String name, @AuthenticationPrincipal Principal principal) {
     var currentUser = principal == null ? null : principal.getUser();
-    return categoryService.getAllByCriteria(name).stream().map(c -> mapper.toRest(c, currentUser)).toList();
+    return categoryService.getAllByCriteria(name).stream()
+        .map(c -> mapper.toRest(c, currentUser))
+        .toList();
   }
 }
