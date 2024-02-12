@@ -28,7 +28,7 @@ public class BookController {
       @RequestParam(value = "category", required = false) String category,
       @RequestParam(value = "title", required = false) String title,
       @RequestParam(value = "page", defaultValue = "1") Integer page,
-      @RequestParam(value = "page_size", defaultValue = "20") Integer pageSize,
+      @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
       @AuthenticationPrincipal Principal principal) {
     // added currentUser check because endpoint is permitAll so anonymous users have UNSET reaction
     var currentUser = principal == null ? null : principal.getUser();

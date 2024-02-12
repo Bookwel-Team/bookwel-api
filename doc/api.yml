@@ -127,7 +127,7 @@ paths:
           required: false
           schema:
             type: integer
-        - name: page_size
+        - name: pageSize
           in: query
           required: false
           schema:
@@ -181,13 +181,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book'
-  '/books/{book_id}/reaction':
+  '/books/{bookId}/reaction':
     put:
       tags:
         - Reaction
       summary: set or unset a reaction on a book
       parameters:
-        - name: book_id
+        - name: bookId
           in: path
           required: true
           schema:
@@ -412,9 +412,9 @@ components:
     UserProfile:
       type: object
       properties:
-        first_name:
+        firstName:
           type: string
-        last_name:
+        lastName:
           type: string
         email:
           type: string
@@ -448,9 +448,9 @@ components:
           type: string
         category:
           type: string
-        file_link:
+        fileLink:
           type: string
-        file_name:
+        fileName:
           type: string
     Reacted:
       type: object
@@ -460,9 +460,9 @@ components:
     ReactionStatistics:
       type: object
       properties:
-        like_numbers:
+        likeNumbers:
           type: integer
-        dislike_numbers:
+        dislikeNumbers:
           type: integer
         byCurrentUser:
           $ref: "#/components/schemas/ReactionStatus"
@@ -505,9 +505,9 @@ components:
     CrupdateReaction:
       type: object
       properties:
-        reactor_id:
+        reactorId:
           type: string
-        reaction_status:
+        reactionStatus:
             $ref: '#/components/schemas/ReactionStatus'
     CategoryCrupdateReaction:
       allOf:
@@ -522,12 +522,12 @@ components:
       properties:
         id:
           type: string
-        book_title:
+        bookTitle:
           type: string
-        creation_datetime:
+        creationDatetime:
           type: string
           format: date-time
-        reactor_name:
+        reactorName:
           type: string
     CategoryReaction:
       allOf:
@@ -538,10 +538,10 @@ components:
           type: string
         category:
           type: string
-        creation_datetime:
+        creationDatetime:
           type: string
           format: date-time
-        reactor_name:
+        reactorName:
           type: string
     AiResponse:
       type: object
