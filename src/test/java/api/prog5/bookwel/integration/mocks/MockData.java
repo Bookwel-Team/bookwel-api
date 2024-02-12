@@ -11,6 +11,7 @@ import api.prog5.bookwel.endpoint.rest.model.Category;
 import api.prog5.bookwel.endpoint.rest.model.CategoryCrupdateReaction;
 import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
+import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
 import java.time.Instant;
@@ -67,7 +68,8 @@ public class MockData {
         .category("Biopic")
         .title("The first book")
         .fileLink(null)
-        .fileName("none");
+        .fileName("none")
+        .reactionStatistics(new ReactionStatistics());
   }
 
   public static Book bookTwo() {
@@ -77,7 +79,8 @@ public class MockData {
         .category("Biopic")
         .title("The second book")
         .fileLink(null)
-        .fileName("none");
+        .fileName("none")
+        .reactionStatistics(new ReactionStatistics());
   }
 
   public static CrupdateReaction crupdateReaction() {
@@ -140,11 +143,11 @@ public class MockData {
 
   public static Book createdBook() {
     return new Book()
-            .fileName("Securite.pdf")
-            .fileLink(MOCK_PRESIGNED_URL)
-            .category("Science")
-            .author("random")
-            .title("sécurité");
+        .fileName("Securite.pdf")
+        .category("Science")
+        .author("random")
+        .title("sécurité")
+        .reactionStatistics(new ReactionStatistics());
   }
 
   public static Category categoryOne() {

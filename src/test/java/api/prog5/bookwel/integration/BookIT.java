@@ -15,6 +15,7 @@ import api.prog5.bookwel.endpoint.rest.api.BookApi;
 import api.prog5.bookwel.endpoint.rest.client.ApiClient;
 import api.prog5.bookwel.endpoint.rest.client.ApiException;
 import api.prog5.bookwel.endpoint.rest.model.Book;
+import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
 import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.service.BookService;
 import api.prog5.bookwel.utils.TestUtils;
@@ -33,7 +34,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -41,7 +41,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-@Slf4j
 public class BookIT extends CustomFacadeIT {
   @LocalServerPort private int serverPort;
   @Autowired BookService bookService;
@@ -63,17 +62,17 @@ public class BookIT extends CustomFacadeIT {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     BookApi api = new BookApi(userOneClient);
 
-    List<Book> books = api.getBooks(null, null, null, 1, 30).stream().map(this::ignoreFilelink).toList();
+    List<Book> books = api.getBooks(null, null, null, 1, 30).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
     List<Book> authorFilteredBooks =
-        api.getBooks("one", null,null, null, null).stream().map(this::ignoreFilelink).toList();
+        api.getBooks("one", null,null, null, null).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
     List<Book> categoryFilteredBooks =
-        api.getBooks(null, null,"Bio", null, null).stream().map(this::ignoreFilelink).toList();
+        api.getBooks(null, null,"Bio", null, null).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
     List<Book> titleFilteredBooks =
-        api.getBooks(null, "first","Bio", null, null).stream().map(this::ignoreFilelink).toList();
+        api.getBooks(null, "first","Bio", null, null).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
     List<Book> fullFilteredBooks =
-        api.getBooks("one", null,"Bio", null, null).stream().map(this::ignoreFilelink).toList();
+        api.getBooks("one", null,"Bio", null, null).stream().map(this::unsetFileLinkAndReactionStatistics).toList();
     List<Book> recommendedBooksOnly =
-            api.getRecommendedBooks().stream().map(this::ignoreFilelink).toList();
+            api.getRecommendedBooks().stream().map(this::unsetFileLinkAndReactionStatistics).toList();
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
     assertTrue(authorFilteredBooks.contains(bookOne()));
@@ -93,7 +92,7 @@ public class BookIT extends CustomFacadeIT {
 
     Book actual = api.getBookById(expected.getId());
 
-    actual = ignoreFilelink(actual);
+    actual = unsetFileLinkAndReactionStatistics(actual);
     assertEquals(expected, actual);
   }
 
@@ -158,13 +157,15 @@ public class BookIT extends CustomFacadeIT {
         client.send(request, HttpResponse.BodyHandlers.ofInputStream());
 
     Book book = om.readValue(response.body(), new TypeReference<>() {});
-    ignoreId(book);
+    book = ignoreId(book);
+    book = unsetFileLinkAndReactionStatistics(book);
     assertEquals(200, response.statusCode());
     assertEquals(createdBook(), book);
   }
 
-  private Book ignoreFilelink(Book book) {
+  private Book unsetFileLinkAndReactionStatistics(Book book) {
     book.setFileLink(null);
+    book.setReactionStatistics(new ReactionStatistics());
     return book;
   }
 
