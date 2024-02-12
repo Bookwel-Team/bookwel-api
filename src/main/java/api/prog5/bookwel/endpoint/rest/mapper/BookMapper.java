@@ -6,7 +6,6 @@ import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.UNSET;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
-import api.prog5.bookwel.endpoint.rest.security.auth.AuthProvider;
 import api.prog5.bookwel.repository.model.User;
 import api.prog5.bookwel.service.BookReactionService;
 import api.prog5.bookwel.service.BookService;
@@ -29,10 +28,12 @@ public class BookMapper {
         .category(domain.getCategory().getName())
         .title(domain.getTitle())
         .reactionStatistics(
-                new ReactionStatistics()
-                        .byCurrentUser(currentUser == null ? UNSET : reactionService.getReactionStatusBy(domain.getId(), currentUser.getId()))
-                        .dislikeNumbers(reactionService.countAllBy(domain.getId(), LIKE))
-                        .likeNumbers(reactionService.countAllBy(domain.getId(), DISLIKE))
-        );
+            new ReactionStatistics()
+                .byCurrentUser(
+                    currentUser == null
+                        ? UNSET
+                        : reactionService.getReactionStatusBy(domain.getId(), currentUser.getId()))
+                .dislikeNumbers(reactionService.countAllBy(domain.getId(), LIKE))
+                .likeNumbers(reactionService.countAllBy(domain.getId(), DISLIKE)));
   }
 }

@@ -15,19 +15,25 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Generated
 public class BookUserSpecificDataProcesser
-    implements TriUserSpecificDataProcesser<List<BookReaction>, List<Book>, List<CategoryReaction>,List<Book>> {
+    implements TriUserSpecificDataProcesser<
+        List<BookReaction>, List<Book>, List<CategoryReaction>, List<Book>> {
   private final RecommendationAPI recommendationAPI;
   private final BookMapper mapper;
   private final CategoryMapper categoryMapper;
 
   @Override
-  public List<Book> process(List<BookReaction> reactedBooks, List<Book> allBooks, List<CategoryReaction> categoryReactions, String userId) {
+  public List<Book> process(
+      List<BookReaction> reactedBooks,
+      List<Book> allBooks,
+      List<CategoryReaction> categoryReactions,
+      String userId) {
     return recommendationAPI
         .apply(
             reactedBooks.stream().map(book -> mapper.toApiModel(book, userId)).toList(),
-                allBooks,
-                categoryReactions.stream().map(category -> categoryMapper.toApiModel(category, userId)).toList()
-        )
+            allBooks,
+            categoryReactions.stream()
+                .map(category -> categoryMapper.toApiModel(category, userId))
+                .toList())
         .stream()
         .map(mapper::toDomain)
         .toList();

@@ -1,7 +1,7 @@
 package api.prog5.bookwel.endpoint.rest.mapper;
 
-import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.endpoint.rest.model.CategoryCrupdateReaction;
+import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
 import api.prog5.bookwel.service.CategoryService;
 import api.prog5.bookwel.service.UserService;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,6 @@
 package api.prog5.bookwel.repository;
 
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatus;
-import api.prog5.bookwel.repository.model.Book;
 import api.prog5.bookwel.repository.model.BookReaction;
 import java.util.List;
 import java.util.Optional;
@@ -17,5 +16,6 @@ public interface BookReactionRepository extends JpaRepository<BookReaction, Stri
   Optional<BookReaction> findByBookIdAndReactorId(String bookId, String reactorId);
 
   List<BookReaction> findAllByReactorId(String reactorId);
+
   int countAllByBookIdAndReaction(String bookdId, ReactionStatus reactionStatus);
 }

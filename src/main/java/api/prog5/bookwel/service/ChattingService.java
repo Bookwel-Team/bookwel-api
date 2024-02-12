@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 @Generated
 public class ChattingService {
   private final ChatClient chatClient;
-  private final String systemPrompt = """
+  private final String systemPrompt =
+      """
                     You are an AI Literary Recommendation Engine, providing book suggestions %s.
                    """;
 
