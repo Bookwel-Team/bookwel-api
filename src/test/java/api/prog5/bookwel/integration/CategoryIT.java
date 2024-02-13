@@ -1,5 +1,6 @@
 package api.prog5.bookwel.integration;
 
+import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.categoryOne;
 import static api.prog5.bookwel.integration.mocks.MockData.categoryTwo;
@@ -30,11 +31,11 @@ public class CategoryIT extends CustomFacadeIT {
     CategoryApi api = new CategoryApi(userOneClient);
 
     List<Category> actualCategories =
-        api.getAllCategories(null).stream()
+        api.getAllCategories(null, null).stream()
             .map(CategoryIT::unsetCategoryReactionStatistics)
             .toList();
     List<Category> actualCategoriesFiltered =
-        api.getAllCategories(categoryTwo().getName()).stream()
+        api.getAllCategories(categoryTwo().getName(), USER_ONE_ID).stream()
             .map(CategoryIT::unsetCategoryReactionStatistics)
             .toList();
 

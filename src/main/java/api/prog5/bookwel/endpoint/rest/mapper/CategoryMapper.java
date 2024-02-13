@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class CategoryMapper {
   private final CategoryReactionService reactionService;
 
-  public Category toRest(api.prog5.bookwel.repository.model.Category domain, User user) {
+  public Category toRest(api.prog5.bookwel.repository.model.Category domain, String userId) {
     return new Category()
         .id(domain.getId())
         .name(domain.getName())
@@ -25,8 +25,8 @@ public class CategoryMapper {
                 .likeNumbers(reactionService.countAllBy(domain.getId(), LIKE))
                 .dislikeNumbers(reactionService.countAllBy(domain.getId(), DISLIKE))
                 .byCurrentUser(
-                    user == null
+                    userId == null
                         ? UNSET
-                        : reactionService.getReactionStatusBy(domain.getId(), user.getId())));
+                        : reactionService.getReactionStatusBy(domain.getId(), userId)));
   }
 }

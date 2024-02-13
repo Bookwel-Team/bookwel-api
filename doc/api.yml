@@ -71,6 +71,12 @@ paths:
           required: false
           schema:
             type: string
+        - name: userId
+          description: helps on getting the already reacted categories
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: All categories
@@ -118,6 +124,11 @@ paths:
           schema:
             type: string
         - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: userId
           in: query
           required: false
           schema:

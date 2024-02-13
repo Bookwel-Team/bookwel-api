@@ -18,7 +18,7 @@ public class BookMapper {
   private final BookService service;
   private final BookReactionService reactionService;
 
-  public Book toRest(api.prog5.bookwel.repository.model.Book domain, User currentUser) {
+  public Book toRest(api.prog5.bookwel.repository.model.Book domain, String userId) {
     String filename = domain.getFilename();
     return new Book()
         .id(domain.getId())
@@ -30,9 +30,9 @@ public class BookMapper {
         .reactionStatistics(
             new ReactionStatistics()
                 .byCurrentUser(
-                    currentUser == null
+                    userId == null
                         ? UNSET
-                        : reactionService.getReactionStatusBy(domain.getId(), currentUser.getId()))
+                        : reactionService.getReactionStatusBy(domain.getId(), userId))
                 .dislikeNumbers(reactionService.countAllBy(domain.getId(), LIKE))
                 .likeNumbers(reactionService.countAllBy(domain.getId(), DISLIKE)));
   }

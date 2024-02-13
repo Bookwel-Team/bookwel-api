@@ -1,6 +1,7 @@
 package api.prog5.bookwel.integration;
 
 import static api.prog5.bookwel.integration.mocks.MockData.NON_EXISTENT_BOOK_ID;
+import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.bookOne;
 import static api.prog5.bookwel.integration.mocks.MockData.bookTwo;
@@ -63,23 +64,23 @@ public class BookIT extends CustomFacadeIT {
     BookApi api = new BookApi(userOneClient);
 
     List<Book> books =
-        api.getBooks(null, null, null, 1, 30).stream()
+        api.getBooks(null, null,null, USER_ONE_ID, 1, 30).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> authorFilteredBooks =
-        api.getBooks("one", null, null, null, null).stream()
+        api.getBooks("one", null, null, null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> categoryFilteredBooks =
-        api.getBooks(null, null, "Bio", null, null).stream()
+        api.getBooks(null, null, "Bio", null,null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> titleFilteredBooks =
-        api.getBooks(null, "first", "Bio", null, null).stream()
+        api.getBooks(null, "first", "Bio", null,null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> fullFilteredBooks =
-        api.getBooks("one", null, "Bio", null, null).stream()
+        api.getBooks("one", null, "Bio", null,null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> recommendedBooksOnly =

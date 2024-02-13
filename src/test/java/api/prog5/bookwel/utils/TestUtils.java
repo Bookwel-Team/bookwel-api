@@ -29,4 +29,11 @@ public class TestUtils {
     assertEquals(
         "{" + "\"type\":\"403 FORBIDDEN\"," + "\"message\":\"" + message + "\"}", responseBody);
   }
+
+  public static void assertThrowsBadRequestException(Executable executable, String message) {
+    ApiException apiException = assertThrows(ApiException.class, executable);
+    String responseBody = apiException.getResponseBody();
+    assertEquals(
+            "{" + "\"type\":\"400 BAD_REQUEST\"," + "\"message\":\"" + message + "\"}", responseBody);
+  }
 }

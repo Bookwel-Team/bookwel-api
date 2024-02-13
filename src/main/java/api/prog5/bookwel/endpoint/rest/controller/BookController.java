@@ -29,24 +29,22 @@ public class BookController {
       @RequestParam(value = "title", required = false) String title,
       @RequestParam(value = "page", defaultValue = "1") Integer page,
       @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
-      @AuthenticationPrincipal Principal principal) {
-    // added currentUser check because endpoint is permitAll so anonymous users have UNSET reaction
-    var currentUser = principal == null ? null : principal.getUser();
+      @RequestParam(required = false) String userId) {
     return bookService.getAllByCriteria(author, title, category, page, pageSize).stream()
-        .map(b -> bookMapper.toRest(b, currentUser))
+        .map(b -> bookMapper.toRest(b, userId))
         .toList();
   }
 
   @GetMapping("/recommended-books")
   public List<Book> getRecommendedBooks(@AuthenticationPrincipal Principal principal) {
     return bookService.getAllRecommendedBooksFor(principal.getUser().getId()).stream()
-        .map(b -> bookMapper.toRest(b, null))
+        .map(b -> bookMapper.toRest(b, principal.getUser().getId()))
         .toList();
   }
 
   @GetMapping("/books/{id}")
   public Book getBookById(@PathVariable String id, @AuthenticationPrincipal Principal principal) {
-    return bookMapper.toRest(bookService.getById(id), principal.getUser());
+    return bookMapper.toRest(bookService.getById(id), principal.getUser().getId());
   }
 
   @PutMapping(
@@ -60,6 +58,6 @@ public class BookController {
       @AuthenticationPrincipal Principal principal)
       throws IOException {
     return bookMapper.toRest(
-        bookService.crupdateBook(book, title, author, category), principal.getUser());
+        bookService.crupdateBook(book, title, author, category), principal.getUser().getId());
   }
 }
