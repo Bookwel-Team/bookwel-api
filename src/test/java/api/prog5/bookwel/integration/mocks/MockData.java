@@ -44,16 +44,12 @@ public class MockData {
         .status(CLIENT);
   }
 
-  public static UserProfile userProfile() {
-    return new UserProfile().firstName("John").lastName("Doe").email("john.doe@gmail.com");
+  public static UserProfile userProfile(String email) {
+    return new UserProfile().firstName("John").lastName("Doe").email(email);
   }
 
-  public static User expectedAdminAfterUpdate() {
-    return new User().id(USER_ONE_ID).profile(userProfile()).firebaseId(null).status(ADMIN);
-  }
-
-  public static User expectedClientAfterUpdate() {
-    return new User().id(USER_TWO_ID).profile(userProfile()).firebaseId(null).status(CLIENT);
+  public static User expectedClientAfterUpdate(String email) {
+    return new User().id(USER_TWO_ID).profile(userProfile(email)).firebaseId(null).status(CLIENT);
   }
 
   public static String USER_ONE_ID_TOKEN = "user_one_id_token";

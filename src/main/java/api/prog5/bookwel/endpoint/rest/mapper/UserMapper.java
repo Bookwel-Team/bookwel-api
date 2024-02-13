@@ -6,6 +6,7 @@ import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 import static java.util.UUID.randomUUID;
 
 import api.prog5.bookwel.endpoint.rest.exception.ApiException;
+import api.prog5.bookwel.endpoint.rest.exception.BadRequestException;
 import api.prog5.bookwel.endpoint.rest.model.CreateUser;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
@@ -33,8 +34,15 @@ public class UserMapper {
   }
 
   public api.prog5.bookwel.repository.model.User toDomain(CreateUser createUser) {
+    UserProfile profile = createUser.getProfile();
+    if (profile == null ){
+      throw new BadRequestException("profile is mandatory, especially profile.email");
+    }
     return api.prog5.bookwel.repository.model.User.builder()
         .id(randomUUID().toString())
+        .email(profile.getEmail())
+        .firstName(profile.getFirstName())
+        .lastName(profile.getLastName())
         .role(api.prog5.bookwel.repository.model.User.Role.CLIENT)
         .firebaseId(createUser.getFirebaseId())
         .build();
@@ -42,7 +50,7 @@ public class UserMapper {
 
   public api.prog5.bookwel.repository.model.User toDomain(UserProfile profile, String userId) {
     api.prog5.bookwel.repository.model.User persisted = userService.getById(userId);
-    persisted.setEmail(profile.getEmail());
+    //persisted.setEmail(profile.getEmail());
     persisted.setFirstName(profile.getFirstName());
     persisted.setLastName(profile.getLastName());
     return persisted;
