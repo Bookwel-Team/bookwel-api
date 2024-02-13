@@ -6,7 +6,6 @@ import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.UNSET;
 
 import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
-import api.prog5.bookwel.repository.model.User;
 import api.prog5.bookwel.service.BookReactionService;
 import api.prog5.bookwel.service.BookService;
 import lombok.AllArgsConstructor;

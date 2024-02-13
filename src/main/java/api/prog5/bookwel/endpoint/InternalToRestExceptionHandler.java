@@ -62,8 +62,10 @@ public class InternalToRestExceptionHandler {
     String message = e.getCause().getCause().getMessage();
     return handleBadRequest(new BadRequestException(message));
   }
+
   @ExceptionHandler(value = {java.lang.Exception.class})
-  ResponseEntity<api.prog5.bookwel.endpoint.rest.model.Exception> handleDefault(java.lang.Exception e) {
+  ResponseEntity<api.prog5.bookwel.endpoint.rest.model.Exception> handleDefault(
+      java.lang.Exception e) {
     log.error("Internal error", e);
     return new ResponseEntity<>(toRest(e, INTERNAL_SERVER_ERROR), INTERNAL_SERVER_ERROR);
   }
@@ -74,7 +76,8 @@ public class InternalToRestExceptionHandler {
         ForbiddenException.class,
         AuthenticationException.class
       })
-  ResponseEntity<api.prog5.bookwel.endpoint.rest.model.Exception> handleForbidden(java.lang.Exception e) {
+  ResponseEntity<api.prog5.bookwel.endpoint.rest.model.Exception> handleForbidden(
+      java.lang.Exception e) {
     /* rest.model.Exception.Type.FORBIDDEN designates both authentication and authorization errors.
      * Hence do _not_ HttpsStatus.UNAUTHORIZED because, counter-intuitively,
      * it's just for authentication.

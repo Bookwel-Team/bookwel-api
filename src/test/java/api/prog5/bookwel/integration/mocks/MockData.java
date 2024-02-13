@@ -179,7 +179,7 @@ public class MockData {
     return result;
   }
 
-  public static BookResponse dummyBookResponse(){
+  public static BookResponse dummyBookResponse() {
     return BookResponse.builder().author("dummy").title("dummy").build();
   }
 }
