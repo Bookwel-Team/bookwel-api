@@ -304,7 +304,7 @@ paths:
     put:
       tags:
         - Users
-      summary: update user profile
+      summary: update user profile except for mail
       operationId: updateUserProfile
       parameters:
         - name: userId
@@ -424,8 +424,6 @@ components:
       properties:
         id:
           type: string
-        profile:
-          $ref: "#/components/schemas/UserProfile"
         status:
           $ref: "#/components/schemas/UserStatus"
       allOf:
@@ -471,6 +469,8 @@ components:
       properties:
         firebaseId:
           type: string
+        profile:
+          $ref: "#/components/schemas/UserProfile"
     CreateBook:
       type: object
       properties:

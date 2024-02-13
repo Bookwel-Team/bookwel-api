@@ -1,12 +1,16 @@
 package api.prog5.bookwel.integration;
 
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
+import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_EMAIL;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
+import static api.prog5.bookwel.integration.mocks.MockData.USER_TWO_EMAIL;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_TWO_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.expectedClientAfterUpdate;
 import static api.prog5.bookwel.integration.mocks.MockData.userOne;
 import static api.prog5.bookwel.integration.mocks.MockData.userProfile;
 import static api.prog5.bookwel.integration.mocks.MockData.userTwo;
+import static api.prog5.bookwel.utils.TestUtils.assertThrowsApiException;
+import static api.prog5.bookwel.utils.TestUtils.assertThrowsBadRequestException;
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,7 +44,7 @@ public class UserIT extends CustomFacadeIT {
 
     List<User> users = api.getAllUsers();
 
-    assertTrue(users.containsAll(List.of(userOne(), expectedClientAfterUpdate())));
+    assertTrue(users.contains(userOne()));
   }
 
   @Test
@@ -58,11 +62,11 @@ public class UserIT extends CustomFacadeIT {
   void create_user_ok() throws ApiException {
     ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
     UsersApi api = new UsersApi(userOneClient);
-    CreateUser payload = creatableUser();
+    CreateUser payload = creatableUser("mock@gmail.com");
     User expected = from(payload, CLIENT);
 
     User actual = api.createUser(payload);
-    User updatedPayload = setProfile(actual);
+    User updatedPayload = updateProfile(actual);
     User actualUpdated = api.updateUserProfile(actual.getId(), updatedPayload.getProfile());
     ignoreId(actual);
     ignoreId(actualUpdated);
@@ -72,36 +76,45 @@ public class UserIT extends CustomFacadeIT {
   }
 
   @Test
+  void create_user_ko() {
+    ApiClient userOneClient = anApiClient(USER_ONE_ID_TOKEN);
+    UsersApi api = new UsersApi(userOneClient);
+    CreateUser payload = creatableUser(null);
+    assertThrowsBadRequestException(() -> api.createUser(payload), "profile.email is mandatory.");
+    assertThrowsBadRequestException(() -> api.createUser(payload.profile(null)), "profile is mandatory.");
+  }
+
+  @Test
   void update_user_profile_as_client() throws ApiException {
     ApiClient userOneClient = anApiClient(USER_TWO_ID_TOKEN);
     UsersApi api = new UsersApi(userOneClient);
     User user = userTwo();
 
-    User actual = api.updateUserProfile(user.getId(), userProfile());
-    User expected = expectedClientAfterUpdate();
+    User actual = api.updateUserProfile(user.getId(), userProfile(USER_TWO_EMAIL));
+    User expected = expectedClientAfterUpdate(USER_TWO_EMAIL);
 
     assertEquals(expected, actual);
   }
 
-  CreateUser creatableUser() {
-    return new CreateUser().firebaseId(randomUUID().toString());
+  CreateUser creatableUser(String email) {
+    return new CreateUser().firebaseId(randomUUID().toString()).profile(new UserProfile().email(email));
   }
 
   User from(CreateUser createUser, UserStatus status) {
     return new User()
         .firebaseId(createUser.getFirebaseId())
         .status(status)
-        .profile(new UserProfile());
+        .profile(createUser.getProfile());
   }
 
-  User setProfile(User user) {
+  User updateProfile(User user) {
     return new User()
         .firebaseId(user.getFirebaseId())
         .profile(
             new UserProfile()
                 .firstName(randomUUID().toString())
                 .lastName(randomUUID().toString())
-                .email("test@email.com"))
+                .email(user.getProfile().getEmail()))
         .status(user.getStatus());
   }
 

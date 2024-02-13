@@ -6,10 +6,12 @@ import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
 import static java.util.UUID.randomUUID;
 
 import api.prog5.bookwel.endpoint.rest.exception.ApiException;
+import api.prog5.bookwel.endpoint.rest.exception.BadRequestException;
 import api.prog5.bookwel.endpoint.rest.model.CreateUser;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
 import api.prog5.bookwel.endpoint.rest.model.UserStatus;
+import api.prog5.bookwel.endpoint.rest.validator.CreateUserValidator;
 import api.prog5.bookwel.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
   private final UserRoleMapper roleMapper;
   private final UserService userService;
+  private final CreateUserValidator createUserValidator;
 
   public User toRest(api.prog5.bookwel.repository.model.User user) {
     return new User()
@@ -33,8 +36,13 @@ public class UserMapper {
   }
 
   public api.prog5.bookwel.repository.model.User toDomain(CreateUser createUser) {
+    createUserValidator.accept(createUser);
+    UserProfile profile = createUser.getProfile();
     return api.prog5.bookwel.repository.model.User.builder()
         .id(randomUUID().toString())
+        .email(profile.getEmail())
+        .firstName(profile.getFirstName())
+        .lastName(profile.getLastName())
         .role(api.prog5.bookwel.repository.model.User.Role.CLIENT)
         .firebaseId(createUser.getFirebaseId())
         .build();
@@ -42,7 +50,7 @@ public class UserMapper {
 
   public api.prog5.bookwel.repository.model.User toDomain(UserProfile profile, String userId) {
     api.prog5.bookwel.repository.model.User persisted = userService.getById(userId);
-    persisted.setEmail(profile.getEmail());
+    //persisted.setEmail(profile.getEmail());
     persisted.setFirstName(profile.getFirstName());
     persisted.setLastName(profile.getLastName());
     return persisted;
