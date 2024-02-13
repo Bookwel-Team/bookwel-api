@@ -34,6 +34,6 @@ public class TestUtils {
     ApiException apiException = assertThrows(ApiException.class, executable);
     String responseBody = apiException.getResponseBody();
     assertEquals(
-            "{" + "\"type\":\"400 BAD_REQUEST\"," + "\"message\":\"" + message + "\"}", responseBody);
+        "{" + "\"type\":\"400 BAD_REQUEST\"," + "\"message\":\"" + message + "\"}", responseBody);
   }
 }

@@ -1,7 +1,6 @@
 package api.prog5.bookwel.integration;
 
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
-import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_EMAIL;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_TWO_EMAIL;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_TWO_ID_TOKEN;
@@ -9,7 +8,6 @@ import static api.prog5.bookwel.integration.mocks.MockData.expectedClientAfterUp
 import static api.prog5.bookwel.integration.mocks.MockData.userOne;
 import static api.prog5.bookwel.integration.mocks.MockData.userProfile;
 import static api.prog5.bookwel.integration.mocks.MockData.userTwo;
-import static api.prog5.bookwel.utils.TestUtils.assertThrowsApiException;
 import static api.prog5.bookwel.utils.TestUtils.assertThrowsBadRequestException;
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -81,7 +79,8 @@ public class UserIT extends CustomFacadeIT {
     UsersApi api = new UsersApi(userOneClient);
     CreateUser payload = creatableUser(null);
     assertThrowsBadRequestException(() -> api.createUser(payload), "profile.email is mandatory.");
-    assertThrowsBadRequestException(() -> api.createUser(payload.profile(null)), "profile is mandatory.");
+    assertThrowsBadRequestException(
+        () -> api.createUser(payload.profile(null)), "profile is mandatory.");
   }
 
   @Test
@@ -97,7 +96,9 @@ public class UserIT extends CustomFacadeIT {
   }
 
   CreateUser creatableUser(String email) {
-    return new CreateUser().firebaseId(randomUUID().toString()).profile(new UserProfile().email(email));
+    return new CreateUser()
+        .firebaseId(randomUUID().toString())
+        .profile(new UserProfile().email(email));
   }
 
   User from(CreateUser createUser, UserStatus status) {

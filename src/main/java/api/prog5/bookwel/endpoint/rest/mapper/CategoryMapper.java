@@ -6,7 +6,6 @@ import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.UNSET;
 
 import api.prog5.bookwel.endpoint.rest.model.Category;
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
-import api.prog5.bookwel.repository.model.User;
 import api.prog5.bookwel.service.CategoryReactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

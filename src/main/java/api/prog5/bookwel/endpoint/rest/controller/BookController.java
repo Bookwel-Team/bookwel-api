@@ -1,7 +1,5 @@
 package api.prog5.bookwel.endpoint.rest.controller;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.APPLICATION_PDF_VALUE;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 import api.prog5.bookwel.endpoint.rest.mapper.BookMapper;

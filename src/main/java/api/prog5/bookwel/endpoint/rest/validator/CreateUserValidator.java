@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CreateUserValidator implements Consumer<CreateUser> {
-    @Override
-    public void accept(CreateUser createUser) {
-        if (createUser.getProfile() == null) {
-            throw new BadRequestException("profile is mandatory.");
-        }
-        UserProfile profile = createUser.getProfile();
-        if (profile.getEmail() == null) {
-            throw new BadRequestException("profile.email is mandatory.");
-        }
+  @Override
+  public void accept(CreateUser createUser) {
+    if (createUser.getProfile() == null) {
+      throw new BadRequestException("profile is mandatory.");
     }
+    UserProfile profile = createUser.getProfile();
+    if (profile.getEmail() == null) {
+      throw new BadRequestException("profile.email is mandatory.");
+    }
+  }
 }

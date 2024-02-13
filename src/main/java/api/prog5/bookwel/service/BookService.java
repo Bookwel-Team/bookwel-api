@@ -61,8 +61,12 @@ public class BookService {
     bucketComponent.upload(savedMultipart, bookAsMultipartFile.getName());
     BookResponse processedBook = pdfReadingAPI.apply(savedMultipart);
     return repository.save(
-        Book.builder().category(persistedCategory).filename(filename).title(processedBook.getTitle()).author(processedBook.getAuthor()).build()
-    );
+        Book.builder()
+            .category(persistedCategory)
+            .filename(filename)
+            .title(processedBook.getTitle())
+            .author(processedBook.getAuthor())
+            .build());
   }
 
   public URL getPresignedUrlFromFilename(String filename) {
