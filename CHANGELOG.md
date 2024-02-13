@@ -1,3 +1,17 @@
+# [1.7.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.6.1...v1.7.0) (2024-02-13)
+
+
+### Bug Fixes
+
+* throw UsernameNotFound if user is not in db ([41acc3b](https://github.com/Bookwel-Team/bookwel-api/commit/41acc3b7c19c12400f823c961cf4d65112b0e73e))
+
+
+### Features
+
+* create user with email, do not let email update on profile update ([c299d47](https://github.com/Bookwel-Team/bookwel-api/commit/c299d47ebeb9c6709d22f7779323dfb8fbbaa3a7))
+
+
+
 ## [1.6.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.6.0...v1.6.1) (2024-02-12)
 
 
@@ -102,16 +116,6 @@
 * get book resources with the corresponding filters ([ef90f81](https://github.com/Bookwel-Team/bookwel-api/commit/ef90f81a148b702fae78a7429bd28556ba733c4d))
 * implements user reactions endpoint ([845eb1b](https://github.com/Bookwel-Team/bookwel-api/commit/845eb1b4bc20720fd273f731eebf3204daee8072))
 * update user_reactions doc for reactions on category and on book and default these to 'UNSET' ([7556fc8](https://github.com/Bookwel-Team/bookwel-api/commit/7556fc870317bd9616a7a18fd884139cd43cf6a0))
-
-
-
-# [1.1.0](https://github.com/Bookwel-Team/bookwel-api/compare/1687a1a57f2ad8e626298f847fa2ef5c8e7076bc...v1.1.0) (2024-01-23)
-
-
-### Features
-
-* configure test containers ([3ca94bc](https://github.com/Bookwel-Team/bookwel-api/commit/3ca94bcbc796861ebdc466ca518cc4722bfba418))
-* initialize project ([1687a1a](https://github.com/Bookwel-Team/bookwel-api/commit/1687a1a57f2ad8e626298f847fa2ef5c8e7076bc))
 
 
 
