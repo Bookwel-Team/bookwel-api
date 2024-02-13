@@ -1,7 +1,9 @@
 package api.prog5.bookwel.endpoint.rest.security.auth;
 
+import api.prog5.bookwel.endpoint.rest.exception.NotFoundException;
 import api.prog5.bookwel.endpoint.rest.security.auth.firebase.FirebaseAuthenticator;
 import api.prog5.bookwel.endpoint.rest.security.model.Principal;
+import api.prog5.bookwel.repository.model.User;
 import api.prog5.bookwel.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +44,12 @@ public class AuthProvider extends AbstractUserDetailsAuthenticationProvider {
     if (email == null) {
       throw new UsernameNotFoundException("bad credentials");
     }
-    return new Principal(userService.getByEmail(email), bearer);
+    try {
+      User user = userService.getByEmail(email);
+      return new Principal(user, bearer);
+    } catch (NotFoundException e) {
+      throw new UsernameNotFoundException("bad credentials");
+    }
   }
 
   private String getBearerFromHeader(
