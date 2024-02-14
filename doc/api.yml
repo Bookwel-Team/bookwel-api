@@ -153,12 +153,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
-    put:
-      summary: Crupdate book
+    post:
+      summary: upload new book
       tags:
         - Book
       security: [ ]
-      operationId: crupdateBook
+      operationId: uploadNewBook
       requestBody:
         required: true
         content:
@@ -485,15 +485,9 @@ components:
     CreateBook:
       type: object
       properties:
-        title:
-          type: string
-          description: The title of the book
-        author:
-          type: string
-          description: The author of the book
         category:
           type: string
-          description: The category of the book
+          description: The category name of the book (must one of the existing ones)
         book:
           type: string
           format: binary
