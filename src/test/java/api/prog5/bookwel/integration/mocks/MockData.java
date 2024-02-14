@@ -14,9 +14,11 @@ import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
 import api.prog5.bookwel.endpoint.rest.model.User;
 import api.prog5.bookwel.endpoint.rest.model.UserProfile;
+import api.prog5.bookwel.service.AI.DataProcesser.api.pdfReading.model.BookResponse;
 import java.time.Instant;
 
 public class MockData {
+  public static final String MOCK_FILE_NAME = "Securite.pdf";
   public static String BOOK_REACTION_ONE_ID = "reaction1_id";
   public static final String MOCK_PRESIGNED_URL = "http://localhost";
   public static String USER_ONE_ID = "user_one";
@@ -140,12 +142,12 @@ public class MockData {
         .reactionStatus(LIKE);
   }
 
-  public static Book createdBook() {
+  public static Book createdBook(String category, String author, String title) {
     return new Book()
-        .fileName("Securite.pdf")
-        .category("Science")
-        .author("random")
-        .title("sécurité")
+        .fileName(MOCK_FILE_NAME)
+        .category(category)
+        .author(author)
+        .title(title)
         .reactionStatistics(new ReactionStatistics());
   }
 
@@ -175,5 +177,9 @@ public class MockData {
     result.setUserId(USER_ONE_ID);
     result.setUserReaction(LIKE);
     return result;
+  }
+
+  public static BookResponse dummyBookResponse(){
+    return BookResponse.builder().author("dummy").title("dummy").build();
   }
 }

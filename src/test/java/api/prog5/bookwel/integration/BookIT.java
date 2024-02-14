@@ -1,11 +1,13 @@
 package api.prog5.bookwel.integration;
 
+import static api.prog5.bookwel.integration.mocks.MockData.MOCK_FILE_NAME;
 import static api.prog5.bookwel.integration.mocks.MockData.NON_EXISTENT_BOOK_ID;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.bookOne;
 import static api.prog5.bookwel.integration.mocks.MockData.bookTwo;
 import static api.prog5.bookwel.integration.mocks.MockData.createdBook;
+import static api.prog5.bookwel.integration.mocks.MockData.dummyBookResponse;
 import static api.prog5.bookwel.utils.TestUtils.assertThrowsApiException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,6 +20,7 @@ import api.prog5.bookwel.endpoint.rest.client.ApiException;
 import api.prog5.bookwel.endpoint.rest.model.Book;
 import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
 import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
+import api.prog5.bookwel.service.AI.DataProcesser.api.pdfReading.model.BookResponse;
 import api.prog5.bookwel.service.BookService;
 import api.prog5.bookwel.utils.TestUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -46,11 +49,9 @@ public class BookIT extends CustomFacadeIT {
   @LocalServerPort private int serverPort;
   @Autowired BookService bookService;
   @Autowired ObjectMapper om;
-  String filepath = "Securite.pdf";
-  File file = getMock();
 
-  File getMock() {
-    URL resource = this.getClass().getClassLoader().getResource(filepath);
+  File getFileFromResource(String resourceName) {
+    URL resource = this.getClass().getClassLoader().getResource(resourceName);
     return new File(resource.getFile());
   }
 
@@ -64,7 +65,7 @@ public class BookIT extends CustomFacadeIT {
     BookApi api = new BookApi(userOneClient);
 
     List<Book> books =
-        api.getBooks(null, null,null, USER_ONE_ID, 1, 30).stream()
+        api.getBooks(null, null, null, USER_ONE_ID, 1, 30).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> authorFilteredBooks =
@@ -72,15 +73,15 @@ public class BookIT extends CustomFacadeIT {
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> categoryFilteredBooks =
-        api.getBooks(null, null, "Bio", null,null, null).stream()
+        api.getBooks(null, null, "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> titleFilteredBooks =
-        api.getBooks(null, "first", "Bio", null,null, null).stream()
+        api.getBooks(null, "first", "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> fullFilteredBooks =
-        api.getBooks("one", null, "Bio", null,null, null).stream()
+        api.getBooks("one", null, "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
             .toList();
     List<Book> recommendedBooksOnly =
@@ -128,11 +129,12 @@ public class BookIT extends CustomFacadeIT {
   void create_book_ok() {
     HttpClient client = HttpClient.newHttpClient();
     String basePath = "http://localhost:" + serverPort;
-
     String boundary = "---------------------------" + System.currentTimeMillis();
-
     String contentTypeHeader = "multipart/form-data; boundary=" + boundary;
-
+    BookResponse dummyBookResponse = dummyBookResponse();
+    Book expected =
+        createdBook("Science", dummyBookResponse.getAuthor(), dummyBookResponse.getTitle());
+    File file = getFileFromResource(MOCK_FILE_NAME);
     String requestBodyPrefix =
         "--"
             + boundary
@@ -144,26 +146,20 @@ public class BookIT extends CustomFacadeIT {
             + "Content-Type: application/octet-stream"
             + CRLF
             + CRLF;
-
     byte[] fileBytes = Files.readAllBytes(Paths.get(file.getPath()));
-
     String requestBodySuffix = CRLF + "--" + boundary + "--" + CRLF;
-
     byte[] requestBody =
         Bytes.concat(requestBodyPrefix.getBytes(), fileBytes, requestBodySuffix.getBytes());
-
-    InputStream requestBodyStream = new ByteArrayInputStream(requestBody);
     UriComponentsBuilder uriComponentsBuilder =
         UriComponentsBuilder.fromUri(URI.create(basePath + "/books"))
-            .queryParam("title", "sécurité")
-            .queryParam("author", "random")
             .queryParam("category", "Science");
+    InputStream requestBodyStream = new ByteArrayInputStream(requestBody);
     HttpRequest request =
         HttpRequest.newBuilder()
             .uri(uriComponentsBuilder.build().toUri())
             .header("Content-Type", contentTypeHeader)
             .header("Authorization", "Bearer " + USER_ONE_ID_TOKEN)
-            .PUT(HttpRequest.BodyPublishers.ofInputStream(() -> requestBodyStream))
+            .POST(HttpRequest.BodyPublishers.ofInputStream(() -> requestBodyStream))
             .build();
 
     HttpResponse<InputStream> response =
@@ -173,7 +169,7 @@ public class BookIT extends CustomFacadeIT {
     book = ignoreId(book);
     book = unsetFileLinkAndReactionStatistics(book);
     assertEquals(200, response.statusCode());
-    assertEquals(createdBook(), book);
+    assertEquals(expected, book);
   }
 
   private Book unsetFileLinkAndReactionStatistics(Book book) {
