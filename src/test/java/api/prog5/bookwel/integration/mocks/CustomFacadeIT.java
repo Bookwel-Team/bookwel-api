@@ -5,6 +5,7 @@ import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_EMAIL;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_TWO_EMAIL;
 import static api.prog5.bookwel.integration.mocks.MockData.USER_TWO_ID_TOKEN;
+import static api.prog5.bookwel.integration.mocks.MockData.dummyBookResponse;
 import static api.prog5.bookwel.integration.mocks.MockData.likedBookOneMockAsAiBook;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -14,6 +15,7 @@ import api.prog5.bookwel.conf.FacadeIT;
 import api.prog5.bookwel.endpoint.rest.security.auth.firebase.FirebaseAuthenticator;
 import api.prog5.bookwel.endpoint.rest.security.auth.firebase.FirebaseConf;
 import api.prog5.bookwel.file.BucketComponent;
+import api.prog5.bookwel.service.AI.DataProcesser.api.pdfReading.PdfReadingAPI;
 import api.prog5.bookwel.service.AI.DataProcesser.api.recommendation.RecommendationAPI;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,7 @@ public class CustomFacadeIT extends FacadeIT {
   @MockBean protected FirebaseAuthenticator firebaseAuthenticator;
   @MockBean protected BucketComponent bucketComponent;
   @MockBean protected RecommendationAPI recommendationAPIMock;
+  @MockBean protected PdfReadingAPI pdfReadingAPIMock;
 
   protected void setupFirebaseAuthenticator(FirebaseAuthenticator firebaseAuthenticator) {
     when(firebaseAuthenticator.getEmail(USER_ONE_ID_TOKEN)).thenReturn(USER_ONE_EMAIL);
@@ -48,10 +51,15 @@ public class CustomFacadeIT extends FacadeIT {
         .thenAnswer((i) -> List.of(likedBookOneMockAsAiBook()));
   }
 
+  protected void setupPdfReadingApiMock(PdfReadingAPI pdfReadingAPI) {
+    when(pdfReadingAPI.apply(any())).thenReturn(dummyBookResponse());
+  }
+
   @BeforeEach
   void setup() throws MalformedURLException {
     setupFirebaseAuthenticator(firebaseAuthenticator);
     setupBucketComponent(bucketComponent);
     setupRecommendationApi(recommendationAPIMock);
+    setupPdfReadingApiMock(pdfReadingAPIMock);
   }
 }

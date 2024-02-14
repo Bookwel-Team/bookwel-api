@@ -10,11 +10,10 @@ import api.prog5.bookwel.repository.model.Book;
 import api.prog5.bookwel.repository.model.BookReaction;
 import api.prog5.bookwel.repository.model.Category;
 import api.prog5.bookwel.service.AI.DataProcesser.BookUserSpecificDataProcesser;
+import api.prog5.bookwel.service.AI.DataProcesser.api.pdfReading.PdfReadingAPI;
+import api.prog5.bookwel.service.AI.DataProcesser.api.pdfReading.model.BookResponse;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -34,6 +33,8 @@ public class BookService {
   private final BookReactionService reactionService;
   private final CategoryReactionService categoryReactionService;
   private final CategoryService categoryService;
+  private final MultipartFileSaver fileSaver;
+  private final PdfReadingAPI pdfReadingAPI;
 
   public List<Book> getAllByCriteria(
       String author, String title, String category, Integer page, Integer pageSize) {
@@ -53,22 +54,15 @@ public class BookService {
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));
   }
 
-  public Book crupdateBook(MultipartFile bookAsFile, String title, String author, String category)
-      throws IOException {
-    String dir = "/tmp";
-    Path filepath = Paths.get(dir, bookAsFile.getOriginalFilename());
-    bookAsFile.transferTo(filepath);
-    File file = new File(filepath.toUri());
-    String filename = file.toString().substring(5);
+  public Book uploadNewBook(MultipartFile bookAsMultipartFile, String category) {
+    String filename = bookAsMultipartFile.getOriginalFilename();
+    File savedMultipart = fileSaver.apply(bookAsMultipartFile);
     Category persistedCategory = categoryService.getByName(category);
-    bucketComponent.upload(file, file.getName());
+    bucketComponent.upload(savedMultipart, bookAsMultipartFile.getName());
+    BookResponse processedBook = pdfReadingAPI.apply(savedMultipart);
     return repository.save(
-        Book.builder()
-            .author(author)
-            .title(title)
-            .category(persistedCategory)
-            .filename(filename)
-            .build());
+        Book.builder().category(persistedCategory).filename(filename).title(processedBook.getTitle()).author(processedBook.getAuthor()).build()
+    );
   }
 
   public URL getPresignedUrlFromFilename(String filename) {
