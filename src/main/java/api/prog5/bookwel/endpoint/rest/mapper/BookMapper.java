@@ -26,6 +26,7 @@ public class BookMapper {
         .fileLink(service.getPresignedUrlFromFilename(filename).toString())
         .category(domain.getCategory().getName())
         .title(domain.getTitle())
+        .pictureLink(service.getPresignedUrlFromFilename(domain.getPictureName()).toString())
         .reactionStatistics(
             new ReactionStatistics()
                 .byCurrentUser(

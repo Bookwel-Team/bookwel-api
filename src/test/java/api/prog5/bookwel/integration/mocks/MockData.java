@@ -19,6 +19,7 @@ import java.time.Instant;
 
 public class MockData {
   public static final String MOCK_FILE_NAME = "Securite.pdf";
+  public static final String MOCK_PICTURE_NAME = "Image.jpg";
   public static String BOOK_REACTION_ONE_ID = "reaction1_id";
   public static final String MOCK_PRESIGNED_URL = "http://localhost";
   public static String USER_ONE_ID = "user_one";
@@ -67,6 +68,7 @@ public class MockData {
         .title("The first book")
         .fileLink(null)
         .fileName("none")
+        .pictureLink(null)
         .reactionStatistics(new ReactionStatistics());
   }
 
@@ -78,6 +80,7 @@ public class MockData {
         .title("The second book")
         .fileLink(null)
         .fileName("none")
+        .pictureLink(null)
         .reactionStatistics(new ReactionStatistics());
   }
 

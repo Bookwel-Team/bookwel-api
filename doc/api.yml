@@ -30,20 +30,20 @@ paths:
                   $ref: "#/components/schemas/AiResponse"
 
   '/hello':
-      get:
-        security:
-          [ ]
-        tags:
-          - HealthController
-        operationId: checkHealth
-        responses:
-          200:
-            description: Health controller
-            content:
-              text/plain:
-                schema:
-                  type: string
-                  example: "Hello from the Bookwel Team!"
+    get:
+      security:
+        [ ]
+      tags:
+        - HealthController
+      operationId: checkHealth
+      responses:
+        200:
+          description: Health controller
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Hello from the Bookwel Team!"
   '/whoami':
     get:
       tags:
@@ -461,6 +461,8 @@ components:
           type: string
         fileName:
           type: string
+        pictureLink:
+          type: string
     Reacted:
       type: object
       properties:
@@ -492,6 +494,10 @@ components:
           type: string
           format: binary
           description: The book as pdf format
+        picture:
+          type: string
+          format: binary
+          description: Picture of the cover of the book
     Category:
       type: object
       allOf:
@@ -513,7 +519,7 @@ components:
         reactorId:
           type: string
         reactionStatus:
-            $ref: '#/components/schemas/ReactionStatus'
+          $ref: '#/components/schemas/ReactionStatus'
     CategoryCrupdateReaction:
       allOf:
         - $ref: "#/components/schemas/CrupdateReaction"

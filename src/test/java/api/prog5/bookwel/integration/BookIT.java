@@ -1,13 +1,6 @@
 package api.prog5.bookwel.integration;
 
-import static api.prog5.bookwel.integration.mocks.MockData.MOCK_FILE_NAME;
-import static api.prog5.bookwel.integration.mocks.MockData.NON_EXISTENT_BOOK_ID;
-import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID;
-import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
-import static api.prog5.bookwel.integration.mocks.MockData.bookOne;
-import static api.prog5.bookwel.integration.mocks.MockData.bookTwo;
-import static api.prog5.bookwel.integration.mocks.MockData.createdBook;
-import static api.prog5.bookwel.integration.mocks.MockData.dummyBookResponse;
+import static api.prog5.bookwel.integration.mocks.MockData.*;
 import static api.prog5.bookwel.utils.TestUtils.assertThrowsApiException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -67,25 +60,30 @@ public class BookIT extends CustomFacadeIT {
     List<Book> books =
         api.getBooks(null, null, null, USER_ONE_ID, 1, 30).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
+                .map(this::unsetPictureLink)
             .toList();
     List<Book> authorFilteredBooks =
         api.getBooks("one", null, null, null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
-            .toList();
+                .map(this::unsetPictureLink)
+                .toList();
     List<Book> categoryFilteredBooks =
         api.getBooks(null, null, "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
-            .toList();
+                .map(this::unsetPictureLink)
+                .toList();
     List<Book> titleFilteredBooks =
         api.getBooks(null, "first", "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
-            .toList();
+                .map(this::unsetPictureLink)
+                .toList();
     List<Book> fullFilteredBooks =
         api.getBooks("one", null, "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
+                .map(this::unsetPictureLink)
             .toList();
     List<Book> recommendedBooksOnly =
-        api.getRecommendedBooks().stream().map(this::unsetFileLinkAndReactionStatistics).toList();
+        api.getRecommendedBooks().stream().map(this::unsetFileLinkAndReactionStatistics).map(this::unsetPictureLink).toList();
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
     assertTrue(authorFilteredBooks.contains(bookOne()));
@@ -106,6 +104,7 @@ public class BookIT extends CustomFacadeIT {
     Book actual = api.getBookById(expected.getId());
 
     actual = unsetFileLinkAndReactionStatistics(actual);
+    actual = unsetPictureLink(actual);
     assertEquals(expected, actual);
   }
 
@@ -135,6 +134,7 @@ public class BookIT extends CustomFacadeIT {
     Book expected =
         createdBook("Science", dummyBookResponse.getAuthor(), dummyBookResponse.getTitle());
     File file = getFileFromResource(MOCK_FILE_NAME);
+    File picture = getFileFromResource(MOCK_PICTURE_NAME);
     String requestBodyPrefix =
         "--"
             + boundary
@@ -145,11 +145,24 @@ public class BookIT extends CustomFacadeIT {
             + CRLF
             + "Content-Type: application/octet-stream"
             + CRLF
+            + CRLF
+            ;
+    String requestBodyMiddle =
+            "--"
+            + boundary
+            + CRLF
+            + "Content-Disposition: form-data; name=\"picture\"; filename=\""
+            + picture.getName()
+            + "\""
+            + CRLF
+            + "Content-Type: application/octet-stream"
+            + CRLF
             + CRLF;
     byte[] fileBytes = Files.readAllBytes(Paths.get(file.getPath()));
+    byte[] pictureBytes = Files.readAllBytes(Paths.get(picture.getPath()));
     String requestBodySuffix = CRLF + "--" + boundary + "--" + CRLF;
     byte[] requestBody =
-        Bytes.concat(requestBodyPrefix.getBytes(), fileBytes, requestBodySuffix.getBytes());
+        Bytes.concat(requestBodyPrefix.getBytes(), fileBytes, requestBodyMiddle.getBytes(), pictureBytes, requestBodySuffix.getBytes());
     UriComponentsBuilder uriComponentsBuilder =
         UriComponentsBuilder.fromUri(URI.create(basePath + "/books"))
             .queryParam("category", "Science");
@@ -168,6 +181,7 @@ public class BookIT extends CustomFacadeIT {
     Book book = om.readValue(response.body(), new TypeReference<>() {});
     book = ignoreId(book);
     book = unsetFileLinkAndReactionStatistics(book);
+    book = unsetPictureLink(book);
     assertEquals(200, response.statusCode());
     assertEquals(expected, book);
   }
@@ -175,6 +189,11 @@ public class BookIT extends CustomFacadeIT {
   private Book unsetFileLinkAndReactionStatistics(Book book) {
     book.setFileLink(null);
     book.setReactionStatistics(new ReactionStatistics());
+    return book;
+  }
+
+  private Book unsetPictureLink(Book book){
+    book.setPictureLink(null);
     return book;
   }
 
