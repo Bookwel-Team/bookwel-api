@@ -1,3 +1,22 @@
+# [1.8.0](https://github.com/Bookwel-Team/bookwel-api/compare/v1.6.1...v1.8.0) (2024-02-17)
+
+
+### Bug Fixes
+
+* bad request are not correctly mapped ([5633956](https://github.com/Bookwel-Team/bookwel-api/commit/56339569ea876ebdc39a9f0a0b0db7f27ada7c07))
+* set pdf reading api url env var value ([8bbe4c5](https://github.com/Bookwel-Team/bookwel-api/commit/8bbe4c5f17e9c5b3eee12d8188c53668e83b9643))
+* throw UsernameNotFound if user is not in db ([41acc3b](https://github.com/Bookwel-Team/bookwel-api/commit/41acc3b7c19c12400f823c961cf4d65112b0e73e))
+* userReaction is not correctly mapped because we couldn't guess the currentUser's id on permitAll endpoints ([0dbb7df](https://github.com/Bookwel-Team/bookwel-api/commit/0dbb7dffb00d48b4537751168b4c55aabf4fd6ca))
+
+
+### Features
+
+* books now have pictures ([8f5c99a](https://github.com/Bookwel-Team/bookwel-api/commit/8f5c99a83385282369713a064d9ebb701cd4d779))
+* create user with email, do not let email update on profile update ([aa3b724](https://github.com/Bookwel-Team/bookwel-api/commit/aa3b724a58591ca83fecd2d2ac1aab0873a92530))
+* get author and title from external api, then map with posted book ([58dbf22](https://github.com/Bookwel-Team/bookwel-api/commit/58dbf22fc5704794016aa030e78425ee1fe983c0))
+
+
+
 ## [1.6.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.6.0...v1.6.1) (2024-02-12)
 
 
@@ -102,16 +121,6 @@
 * get book resources with the corresponding filters ([ef90f81](https://github.com/Bookwel-Team/bookwel-api/commit/ef90f81a148b702fae78a7429bd28556ba733c4d))
 * implements user reactions endpoint ([845eb1b](https://github.com/Bookwel-Team/bookwel-api/commit/845eb1b4bc20720fd273f731eebf3204daee8072))
 * update user_reactions doc for reactions on category and on book and default these to 'UNSET' ([7556fc8](https://github.com/Bookwel-Team/bookwel-api/commit/7556fc870317bd9616a7a18fd884139cd43cf6a0))
-
-
-
-# [1.1.0](https://github.com/Bookwel-Team/bookwel-api/compare/1687a1a57f2ad8e626298f847fa2ef5c8e7076bc...v1.1.0) (2024-01-23)
-
-
-### Features
-
-* configure test containers ([3ca94bc](https://github.com/Bookwel-Team/bookwel-api/commit/3ca94bcbc796861ebdc466ca518cc4722bfba418))
-* initialize project ([1687a1a](https://github.com/Bookwel-Team/bookwel-api/commit/1687a1a57f2ad8e626298f847fa2ef5c8e7076bc))
 
 
 
