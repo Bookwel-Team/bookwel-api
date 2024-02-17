@@ -54,11 +54,19 @@ public class BookService {
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));
   }
 
-  public Book uploadNewBook(MultipartFile bookAsMultipartFile, String category) {
+  public Book uploadNewBook(
+      MultipartFile bookAsMultipartFile, MultipartFile pictureAsMultipartFile, String category) {
     String filename = bookAsMultipartFile.getOriginalFilename();
+    String pictureName = pictureAsMultipartFile.getOriginalFilename();
+
     File savedMultipart = fileSaver.apply(bookAsMultipartFile);
+    File savedPictureBook = fileSaver.apply(pictureAsMultipartFile);
+
     Category persistedCategory = categoryService.getByName(category);
+
     bucketComponent.upload(savedMultipart, bookAsMultipartFile.getName());
+    bucketComponent.upload(savedPictureBook, pictureAsMultipartFile.getName());
+
     BookResponse processedBook = pdfReadingAPI.apply(savedMultipart);
     return repository.save(
         Book.builder()
@@ -66,6 +74,7 @@ public class BookService {
             .filename(filename)
             .title(processedBook.getTitle())
             .author(processedBook.getAuthor())
+            .pictureName(pictureName)
             .build());
   }
 

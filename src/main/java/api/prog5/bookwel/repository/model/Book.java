@@ -32,4 +32,5 @@ public class Book {
   private Category category;
 
   private String filename;
+  private String pictureName;
 }
