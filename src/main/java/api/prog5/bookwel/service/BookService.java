@@ -54,7 +54,8 @@ public class BookService {
         .orElseThrow(() -> new NotFoundException("Book with id: " + id + " not found"));
   }
 
-  public Book uploadNewBook(MultipartFile bookAsMultipartFile, MultipartFile pictureAsMultipartFile, String category) {
+  public Book uploadNewBook(
+      MultipartFile bookAsMultipartFile, MultipartFile pictureAsMultipartFile, String category) {
     String filename = bookAsMultipartFile.getOriginalFilename();
     String pictureName = pictureAsMultipartFile.getOriginalFilename();
 

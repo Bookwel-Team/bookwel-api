@@ -1,6 +1,14 @@
 package api.prog5.bookwel.integration;
 
-import static api.prog5.bookwel.integration.mocks.MockData.*;
+import static api.prog5.bookwel.integration.mocks.MockData.MOCK_FILE_NAME;
+import static api.prog5.bookwel.integration.mocks.MockData.MOCK_PICTURE_NAME;
+import static api.prog5.bookwel.integration.mocks.MockData.NON_EXISTENT_BOOK_ID;
+import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID;
+import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
+import static api.prog5.bookwel.integration.mocks.MockData.bookOne;
+import static api.prog5.bookwel.integration.mocks.MockData.bookTwo;
+import static api.prog5.bookwel.integration.mocks.MockData.createdBook;
+import static api.prog5.bookwel.integration.mocks.MockData.dummyBookResponse;
 import static api.prog5.bookwel.utils.TestUtils.assertThrowsApiException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -60,30 +68,33 @@ public class BookIT extends CustomFacadeIT {
     List<Book> books =
         api.getBooks(null, null, null, USER_ONE_ID, 1, 30).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
-                .map(this::unsetPictureLink)
+            .map(this::unsetPictureLink)
             .toList();
     List<Book> authorFilteredBooks =
         api.getBooks("one", null, null, null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
-                .map(this::unsetPictureLink)
-                .toList();
+            .map(this::unsetPictureLink)
+            .toList();
     List<Book> categoryFilteredBooks =
         api.getBooks(null, null, "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
-                .map(this::unsetPictureLink)
-                .toList();
+            .map(this::unsetPictureLink)
+            .toList();
     List<Book> titleFilteredBooks =
         api.getBooks(null, "first", "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
-                .map(this::unsetPictureLink)
-                .toList();
+            .map(this::unsetPictureLink)
+            .toList();
     List<Book> fullFilteredBooks =
         api.getBooks("one", null, "Bio", null, null, null).stream()
             .map(this::unsetFileLinkAndReactionStatistics)
-                .map(this::unsetPictureLink)
+            .map(this::unsetPictureLink)
             .toList();
     List<Book> recommendedBooksOnly =
-        api.getRecommendedBooks().stream().map(this::unsetFileLinkAndReactionStatistics).map(this::unsetPictureLink).toList();
+        api.getRecommendedBooks().stream()
+            .map(this::unsetFileLinkAndReactionStatistics)
+            .map(this::unsetPictureLink)
+            .toList();
 
     assertTrue(books.containsAll(List.of(bookOne(), bookTwo())));
     assertTrue(authorFilteredBooks.contains(bookOne()));
@@ -145,10 +156,9 @@ public class BookIT extends CustomFacadeIT {
             + CRLF
             + "Content-Type: application/octet-stream"
             + CRLF
-            + CRLF
-            ;
+            + CRLF;
     String requestBodyMiddle =
-            "--"
+        "--"
             + boundary
             + CRLF
             + "Content-Disposition: form-data; name=\"picture\"; filename=\""
@@ -162,7 +172,12 @@ public class BookIT extends CustomFacadeIT {
     byte[] pictureBytes = Files.readAllBytes(Paths.get(picture.getPath()));
     String requestBodySuffix = CRLF + "--" + boundary + "--" + CRLF;
     byte[] requestBody =
-        Bytes.concat(requestBodyPrefix.getBytes(), fileBytes, requestBodyMiddle.getBytes(), pictureBytes, requestBodySuffix.getBytes());
+        Bytes.concat(
+            requestBodyPrefix.getBytes(),
+            fileBytes,
+            requestBodyMiddle.getBytes(),
+            pictureBytes,
+            requestBodySuffix.getBytes());
     UriComponentsBuilder uriComponentsBuilder =
         UriComponentsBuilder.fromUri(URI.create(basePath + "/books"))
             .queryParam("category", "Science");
@@ -192,7 +207,7 @@ public class BookIT extends CustomFacadeIT {
     return book;
   }
 
-  private Book unsetPictureLink(Book book){
+  private Book unsetPictureLink(Book book) {
     book.setPictureLink(null);
     return book;
   }

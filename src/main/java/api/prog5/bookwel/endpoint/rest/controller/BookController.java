@@ -55,6 +55,7 @@ public class BookController {
       @RequestParam("picture") MultipartFile pictureAsMultipartFile,
       @AuthenticationPrincipal Principal principal) {
     return bookMapper.toRest(
-        bookService.uploadNewBook(bookAsMultipartFile, pictureAsMultipartFile, category), principal.getUser().getId());
+        bookService.uploadNewBook(bookAsMultipartFile, pictureAsMultipartFile, category),
+        principal.getUser().getId());
   }
 }
