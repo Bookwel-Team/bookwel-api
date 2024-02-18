@@ -64,8 +64,8 @@ public class BookService {
 
     Category persistedCategory = categoryService.getByName(category);
 
-    bucketComponent.upload(savedMultipart, bookAsMultipartFile.getName());
-    bucketComponent.upload(savedPictureBook, pictureAsMultipartFile.getName());
+    bucketComponent.upload(savedMultipart, filename);
+    bucketComponent.upload(savedPictureBook, pictureName);
 
     BookResponse processedBook = pdfReadingAPI.apply(savedMultipart);
     return repository.save(
