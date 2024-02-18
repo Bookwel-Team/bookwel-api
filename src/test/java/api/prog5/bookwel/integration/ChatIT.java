@@ -5,6 +5,7 @@ import api.prog5.bookwel.endpoint.rest.api.AiApi;
 import api.prog5.bookwel.endpoint.rest.client.ApiClient;
 import api.prog5.bookwel.endpoint.rest.client.ApiException;
 import api.prog5.bookwel.endpoint.rest.model.AiResponse;
+import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.utils.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import java.util.List;
 
 import static api.prog5.bookwel.integration.mocks.MockData.USER_ONE_ID_TOKEN;
 @Testcontainers
-public class ChatIT {
+public class ChatIT extends CustomFacadeIT {
   @LocalServerPort
   private int serverPort;
   private ApiClient anApiClient(String token) {
