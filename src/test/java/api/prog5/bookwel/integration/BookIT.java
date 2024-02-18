@@ -13,7 +13,7 @@ import static api.prog5.bookwel.utils.TestUtils.assertThrowsApiException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static software.amazon.awssdk.core.internal.util.ChunkContentUtils.CRLF;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import api.prog5.bookwel.endpoint.rest.api.BookApi;
 import api.prog5.bookwel.endpoint.rest.client.ApiClient;
@@ -24,32 +24,30 @@ import api.prog5.bookwel.integration.mocks.CustomFacadeIT;
 import api.prog5.bookwel.service.AI.DataProcesser.api.pdfReading.model.BookResponse;
 import api.prog5.bookwel.service.BookService;
 import api.prog5.bookwel.utils.TestUtils;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.primitives.Bytes;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.http.HttpMethod;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
+@AutoConfigureMockMvc
 public class BookIT extends CustomFacadeIT {
   @LocalServerPort private int serverPort;
   @Autowired BookService bookService;
   @Autowired ObjectMapper om;
+  @Autowired MockMvc mockMvc;
 
   File getFileFromResource(String resourceName) {
     URL resource = this.getClass().getClassLoader().getResource(resourceName);
@@ -137,67 +135,36 @@ public class BookIT extends CustomFacadeIT {
   @Test
   @SneakyThrows
   void create_book_ok() {
-    HttpClient client = HttpClient.newHttpClient();
-    String basePath = "http://localhost:" + serverPort;
-    String boundary = "---------------------------" + System.currentTimeMillis();
-    String contentTypeHeader = "multipart/form-data; boundary=" + boundary;
     BookResponse dummyBookResponse = dummyBookResponse();
     Book expected =
         createdBook("Science", dummyBookResponse.getAuthor(), dummyBookResponse.getTitle());
-    File file = getFileFromResource(MOCK_FILE_NAME);
-    File picture = getFileFromResource(MOCK_PICTURE_NAME);
-    String requestBodyPrefix =
-        "--"
-            + boundary
-            + CRLF
-            + "Content-Disposition: form-data; name=\"book\"; filename=\""
-            + file.getName()
-            + "\""
-            + CRLF
-            + "Content-Type: application/octet-stream"
-            + CRLF
-            + CRLF;
-    String requestBodyMiddle =
-        "--"
-            + boundary
-            + CRLF
-            + "Content-Disposition: form-data; name=\"picture\"; filename=\""
-            + picture.getName()
-            + "\""
-            + CRLF
-            + "Content-Type: application/octet-stream"
-            + CRLF
-            + CRLF;
-    byte[] fileBytes = Files.readAllBytes(Paths.get(file.getPath()));
-    byte[] pictureBytes = Files.readAllBytes(Paths.get(picture.getPath()));
-    String requestBodySuffix = CRLF + "--" + boundary + "--" + CRLF;
-    byte[] requestBody =
-        Bytes.concat(
-            requestBodyPrefix.getBytes(),
-            fileBytes,
-            requestBodyMiddle.getBytes(),
-            pictureBytes,
-            requestBodySuffix.getBytes());
-    UriComponentsBuilder uriComponentsBuilder =
-        UriComponentsBuilder.fromUri(URI.create(basePath + "/books"))
-            .queryParam("category", "Science");
-    InputStream requestBodyStream = new ByteArrayInputStream(requestBody);
-    HttpRequest request =
-        HttpRequest.newBuilder()
-            .uri(uriComponentsBuilder.build().toUri())
-            .header("Content-Type", contentTypeHeader)
-            .header("Authorization", "Bearer " + USER_ONE_ID_TOKEN)
-            .POST(HttpRequest.BodyPublishers.ofInputStream(() -> requestBodyStream))
-            .build();
+    String picture = om.writeValueAsString(getFileFromResource(MOCK_PICTURE_NAME));
+    String pdf = om.writeValueAsString(getFileFromResource(MOCK_FILE_NAME));
 
-    HttpResponse<InputStream> response =
-        client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+    MockMultipartFile picMock =
+        new MockMultipartFile(
+            "picture", MOCK_PICTURE_NAME, "image/jpeg", picture.getBytes(StandardCharsets.UTF_8));
+    MockMultipartFile pdfMock =
+        new MockMultipartFile(
+            "book", MOCK_FILE_NAME, "application/json", pdf.getBytes(StandardCharsets.UTF_8));
+    MockMultipartFile catMock =
+        new MockMultipartFile(
+            "category", "", "text/plain", "Science".getBytes(StandardCharsets.UTF_8));
 
-    Book book = om.readValue(response.body(), new TypeReference<>() {});
+    MvcResult result =
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders.multipart(HttpMethod.POST, "/books")
+                    .file(picMock)
+                    .file(pdfMock)
+                    .file(catMock)
+                    .header("Authorization", "Bearer " + USER_ONE_ID_TOKEN))
+            .andExpect(status().isOk())
+            .andReturn();
+    Book book = om.readValue(result.getResponse().getContentAsString(), Book.class);
     book = ignoreId(book);
     book = unsetFileLinkAndReactionStatistics(book);
     book = unsetPictureLink(book);
-    assertEquals(200, response.statusCode());
     assertEquals(expected, book);
   }
 
