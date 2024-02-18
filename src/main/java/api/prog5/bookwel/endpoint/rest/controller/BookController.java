@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,9 +51,9 @@ public class BookController {
 
   @PostMapping(value = "/books", consumes = MULTIPART_FORM_DATA_VALUE)
   public Book uploadNewBook(
-      @RequestParam("category") String category,
-      @RequestParam("book") MultipartFile bookAsMultipartFile,
-      @RequestParam("picture") MultipartFile pictureAsMultipartFile,
+      @RequestPart("category") String category,
+      @RequestPart("book") MultipartFile bookAsMultipartFile,
+      @RequestPart("picture") MultipartFile pictureAsMultipartFile,
       @AuthenticationPrincipal Principal principal) {
     return bookMapper.toRest(
         bookService.uploadNewBook(bookAsMultipartFile, pictureAsMultipartFile, category),
