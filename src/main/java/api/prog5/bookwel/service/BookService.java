@@ -16,10 +16,12 @@ import java.io.File;
 import java.net.URL;
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,8 +66,14 @@ public class BookService {
 
     Category persistedCategory = categoryService.getByName(category);
 
-    bucketComponent.upload(savedMultipart, filename);
-    bucketComponent.upload(savedPictureBook, pictureName);
+    bucketComponent.upload(
+        savedMultipart,
+        filename,
+        MediaType.valueOf(Objects.requireNonNull(bookAsMultipartFile.getContentType())));
+    bucketComponent.upload(
+        savedPictureBook,
+        pictureName,
+        MediaType.valueOf(Objects.requireNonNull(pictureAsMultipartFile.getContentType())));
 
     BookResponse processedBook = pdfReadingAPI.apply(savedMultipart);
     return repository.save(

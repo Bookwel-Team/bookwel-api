@@ -16,7 +16,8 @@ public class MultipartFileSaver implements Function<MultipartFile, File> {
   @Override
   public File apply(MultipartFile multipartFile) {
     try {
-      File tempFile = createTempFile(Objects.requireNonNull(multipartFile.getOriginalFilename()), null);
+      File tempFile =
+          createTempFile(Objects.requireNonNull(multipartFile.getOriginalFilename()), null);
       multipartFile.transferTo(tempFile);
       return tempFile;
     } catch (IOException e) {

@@ -150,6 +150,7 @@ dependencies {
     implementation 'software.amazon.awssdk:s3:2.21.40'
     implementation 'software.amazon.awssdk:s3-transfer-manager:2.21.40'
     implementation 'software.amazon.awssdk.crt:aws-crt:0.28.12'
+    implementation 'software.amazon.awssdk:core:2.21.40'
     implementation 'com.mashape.unirest:unirest-java:1.4.9'
 
     compileOnly 'org.projectlombok:lombok'
