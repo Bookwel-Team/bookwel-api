@@ -4,7 +4,7 @@ info:
   title: Bookwel-api
 
 servers:
-  - url: 'http://13.39.144.179:3000'
+  - url: 'https://book-api.preprod.hei.school'
 security:
   - BearerAuth: [ ]
 
