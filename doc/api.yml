@@ -13,6 +13,7 @@ paths:
     post:
       tags:
         - AI
+      security: [ ]
       operationId: chat
       requestBody:
         content:
@@ -31,8 +32,7 @@ paths:
 
   '/hello':
     get:
-      security:
-        [ ]
+      security: [ ]
       tags:
         - HealthController
       operationId: checkHealth
@@ -59,8 +59,7 @@ paths:
                 $ref: "#/components/schemas/Whoami"
   '/categories':
     get:
-      security:
-        [ ]
+      security: [ ]
       tags:
         - Category
       summary: Get all categories of book
@@ -111,6 +110,7 @@ paths:
     get:
       tags:
         - Book
+      security: [ ]
       summary: Get all books
       parameters:
         - name: author
@@ -157,7 +157,6 @@ paths:
       summary: upload new book
       tags:
         - Book
-      security: [ ]
       operationId: uploadNewBook
       requestBody:
         required: true
@@ -262,8 +261,7 @@ paths:
         404:
           $ref: "#/components/responses/404"
     post:
-      security:
-        [ ]
+      security: [ ]
       tags:
         - Users
       summary: CreateUser
