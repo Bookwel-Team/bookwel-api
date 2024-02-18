@@ -1,21 +1,14 @@
 package api.prog5.bookwel.integration.mocks;
 
+import api.prog5.bookwel.endpoint.rest.model.*;
+import api.prog5.bookwel.service.AI.DataProcesser.api.pdfReading.model.BookResponse;
+
+import java.time.Instant;
+
 import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.DISLIKE;
 import static api.prog5.bookwel.endpoint.rest.model.ReactionStatus.LIKE;
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.ADMIN;
 import static api.prog5.bookwel.endpoint.rest.model.UserStatus.CLIENT;
-
-import api.prog5.bookwel.endpoint.rest.model.Book;
-import api.prog5.bookwel.endpoint.rest.model.BookReaction;
-import api.prog5.bookwel.endpoint.rest.model.Category;
-import api.prog5.bookwel.endpoint.rest.model.CategoryCrupdateReaction;
-import api.prog5.bookwel.endpoint.rest.model.CategoryReaction;
-import api.prog5.bookwel.endpoint.rest.model.CrupdateReaction;
-import api.prog5.bookwel.endpoint.rest.model.ReactionStatistics;
-import api.prog5.bookwel.endpoint.rest.model.User;
-import api.prog5.bookwel.endpoint.rest.model.UserProfile;
-import api.prog5.bookwel.service.AI.DataProcesser.api.pdfReading.model.BookResponse;
-import java.time.Instant;
 
 public class MockData {
   public static final String MOCK_FILE_NAME = "Securite.pdf";
@@ -184,5 +177,13 @@ public class MockData {
 
   public static BookResponse dummyBookResponse() {
     return BookResponse.builder().author("dummy").title("dummy").build();
+  }
+  public static AiResponse dummyAiResponse() {
+    return new AiResponse()
+      .title("Dummy Title")
+      .author("Dummy Author")
+      .synopsis("Dummy Synopsis")
+      .category("Dummy Category")
+      .reason("Dummy Reason");
   }
 }
