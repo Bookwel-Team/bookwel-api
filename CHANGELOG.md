@@ -1,3 +1,12 @@
+## [1.8.2](https://github.com/Bookwel-Team/bookwel-api/compare/v1.8.1...v1.8.2) (2024-02-19)
+
+
+### Bug Fixes
+
+* upload book ([bdd4cd9](https://github.com/Bookwel-Team/bookwel-api/commit/bdd4cd925325feda307dfc0113b05875404d365d))
+
+
+
 ## [1.8.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.8.0...v1.8.1) (2024-02-18)
 
 
@@ -101,15 +110,6 @@
 * rest exceptions mapping, user creation endpoint is made by post method ([e7894f0](https://github.com/Bookwel-Team/bookwel-api/commit/e7894f047588a7ba007858df3ae1dad4d09600a8))
 * s3 presigned url ([2290d49](https://github.com/Bookwel-Team/bookwel-api/commit/2290d49e4a2e0f0aa0cdc40a2257cbb1baed1aa4))
 * **tests:** increase test coverage ([ddd1d85](https://github.com/Bookwel-Team/bookwel-api/commit/ddd1d855eea2115f0075e00b0beabd61df14d837))
-
-
-
-## [1.2.1](https://github.com/Bookwel-Team/bookwel-api/compare/v1.2.0...v1.2.1) (2024-02-07)
-
-
-### Bug Fixes
-
-* **infra:** include necessary DOM librairies in typescript client ([71f8e26](https://github.com/Bookwel-Team/bookwel-api/commit/71f8e26e8e2a343d521761fe2d310fb28a6e3ba4))
 
 
 
